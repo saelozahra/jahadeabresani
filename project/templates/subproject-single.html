@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css" type="text/css">
     <style>
       .map {
-        filter: blur(6px);
+        filter: blur(3px);
       }
     </style>
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
@@ -58,12 +58,14 @@
 
         <nav class="row">
             <div class="nav-wrapper">
-              <a href="../../" class="brand-logo"><b><i class="material-icons">spa</i>{{ projects_data.title }}</b></a>
+            {% for spd in projects_data.this_single_sub_projects %}
+              <a href="../../" class="brand-logo"><b><i class="material-icons">spa</i>{{ spd.title }}</b></a>
+            {% endfor %}
               <ul class="right hide-on-med-and-down">
                 <li><a class="waves-effect waves-light" href="#"><i class="material-icons">search</i></a></li>
                 <li><a href="../../project"><i class="material-icons">view_module</i></a></li>
                 <li><a href="./"><i class="material-icons">refresh</i></a></li>
-                <li><a href="../../login"><i class="material-icons">account_circle</i></a></li>
+                <li><a href="../../admin"><i class="material-icons">account_circle</i></a></li>
                 <li><a href="../../register"><i class="material-icons">person_add</i></a></li>
               </ul>
             </div>
@@ -71,10 +73,10 @@
 
         <div style="float: left;width: 48%;">
             <ul class="collection with-header">
-                <li class="collection-header" style="direction: rtl;"><h4>{{ projects_data.city }}</h4></li>
+                <li class="collection-header" style="direction: rtl;"><h5>زیرپروژه های دیگر از {{ projects_data.title }}</h5></li>
                 {% for pd in projects_data.subprojects %}
                     <li class="collection-item avatar ">
-                        <a href="./{{ projects_data.slug }}/{{ pd.id }}">
+                        <a href="../{{ projects_data.slug }}/{{ pd.id }}">
                             <img src="{{ pd.photo }}" alt="" class="circle">
                             <span class="title">{{ pd.title }}</span>
                             <p>{{ pd.city }} - {{ pd.date_end }}</p>
@@ -86,11 +88,22 @@
                     </li>
                 {% endfor %}
             </ul>
-        </div>
-
-        <div style="float: right;width: 48%;">
-
+            <br>
+            <br>
             <ul class="collapsible popout">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>نقشه اجرا پروژه</div>
+                    <div class="collapsible-body">
+                        <span>
+                            <img style="max-width: 100%" src="{{ projects_data.naghshe }}">
+                            <br>
+                            <a download="" href="{{ projects_data.naghshe }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
+                                <i class="material-icons right">download</i>
+                                لینک دانلود
+                            </a>
+                        </span>
+                    </div>
+                </li>
                 <li>
                     <div class="collapsible-header"><i class="material-icons">filter_drama</i>مجوز پروژه</div>
                     <div class="collapsible-body">
@@ -130,6 +143,94 @@
                         </span>
                     </div>
                 </li>
+            </ul>
+        </div>
+
+        <div style="float: right;width: 48%;">
+
+            <ul class="collapsible popout" style="max-height: 789px;overflow-y: scroll;">
+            {% for spd in projects_data.this_single_sub_projects %}
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 1</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale1 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 2</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale2 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 3</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale3 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 4</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale4 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 5</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale5 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 6</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale6 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 7</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale7 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 8</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale8 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 9</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale9 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 10</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale10 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 11</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale11 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 12</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale12 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 13</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale13 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 14</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale14 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 15</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale15 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 16</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale16 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 17</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale17 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 18</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale18 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 19</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale19 }}</span> </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 20</div>
+                    <div class="collapsible-body"> <span>{{ spd.marhale20 }}</span> </div>
+                </li>
+            {% endfor %}
             </ul>
         </div>
 

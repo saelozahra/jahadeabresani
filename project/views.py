@@ -50,10 +50,16 @@ class single_project(TemplateView):
                 'icon': icon,
                 'view_count': pd.view_count,
             })
-        miangin_pishrafte_kol = miangin_pishrafte_kol / this_sub_projects.count()
-        print(miangin_pishrafte_kol)
-        print(miangin_pishrafte_kol)
-        print(this_sub_projects.count())
+
+        try:
+            miangin_pishrafte_kol = miangin_pishrafte_kol / this_sub_projects.count()
+            print(miangin_pishrafte_kol)
+            print(miangin_pishrafte_kol)
+            print(this_sub_projects.count())
+        except:
+            miangin_pishrafte_kol = 0
+            print("miangin error dade")
+
         for pd in all_projects:
             all_projects.update(view_count=(pd.view_count)+1)
             final_data = {
@@ -63,6 +69,7 @@ class single_project(TemplateView):
                 'lat': pd.location.split(",")[0],
                 'lng': pd.location.split(",")[1],
                 'photo': pd.photo.url,
+                'naghshe': pd.naghshe.url,
                 'mojavez': pd.mojavez.url,
                 'mostanadat': pd.mostanadat.url,
                 'file_ha': pd.file_ha.url,
@@ -83,6 +90,7 @@ class single_sub_project(TemplateView):
         all_projects = main.models.project.objects.filter(Q(slug__contains=slug))
         subprojects_data = []
         this_sub_projects = main.models.subproject.objects.filter(Q(project_id__slug__contains=slug))
+        this_single_sub_projects = main.models.subproject.objects.filter(id=id)
         miangin_pishrafte_kol = 0
         for pd in this_sub_projects:
             miangin_pishrafte_kol += pd.pishrafte_kol
@@ -108,10 +116,14 @@ class single_sub_project(TemplateView):
                 'icon': icon,
                 'view_count': pd.view_count,
             })
-        miangin_pishrafte_kol = miangin_pishrafte_kol / this_sub_projects.count()
-        print(miangin_pishrafte_kol)
-        print(miangin_pishrafte_kol)
-        print(this_sub_projects.count())
+        try:
+            miangin_pishrafte_kol = miangin_pishrafte_kol / this_sub_projects.count()
+            print(miangin_pishrafte_kol)
+            print(miangin_pishrafte_kol)
+            print(this_sub_projects.count())
+        except:
+            miangin_pishrafte_kol = 0
+            print("miangin error dade")
         for pd in all_projects:
             all_projects.update(view_count=(pd.view_count) + 1)
             final_data = {
@@ -129,6 +141,7 @@ class single_sub_project(TemplateView):
                 'date_start': pd.date_start,
                 'date_end': pd.date_end,
                 'subprojects': subprojects_data,
+                'this_single_sub_projects': this_single_sub_projects,
                 'miangin_pishraft': miangin_pishrafte_kol,
                 'view_count': pd.view_count,
             }
