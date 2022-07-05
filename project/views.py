@@ -82,8 +82,6 @@ class single_project(TemplateView):
             }
         print(final_data)
         return render(request, 'project-single.html', {'projects_data': final_data})
-
-
 class single_sub_project(TemplateView):
     def get(self, request, slug , id):
         from django.db.models import Q

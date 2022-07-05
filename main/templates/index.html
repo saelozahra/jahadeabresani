@@ -24,6 +24,11 @@
 <body>
 
     <div id="map" class="map"></div>
+    <div id="popup" title="myproject" class="ol-popup">
+          <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+          <div id="popup-content"></div>
+    </div>
+
     <div class="container">
         <nav class="row">
             <div class="nav-wrapper">
@@ -34,13 +39,6 @@
                     <li><a href="./"><i class="material-icons">refresh</i></a></li>
                     <li><a href="./admin"><i class="material-icons">account_circle</i></a></li>
                     <li><a href="./register"><i class="material-icons">person_add</i></a></li>
-                    <!--
-                          <li><a href="#"><i class="material-icons">more_vert</i></a></li>
-                           <a href="" title="">صفحه اصلی</a>
-                           <a href="" title="">پیام ها</a>
-                           <a href="" title="">آمارها</a>
-                           <a href="" title="">رویدادها</a>
-                   -->
                 </ul>
             </div>
         </nav>
@@ -48,48 +46,137 @@
     </div>
 
 
-
     <script type="text/javascript">
-      var map = new ol.Map({
+var content = document.getElementById('popup-content');
+var center = ol.proj.transform([52.5640869140625, 29.591371238663804], 'EPSG:4326', 'EPSG:3857'); //initial position of map
+    var view = new ol.View({
+        center: center,
+        zoom: 5
+    });
+
+//raster layer on map
+   var OSMBaseLayer = new ol.layer.Tile({
+        source: new ol.source.OSM()
+    });
+
+ straitSource = new ol.source.Vector({ wrapX: true });
+    var straitsLayer = new ol.layer.Vector({
+        source: straitSource
+    });
+
+ map = new ol.Map({
+        layers: [OSMBaseLayer, straitsLayer],
         target: 'map',
-        layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM()
-          })
-        ],
-        view: new ol.View({
-          center: ol.proj.fromLonLat([52.5745685,29.6291444]),
-          zoom: 8
-        })
-      });
+        view: view,
+        controls: [new ol.control.FullScreen(), new ol.control.Zoom()]
+    });
+
+   // Popup showing the position the user clicked
+    var container = document.getElementById('popup');
+    var popup = new ol.Overlay({
+        element: container,
+        autoPan: true,
+        autoPanAnimation: {
+            duration: 250
+        }
+    });
+    map.addOverlay(popup);
+
+
+    map.on('click', function (evt) {
+        var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
+            return feat;
+        });
+        alert(feature.get('url'));
+    });
 
 
 
+  /* Add a pointermove handler to the map to render the popup.*/
+    map.on('pointermove', function (evt) {
+        var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
+            return feat;
+        }
+        );
 
-var markerGeometry = new ol.geom.Point(ol.proj.transform([1,2], 'EPSG:4326','EPSG:4326'));
-var markerFeature = new ol.Feature({
-    geometry: markerGeometry
-});
+        if (feature && feature.get('type') == 'Point') {
+            var coordinate = evt.coordinate;    //default projection is EPSG:3857 you may want to use ol.proj.transform
 
-var markerStyle = new ol.style.Icon(({
-    src: 'https://raw.githubusercontent.com/openlayers/openlayers/v3.20.1/examples/resources/logo-70x70.png'
-}));
+            content.innerHTML = feature.get('desc');
+            popup.setPosition(coordinate);
+        }
+        else {
+            popup.setPosition(undefined);
 
-markerFeature.setStyle(new ol.style.Style({
-    image: markerStyle,
-}));
+        }
+    });
 
-var vectorSource = new ol.source.Vector({
-    features: [markerFeature]
-});
+var data=[
+    {% for pd in projects_data %}
+        {"project_name":"{{ pd.title }}","photo":"{{ pd.photo }}","miangin_pishraft":"{{ pd.miangin_pishraft }}","date_start":"{{ pd.date_start }}","date_end":"{{ pd.date_end }}","Lon":{{ pd.lng }},"Lat":{{ pd.lat }},"url":"./project/{{ pd.slug }}"},
+    {% endfor %}
+];
 
-var markerLayer = new ol.layer.Vector({
-    title: "RoutePoint",
-    visible: true,
-    source: vectorSource
-});
+function addPointGeom(data) {
 
-map.addLayer(markerLayer);
+        data.forEach(function(item) { //iterate through array...
+            var longitude = item.Lon,
+            latitude = item.Lat,
+            project_name = item.project_name,
+            iconFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326',
+                    'EPSG:3857')),
+                type: 'Point',
+                url: item.url,
+                desc: '<div style="font-family: sahel;direction: rtl;"> <p style="float: right;"><b>' + project_name + ' </b> ' + '<br><i class="material-icons">date_range</i>' + item.date_end + '</p>  <div class="progress"><div class="determinate" style="width: '+item.miangin_pishraft+'%"></div> </div> <img style="max-width: 162px;display: inline-block;border-radius: 5px;margin-bottom: -5px" src="'+item.photo+'" > </div>'}),
+            iconStyle = new ol.style.Style({
+                image: new ol.style.Icon({
+                  anchor: [0.5, 1],
+                  src: '/static/img/social_media_network_online_maps-64.webp'
+                })
+            });
+
+            iconFeature.setStyle(iconStyle);
+
+            straitSource.addFeature(iconFeature);
+        });
+    }// End of function showStraits()
+
+addPointGeom(data);
+
+
+
+ /*function addPointsGeom(data) {
+
+        var straitFeatures = data.map(item => { //iterate through array...
+            let longitude = item.Lon,
+                latitude = item.Lat,
+                iconFeature = new ol.Feature({
+                    geometry: new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326',
+                        'EPSG:3857')),
+
+                    type: 'Point',
+                    desc: '<pre>Strait   : ' + '<br>' + 'Latitude : ' + latitude + '<br>Longitude: ' + longitude + '</pre>',
+                    id: 1
+                }),
+                iconStyle = new ol.style.Style({
+                    image: new ol.style.Circle({
+                        radius: 3,
+                        stroke: new ol.style.Stroke({
+                            color: 'blue'
+                        }),
+                        fill: new ol.style.Fill({
+                            color: [57, 228, 193, 0.84]
+                        }),
+                    })
+                });
+
+            iconFeature.setStyle(iconStyle);
+
+            straitSource.addFeature(iconFeature);
+          return iconFeature;
+        });
+    }*/
     </script>
 
 </body>
