@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  abresani:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/abresani
+      - abresani_static_volume:/abresani/static
+      - abresani_files_volume:/abresani/files
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - abresani_network
+      - nginx_network
+    depends_on:
+      - abresani_postgresql
+  abresani_postgresql:
+    image: postgres:12
+    container_name: abresani_postgresql
+    volumes:
+      - abresani_postgresql:/var/lib/postgresql/data
+    restart: always
+    env_file: .env
+    ports:
+      - "5432:5432"
+    networks:
+      - abresani_network
+
+volumes:
+  abresani_postgresql:
+    external: true
+  abresani_static_volume:
+    external: true
+  abresani_files_volume:
+    external: true
+networks:
+  abresani_network:
+    external: true
+  nginx_network:
+    external: true
