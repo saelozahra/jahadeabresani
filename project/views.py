@@ -2,14 +2,34 @@ from django.shortcuts import render
 import main.models
 from main.models import *
 # Create your views here.
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import Permission
 from django.views.generic import TemplateView
+from django.db.models import Q
 
 def darsad_icon(self,adad):
     if adad == "0":
         return "exposure_zero"
     else:
         return "filter_"+adad
+    
+    
 class project(TemplateView):
+    def post(self, request):
+        search_word = self.request.POST['search']
+        print(search_word)
+        search_projects_data = []
+        search_in_projects_query = main.models.project.objects.filter(Q(title__search=search_word))
+        for spd in search_in_projects_query:
+            search_projects_data.append({
+                'title': spd.title,
+                'city': spd.city,
+                'photo': spd.photo.url,
+                'slug': spd.slug,
+                'date_end': spd.date_end,
+            })
+        context = {'projects_data': search_projects_data}
+        return render(request, 'project.html', context)
     def get(self, request):
         projects_data = []
         all_projects = main.models.project.objects.all()
@@ -21,11 +41,11 @@ class project(TemplateView):
                 'slug': pd.slug,
                 'date_end': pd.date_end,
             })
-        # context = {'projects_data': projects_data}
-        return render(request, 'project.html', {'projects_data': projects_data})
+        context = {'projects_data': projects_data}
+        return render(request, 'project.html', context)
+
 class single_project(TemplateView):
     def get(self,request,slug):
-        from django.db.models import Q
         all_projects = main.models.project.objects.filter(Q(slug__contains=slug))
         subprojects_data = []
         this_sub_projects = main.models.subproject.objects.filter(Q(project_id__slug__contains=slug))
@@ -75,15 +95,17 @@ class single_project(TemplateView):
                 'slug': pd.slug,
                 'date_start': pd.date_start,
                 'date_end': pd.date_end,
+                'note': pd.note,
                 'subprojects': subprojects_data,
                 'miangin_pishraft': miangin_pishrafte_kol,
+                'user_login': self.request.user.is_authenticated,
+                'user_id': self.request.user.id,
                 'view_count': pd.view_count,
             }
         print(final_data)
         return render(request, 'project-single.html', {'projects_data': final_data})
 class single_sub_project(TemplateView):
     def get(self, request, slug , id):
-        from django.db.models import Q
         all_projects = main.models.project.objects.filter(Q(slug__contains=slug))
         subprojects_data = []
         this_sub_projects = main.models.subproject.objects.filter(Q(project_id__slug__contains=slug))

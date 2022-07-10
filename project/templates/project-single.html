@@ -60,7 +60,7 @@
             <div class="nav-wrapper">
               <a href="../../" class="brand-logo"><b><i class="material-icons">spa</i>{{ projects_data.title }}</b></a>
               <ul class="right hide-on-med-and-down">
-                <li><a class="waves-effect waves-light" href="#"><i class="material-icons">search</i></a></li>
+                <li><a class="waves-effect waves-light modal-trigger" href="#search"><i class="material-icons">search</i></a></li>
                 <li><a href="../../project"><i class="material-icons">view_module</i></a></li>
                 <li><a href="./"><i class="material-icons">refresh</i></a></li>
                 <li><a href="../../admin"><i class="material-icons">account_circle</i></a></li>
@@ -68,6 +68,17 @@
               </ul>
             </div>
         </nav>
+        <!-- Search Modal Structure -->
+        <form style="direction: rtl;" id="search" class="modal modal-fixed-footer" method="post" action="../../search">
+            <div class="modal-content">
+                <h4>جستجو در پروژه ها</h4>
+                {% csrf_token %}
+                <p><input type="search" style="min-height: 188px;" placeholder="عنوان پروژه"></p>
+            </div>
+            <div class="modal-footer">
+               <input type="submit" value="جستجو" class="modal-close waves-effect waves-green btn-flat" >
+            </div>
+        </form>
 
         <div style="float: left;width: 48%;">
             <ul class="collection with-header">
@@ -86,6 +97,14 @@
                     </li>
                 {% endfor %}
             </ul>
+            {% if user.is_authenticated %}
+                <ul class="collection with-header">
+                    <li class="collection-header" style="direction: rtl;"><h4>یادداشت مدیریتی</h4></li>
+                    <li class="collection-item " style="padding: 0">
+                        <textarea class="row" placeholder="یادداشت" onchange="updateNoteText(this,'{{ projects_data.slug }}');" style="border: 0 none; width: 100%; min-height: 202px;margin: auto;" >{{ projects_data.note }}</textarea>
+                    </li>
+                </ul>
+            {% endif %}
         </div>
 
         <div style="float: right;width: 48%;">
@@ -133,9 +152,16 @@
             </ul>
         </div>
 
+
     </div>
 
     <script type="text/javascript">
+        function updateNoteText(selfObject,PSlug){
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/");
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("project="+PSlug+"&text="+selfObject.value);
+        }
       var map = new ol.Map({
         target: 'map',
         layers: [
@@ -154,6 +180,7 @@
         $(document).ready(function(){
             $('.tap-target').tapTarget();
             $('.collapsible').collapsible();
+            $('.modal').modal();
         });
 
 

@@ -54,7 +54,8 @@ class project(models.Model):
     mojavez = models.FileField(upload_to='files/images/project/mojavez', verbose_name='مجوزهای پروژه', default="")
     mostanadat = models.FileField(upload_to='files/images/project/mostanadat', verbose_name='مستندات پروژه', default="")
     file_ha = models.FileField(upload_to='files/images/project', verbose_name='فایلهای پروژه', default="")
-
+    #
+    note    = models.TextField(default="" ,verbose_name='یادداشت' )
     #
     class Meta:
         verbose_name = "پروژه"
