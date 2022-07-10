@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="/static/css/ol.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -27,6 +28,10 @@
     <div id="popup" title="myproject" class="ol-popup">
           <a href="#" id="popup-closer" class="ol-popup-closer"></a>
           <div id="popup-content"></div>
+    </div>
+
+    <div class="progress" style="bottom: -2px;position: absolute;left: 1.2%;width: 97%;height: 8px;border-radius: 10px;">
+        <div class="determinate" style="width: {{ pishraft }}%"></div>
     </div>
 
     <div class="container">
@@ -55,6 +60,46 @@
         </form>
 
 
+        <div style="float: left;width: 313px;max-height: 78%;overflow-y: auto;position: absolute;">
+            <ul class="collection" >
+                {% for pd in projects_data %}
+                    <li class="collection-item avatar">
+                        <a  href="./project/{{ pd.slug }}" title="{{ pd.title }}">
+                            <img src="{{ pd.photo }}" alt="" class="circle" style="margin-top: 10px;">
+                            <span class="title">{{ pd.title }}</span>
+                            <p>
+                                {{ pd.city }} - {{ pd.date_end }}
+                                <br>
+                                <div class="progress">
+                                    <div class="determinate" style="width: {{ pd.miangin_pishraft }}%"></div>
+                                </div>
+                            </p>
+                        </a>
+                        <a href="./project/{{ pd.slug }}" class="secondary-content" style="margin-top: 5px;margin-right: -8px;"><i class="material-icons">send</i></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+          <a id="menu" class="btn btn-floating btn-large tap-target-click" onclick="$('.tap-target').tapTarget('open')" style="background-color: var(--color_secondary)" >
+            <i class="material-icons">timeline</i>
+          </a>
+        </div>
+
+        <div class="tap-target" data-target="menu">
+          <div class="tap-target-content white-text">
+            <h5>آمار کلی</h5>
+            <p class="white-text">در حال حاضر  <b>{{ projects_number }}</b> پروژه در سامانه بارگزاری شده
+                <br>
+                و میانگین پیشرفت این پروژه ها تا امروز <b>{{ pishraft }}%</b> است
+                <br>
+                با آرزوی موفقیت
+            </p>
+          </div>
+        </div>
+
     </div>
 
 
@@ -63,6 +108,12 @@
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.tap-target');
+        var instances = M.TapTarget.init(elems);
+    });
+
 
     var content = document.getElementById('popup-content');
     var center = ol.proj.transform([52.5640869140625, 29.591371238663804], 'EPSG:4326', 'EPSG:3857'); //initial position of map

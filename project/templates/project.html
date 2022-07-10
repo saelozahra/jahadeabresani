@@ -60,9 +60,15 @@
             {% for pd in projects_data %}
                 <li class="collection-item avatar">
                     <a  href="./{{ pd.slug }}" title="{{ pd.title }}">
-                        <img src="{{ pd.photo }}" alt="" class="circle">
+                        <img src="{{ pd.photo }}" alt="" class="circle" style="margin-top: 10px;">
                         <span class="title">{{ pd.title }}</span>
-                        <p>{{ pd.city }} - {{ pd.date_end }}</p>
+                        <p>
+                            {{ pd.city }} - {{ pd.date_end }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ pd.miangin_pishraft }}%"></div>
+                            </div>
+                        </p>
                     </a>
                     <a href="./{{ pd.slug }}" class="secondary-content" style="margin-top: 5px;margin-right: -8px;"><i class="material-icons">send</i></a>
                 </li>

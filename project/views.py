@@ -26,6 +26,8 @@ class project(TemplateView):
                 'city': spd.city,
                 'photo': spd.photo.url,
                 'slug': spd.slug,
+                'miangin_pishraft': spd.miangin_pishraft,
+                'date_start': spd.date_start,
                 'date_end': spd.date_end,
             })
         context = {'projects_data': search_projects_data}
@@ -39,6 +41,8 @@ class project(TemplateView):
                 'city': pd.city,
                 'photo': pd.photo.url,
                 'slug': pd.slug,
+                'miangin_pishraft': pd.miangin_pishraft,
+                'date_start': pd.date_start,
                 'date_end': pd.date_end,
             })
         context = {'projects_data': projects_data}
