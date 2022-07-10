@@ -1,4 +1,4 @@
-# Blogpy
+# جهاد آب رسانی
 <p align="center">
   <img src="https://i.imgur.com/WOSDNdF.png">
 </p>
@@ -62,8 +62,8 @@ $ docker ps -a
 ```sh
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
 fc6cc9d6d3d7        nginx_nginx         "nginx -g 'daemon of…"   2 hours ago         Up 2 hours          0.0.0.0:80->80/tcp       nginx
-05103904dcb8        ae80efb17475        "gunicorn --chdir bl…"   2 hours ago         Up 2 hours          0.0.0.0:8000->8000/tcp   blogpy
-4a183e90a9eb        postgres:10         "docker-entrypoint.s…"   2 hours ago         Up 2 hours          0.0.0.0:5432->5432/tcp   blogpy_postgresql
+05103904dcb8        ae80efb17475        "gunicorn --chdir bl…"   2 hours ago         Up 2 hours          0.0.0.0:8000->8000/tcp   abresani
+4a183e90a9eb        postgres:10         "docker-entrypoint.s…"   2 hours ago         Up 2 hours          0.0.0.0:5432->5432/tcp   abresani_postgresql
 ```
 **nginx** container as common web server, **JahadeAbresani** container as django application and **abresani_postgresql** as postgreSQL database container.
 

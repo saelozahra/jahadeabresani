@@ -9,12 +9,12 @@ import django_jalali.admin as jadmin
 
 class ProjectAdmin(admin.ModelAdmin):
     list_filter = (
-        ('date', JDateFieldListFilter),
+        ('date_end', JDateFieldListFilter),
     )
 
 class SubProjectAdmin(admin.ModelAdmin):
     list_filter = (
-        ('date', JDateFieldListFilter),
+        ('date_end', JDateFieldListFilter),
     )
 
 

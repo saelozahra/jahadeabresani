@@ -51,7 +51,7 @@ var content = document.getElementById('popup-content');
 var center = ol.proj.transform([52.5640869140625, 29.591371238663804], 'EPSG:4326', 'EPSG:3857'); //initial position of map
     var view = new ol.View({
         center: center,
-        zoom: 5
+        zoom: 8
     });
 
 //raster layer on map
@@ -87,7 +87,8 @@ var center = ol.proj.transform([52.5640869140625, 29.591371238663804], 'EPSG:432
         var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
             return feat;
         });
-        alert(feature.get('url'));
+        //alert(feature.get('url'));
+        window.location.href=window.location.href+"project/"+feature.get('url');
     });
 
 
@@ -113,7 +114,16 @@ var center = ol.proj.transform([52.5640869140625, 29.591371238663804], 'EPSG:432
 
 var data=[
     {% for pd in projects_data %}
-        {"project_name":"{{ pd.title }}","photo":"{{ pd.photo }}","miangin_pishraft":"{{ pd.miangin_pishraft }}","date_start":"{{ pd.date_start }}","date_end":"{{ pd.date_end }}","Lon":{{ pd.lng }},"Lat":{{ pd.lat }},"url":"./project/{{ pd.slug }}"},
+        {
+            "project_name":"{{ pd.title }}",
+            "photo":"{{ pd.photo }}",
+            "miangin_pishraft":"{{ pd.miangin_pishraft }}",
+            "date_start":"{{ pd.date_start }}",
+            "date_end":"{{ pd.date_end }}",
+            "Lon":{{ pd.lng }},
+            "Lat":{{ pd.lat }},
+            "url":"{{ pd.slug }}"
+        },
     {% endfor %}
 ];
 

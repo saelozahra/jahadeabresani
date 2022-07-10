@@ -69,7 +69,6 @@ class single_project(TemplateView):
                 'lat': pd.location.split(",")[0],
                 'lng': pd.location.split(",")[1],
                 'photo': pd.photo.url,
-                'naghshe': pd.naghshe.url,
                 'mojavez': pd.mojavez.url,
                 'mostanadat': pd.mostanadat.url,
                 'file_ha': pd.file_ha.url,
