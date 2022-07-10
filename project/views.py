@@ -80,6 +80,8 @@ class single_project(TemplateView):
             miangin_pishrafte_kol = 0
             print("miangin error dade")
 
+        main.models.project.objects.filter(slug=slug).update(miangin_pishraft=miangin_pishrafte_kol)
+
         for pd in all_projects:
             all_projects.update(view_count=(pd.view_count)+1)
             final_data = {

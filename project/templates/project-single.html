@@ -99,8 +99,8 @@
             </ul>
             {% if user.is_authenticated %}
                 <ul class="collection with-header">
-                    <li class="collection-header" style="direction: rtl;"><h4>یادداشت مدیریتی</h4></li>
-                    <li class="collection-item " style="padding: 0">
+                    <li class="collection-header" style="text-align: right;"><h4>یادداشت مدیریتی</h4></li>
+                    <li class="collection-item " style="direction: rtl;padding: 0;">
                         <textarea class="row" placeholder="یادداشت" onchange="updateNoteText(this,'{{ projects_data.slug }}');" style="border: 0 none; width: 100%; min-height: 202px;margin: auto;" >{{ projects_data.note }}</textarea>
                     </li>
                 </ul>
@@ -158,9 +158,9 @@
     <script type="text/javascript">
         function updateNoteText(selfObject,PSlug){
             var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "/");
+            xhttp.open("POST", "/api/project/");
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send("project="+PSlug+"&text="+selfObject.value);
+            xhttp.send("project="+PSlug+"&csrfmiddlewaretoken={{ csrf_token }}&text="+selfObject.value);
         }
       var map = new ol.Map({
         target: 'map',

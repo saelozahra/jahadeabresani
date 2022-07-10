@@ -49,6 +49,7 @@ class project(models.Model):
     location = PlainLocationField(based_fields=['city'], zoom=8, suffix=['city'], verbose_name='موقعیت مکانی')
     date_start = jmodels.jDateField(verbose_name='تاریخ شروع پروژه')
     date_end = jmodels.jDateField(verbose_name='تاریخ پایان پروژه')
+    miangin_pishraft = models.IntegerField(default=0, editable=False, verbose_name='میانگین پیشرفت کل')
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
     #
     mojavez = models.FileField(upload_to='files/images/project/mojavez', verbose_name='مجوزهای پروژه', default="")
