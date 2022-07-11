@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fa-ir">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}کنترل پروژه آب رسانی{% endblock title %}</title>
+    <meta name="description" content="The small framework with powerful features">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="/static/favicon.ico" >
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/ol.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
+
+</head>
+<body>
+
+    <div id="map" class="map"></div>
+    {% block UnderMap %}{% endblock UnderMap %}
+
+    <div class="container">
+        <nav class="row">
+            <div class="nav-wrapper">
+                <a href="../../../" class="brand-logo"><b><i class="material-icons">spa</i>{% block MenuTitle %}پروژه آب رسانی شهید مالکوم ایکس{% endblock MenuTitle %}</b></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a class="waves-effect waves-light modal-trigger" href="#search"><i class="material-icons">search</i></a></li>
+                    <li><a href="../../../project"><i class="material-icons">view_module</i></a></li>
+                    <li><a href="#" onclick="window.location.reload()"><i class="material-icons">refresh</i></a></li>
+                    <li><a href="../../../admin"><i class="material-icons">account_circle</i></a></li>
+                    <li><a href="../../../register" onclick="M.toast({html: 'برای ثبت‌نام به مدیر سایت پیام دهید '});return false;"><i class="material-icons">person_add</i></a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Search Structure -->
+        <form style="direction: rtl;" id="search" class="modal modal-fixed-footer" method="post" action="../../../search/">
+            <div class="modal-content">
+                <h4>جستجو در پروژه ها</h4>
+                {% csrf_token %}
+                <p><input name="text" type="search" style="min-height: 188px;" placeholder="عنوان پروژه"></p>
+            </div>
+            <div class="modal-footer">
+               <input type="submit" value="جستجو" class="btn modal-close waves-effect waves-green btn-flat" >
+            </div>
+        </form>
+
+        <div class="row">
+            <div style="float: left; width: {% block LeftBoxWidth %}313px{% endblock LeftBoxWidth %};max-height: 789px;overflow-y: auto;padding: 10px">
+                {% block LeftContent %}
+                {% endblock LeftContent %}
+            </div>
+
+            <div style="float: right;width: 48%;max-height: 789px;overflow-y: auto;padding: 10px">
+                {% block RightContent %}
+                {% endblock RightContent %}
+            </div>
+            <br style="clear: both;">
+        </div>
+
+        {% block BottomContent %}
+        {% endblock BottomContent %}
+
+
+    </div>
+
+
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+        });
+
+        {% block scripts %}
+        {% endblock scripts %}
+
+    </script>
+
+</body>
+</html>

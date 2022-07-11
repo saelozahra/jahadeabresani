@@ -1,279 +1,241 @@
-<!DOCTYPE html>
-<html lang="fa-ir">
-<head>
-    <meta charset="UTF-8">
-    <title>کنترل پروژه آب رسانی -  {{ projects_data.title }}</title>
-    <meta name="description" content="The small framework with powerful features">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="/static/favicon.ico"/>
+{% extends "base.html" %}
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-{#    <link rel="stylesheet" href="/static/css/ol.css">#}
-    <link rel="stylesheet" href="/static/css/style.css">
-
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% block title %} کنترل پروژه آب رسانی -  {{ projects_data.title }} {% endblock %}
+{% block MenuTitle %}
+    <div style="float: left;margin-right: 8px">
+        {% for spd in projects_data.this_single_sub_projects %}
+            {{ spd.title }}
+        {% endfor %}
+    </div>
+    <i class="material-icons">reply</i>
+    <div style="float: left">{{ projects_data.title }}</div>
+{% endblock %}
 
 
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css" type="text/css">
+{% block UnderMap %}
     <style>
       .map {
-        filter: blur(3px);
+        filter: blur(6px) brightness(1.1) saturate(1.2) sepia(0.1);
       }
     </style>
-    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
 
-</head>
-<body>
-    <div id="map" class="map"></div>
+
 
     <div class="progress full_progress">
         <div class="determinate" style="width: {{ projects_data.miangin_pishraft }}%"></div>
     </div>
 
-        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-          <a id="menu" class="btn btn-floating btn-large" style="background-color: var(--color_secondary)" onclick="$('.tap-target').tapTarget('open')">
-            <i class="material-icons">timeline</i>
-          </a>
-        </div>
-
-        <div class="tap-target" data-target="menu">
-          <div class="tap-target-content white-text">
-            <h5>خط مرگ</h5>
-            <p class="white-text">این پروژه در تاریخ <b>{{ projects_data.date_start }}</b> شروع شده
-                <br>
-                و باید در تاریخ <b>{{ projects_data.date_end }}</b> به پایان برسد
-                <br>
-                اما تا کنون <b>{{ projects_data.miangin_pishraft }}%</b> از زیر پروژه ها پیشرفت داشته اند
-            </p>
-          </div>
-        </div>
-
-
-    <div class="container">
-
-        <nav class="row">
-            <div class="nav-wrapper">
-            {% for spd in projects_data.this_single_sub_projects %}
-              <a href="../../" class="brand-logo"><b><i class="material-icons">spa</i>{{ spd.title }}</b></a>
-            {% endfor %}
-              <ul class="right hide-on-med-and-down">
-                <li><a class="waves-effect waves-light modal-trigger" href="#search"><i class="material-icons">search</i></a></li>
-                <li><a href="../../project"><i class="material-icons">view_module</i></a></li>
-                <li><a href="./"><i class="material-icons">refresh</i></a></li>
-                <li><a href="../../admin"><i class="material-icons">account_circle</i></a></li>
-                <li><a href="../../register"><i class="material-icons">person_add</i></a></li>
-              </ul>
-            </div>
-        </nav>
-        <!-- Search Modal Structure -->
-        <form style="direction: rtl;" id="search" class="modal modal-fixed-footer" method="post" action="../../search">
-            <div class="modal-content">
-                <h4>جستجو در پروژه ها</h4>
-                {% csrf_token %}
-                <p><input type="search" style="min-height: 188px;" placeholder="عنوان پروژه"></p>
-            </div>
-            <div class="modal-footer">
-               <input type="submit" value="جستجو" class="modal-close waves-effect waves-green btn-flat" >
-            </div>
-        </form>
-
-        <div style="float: left;width: 48%;">
-            <ul class="collection with-header">
-                <li class="collection-header" style="direction: rtl;"><h5>زیرپروژه های دیگر از {{ projects_data.title }}</h5></li>
-                {% for pd in projects_data.subprojects %}
-                    <li class="collection-item avatar ">
-                        <a href="../{{ projects_data.slug }}/{{ pd.id }}">
-                            <img src="{{ pd.photo }}" alt="" class="circle">
-                            <span class="title">{{ pd.title }}</span>
-                            <p>{{ pd.city }} - {{ pd.date_end }}</p>
-                        </a>
-                        <a href="./{{ projects_data.slug }}/{{ pd.id }}" class="secondary-content waves-effect waves-light" style="margin-top: 5px;margin-right: -8px;">{{ pd.icon|safe }}</a>
-                        <div class="progress">
-                            <div class="determinate" style="width: {{ pd.pishrafte_kol }}%"></div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-            <br>
-            <br>
-            <ul class="collapsible popout">
-            {% for spd in projects_data.this_single_sub_projects %}
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>نقشه اجرا پروژه</div>
-                    <div class="collapsible-body">
-                        <span>
-                            <img style="max-width: 100%" src="{{ spd.naghshe.url }}">
-                            <br>
-                            <a download="" href="{{ spd.naghshe.url }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
-                                <i class="material-icons right">download</i>
-                                لینک دانلود
-                            </a>
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مجوز پروژه</div>
-                    <div class="collapsible-body">
-                        <span>
-                            <img style="max-width: 100%" src="{{ spd.mojavez.url }}">
-                            <br>
-                            <a download="" href="{{ spd.mojavez.url }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
-                                <i class="material-icons right">download</i>
-                                لینک دانلود
-                            </a>
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">place</i>مستندات پروژه</div>
-                    <div class="collapsible-body">
-                        <span>
-                            <img style="max-width: 100%" src="{{ spd.mostanadat.url }}">
-                            <br>
-                            <a download="" href="{{ spd.mostanadat.url }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
-                                <i class="material-icons right">download</i>
-                                لینک دانلود
-                            </a>
-                        </span>
-                    </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">whatshot</i>فایل های پروژه</div>
-                    <div class="collapsible-body">
-                        <span>
-                            <img style="max-width: 100%" src="{{ spd.file_ha.url }}">
-                            <br>
-                            <a download="" href="{{ spd.file_ha.url }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
-                                <i class="material-icons right">download</i>
-                                لینک دانلود
-                            </a>
-                        </span>
-                    </div>
-                </li>
-            {% endfor %}
-            </ul>
-        </div>
-
-        <div style="float: right;width: 48%;">
-
-            <ul class="collapsible popout" style="max-height: 789px;overflow-y: scroll;">
-            {% for spd in projects_data.this_single_sub_projects %}
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 1</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale1 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 2</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale2 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 3</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale3 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 4</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale4 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 5</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale5 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 6</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale6 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 7</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale7 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 8</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale8 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 9</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale9 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 10</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale10 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 11</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale11 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 12</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale12 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 13</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale13 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 14</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale14 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 15</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale15 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 16</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale16 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 17</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale17 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 18</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale18 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 19</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale19 }}</span> </div>
-                </li>
-                <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 20</div>
-                    <div class="collapsible-body"> <span>{{ spd.marhale20 }}</span> </div>
-                </li>
-            {% endfor %}
-            </ul>
-        </div>
-
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+      <a id="menu" class="btn btn-floating btn-large" style="background-color: var(--color_secondary)" onclick="$('.tap-target').tapTarget('open')">
+        <i class="material-icons">timeline</i>
+      </a>
     </div>
 
-    <script type="text/javascript">
-      var map = new ol.Map({
-        target: 'map',
-        layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM()
-          })
-        ],
-        view: new ol.View({
-          center: ol.proj.fromLonLat([{{ projects_data.lng }},{{ projects_data.lat }}]),
-          zoom: 14
-        })
-      });
+    <div class="tap-target" data-target="menu">
+      <div class="tap-target-content white-text">
+        <h5>خط مرگ</h5>
+        <p class="white-text">این پروژه در تاریخ <b>{{ projects_data.date_start }}</b> شروع شده
+            <br>
+            و باید در تاریخ <b>{{ projects_data.date_end }}</b> به پایان برسد
+            <br>
+            اما تا کنون <b>{{ projects_data.miangin_pishraft }}%</b> از زیر پروژه ها پیشرفت داشته اند
+        </p>
+      </div>
+    </div>
+
+{% endblock UnderMap %}
+
+{% block LeftContent %}
+    <ul class="collection with-header">
+        <li class="collection-header" style="direction: rtl;"><h5>زیرپروژه های دیگر از {{ projects_data.title }}</h5></li>
+        {% for pd in projects_data.subprojects %}
+            <li class="collection-item avatar ">
+                <a href="../{{ projects_data.slug }}/{{ pd.id }}">
+                    <img src="{{ pd.photo }}" alt="" class="circle">
+                    <span class="title">{{ pd.title }}</span>
+                    <p>{{ pd.city }} - {{ pd.date_end }}</p>
+                </a>
+                <a href="./{{ projects_data.slug }}/{{ pd.id }}" class="secondary-content waves-effect waves-light" style="margin-top: 5px;margin-right: -8px;">{{ pd.icon|safe }}</a>
+                <div class="progress">
+                    <div class="determinate" style="width: {{ pd.pishrafte_kol }}%"></div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <br>
+    <br>
+    <ul class="collapsible popout">
+    {% for spd in projects_data.this_single_sub_projects %}
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>نقشه اجرا پروژه</div>
+            <div class="collapsible-body">
+                <span>
+                    <img style="max-width: 100%" src="{{ spd.naghshe.url }}">
+                    <br>
+                    <a download="" href="{{ spd.naghshe.url }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
+                        <i class="material-icons right">download</i>
+                        لینک دانلود
+                    </a>
+                </span>
+            </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مجوز پروژه</div>
+            <div class="collapsible-body">
+                <span>
+                    <img style="max-width: 100%" src="{{ spd.mojavez.url }}">
+                    <br>
+                    <a download="" href="{{ spd.mojavez.url }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
+                        <i class="material-icons right">download</i>
+                        لینک دانلود
+                    </a>
+                </span>
+            </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">place</i>مستندات پروژه</div>
+            <div class="collapsible-body">
+                <span>
+                    <img style="max-width: 100%" src="{{ spd.mostanadat.url }}">
+                    <br>
+                    <a download="" href="{{ spd.mostanadat.url }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
+                        <i class="material-icons right">download</i>
+                        لینک دانلود
+                    </a>
+                </span>
+            </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">whatshot</i>فایل های پروژه</div>
+            <div class="collapsible-body">
+                <span>
+                    <img style="max-width: 100%" src="{{ spd.file_ha.url }}">
+                    <br>
+                    <a download="" href="{{ spd.file_ha.url }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
+                        <i class="material-icons right">download</i>
+                        لینک دانلود
+                    </a>
+                </span>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock LeftContent %}
+
+{% block LeftBoxWidth %}48%{% endblock LeftBoxWidth %}
+
+{% block RightContent %}
+    <ul class="collapsible popout">
+    {% for spd in projects_data.this_single_sub_projects %}
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 1</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale1 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 2</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale2 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 3</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale3 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 4</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale4 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 5</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale5 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 6</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale6 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 7</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale7 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 8</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale8 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 9</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale9 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 10</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale10 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 11</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale11 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 12</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale12 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 13</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale13 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 14</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale14 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 15</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale15 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 16</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale16 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 17</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale17 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 18</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale18 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 19</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale19 }}</span> </div>
+        </li>
+        <li>
+            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 20</div>
+            <div class="collapsible-body"> <span>{{ spd.marhale20 }}</span> </div>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock RightContent %}
+
+{% block BottomContent %}
+{% endblock BottomContent %}
+
+
+{% block scripts %}
+
+  var map = new ol.Map({
+    target: 'map',
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      })
+    ],
+    view: new ol.View({
+      center: ol.proj.fromLonLat([{{ projects_data.lng }},{{ projects_data.lat }}]),
+      zoom: 14
+    })
+  });
 
 
 
-        $(document).ready(function(){
-            $('.tap-target').tapTarget();
-            $('.collapsible').collapsible();
-            $('.modal').modal();
-        });
+    $(document).ready(function(){
+        $('.tap-target').tapTarget();
+        $('.collapsible').collapsible();
+        $('.modal').modal();
+    });
 
-
-
-    </script>
-
-</body>
-</html>
+{% endblock scripts %}

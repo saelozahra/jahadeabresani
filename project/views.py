@@ -16,10 +16,10 @@ def darsad_icon(self,adad):
     
 class project(TemplateView):
     def post(self, request):
-        search_word = self.request.POST['search']
+        search_word = self.request.POST['text']
         print(search_word)
         search_projects_data = []
-        search_in_projects_query = main.models.project.objects.filter(Q(title__search=search_word))
+        search_in_projects_query = main.models.project.objects.filter(Q(title__contains=search_word))
         for spd in search_in_projects_query:
             search_projects_data.append({
                 'title': spd.title,
