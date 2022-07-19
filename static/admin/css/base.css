@@ -6,8 +6,8 @@
 
 /* VARIABLE DEFINITIONS */
 :root {
-  --primary: #79aec8;
-  --secondary: #417690;
+  --primary: #EE6E73;
+  --secondary: #e57373;
   --accent: #f5dd5d;
   --primary-fg: #fff;
 
@@ -927,6 +927,7 @@ table#change-history tbody th {
 
 #branding h1, #branding h1 a:link, #branding h1 a:visited {
     color: var(--accent);
+    font-weight: bold;
 }
 
 #branding h2 {
