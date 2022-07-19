@@ -7,34 +7,21 @@ from django.contrib.auth.models import Permission
 from django.views.generic import TemplateView
 from django.db.models import Q
 
+
 def darsad_icon(self,adad):
     if adad == "0":
         return "exposure_zero"
     else:
         return "filter_"+adad
-    
-    
+
+
+
 class project(TemplateView):
     def post(self, request):
         search_word = self.request.POST['text']
-        print(search_word)
-        search_projects_data = []
-        search_in_projects_query = main.models.project.objects.filter(Q(title__contains=search_word))
-        for spd in search_in_projects_query:
-            search_projects_data.append({
-                'title': spd.title,
-                'city': spd.city,
-                'photo': spd.photo.url,
-                'slug': spd.slug,
-                'miangin_pishraft': spd.miangin_pishraft,
-                'date_start': spd.date_start,
-                'date_end': spd.date_end,
-            })
-        context = {'projects_data': search_projects_data}
-        return render(request, 'project.html', context)
-    def get(self, request):
+        print("Searched: "+search_word)
+        all_projects = main.models.project.objects.filter(Q(title__contains=search_word))
         projects_data = []
-        all_projects = main.models.project.objects.all()
         for pd in all_projects:
             projects_data.append({
                 'title': pd.title,
@@ -44,9 +31,27 @@ class project(TemplateView):
                 'miangin_pishraft': pd.miangin_pishraft,
                 'date_start': pd.date_start,
                 'date_end': pd.date_end,
+                'sub_projects' : main.models.MaraheleEjra.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
             })
         context = {'projects_data': projects_data}
         return render(request, 'project.html', context)
+    def get(self, request):
+        all_projects = main.models.project.objects.all()
+        projects_data = []
+        for pd in all_projects:
+            projects_data.append({
+                'title': pd.title,
+                'city': pd.city,
+                'photo': pd.photo.url,
+                'slug': pd.slug,
+                'miangin_pishraft': pd.miangin_pishraft,
+                'date_start': pd.date_start,
+                'date_end': pd.date_end,
+                'sub_projects' : main.models.subproject.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
+            })
+        context = {'projects_data': projects_data}
+        return render(request, 'project.html', context)
+
 
 class single_project(TemplateView):
     def get(self,request,slug):

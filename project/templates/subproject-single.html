@@ -125,88 +125,137 @@
 {% block LeftBoxWidth %}48%{% endblock LeftBoxWidth %}
 
 {% block RightContent %}
-    <ul class="collapsible popout">
+    <ul class="collapsible popout" style="direction: rtl;">
     {% for spd in projects_data.this_single_sub_projects %}
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 1</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale1 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 2</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale2 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 3</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale3 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 4</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale4 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 5</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale5 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 6</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale6 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 7</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale7 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 8</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale8 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 9</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale9 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 10</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale10 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 11</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale11 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 12</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale12 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 13</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale13 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 14</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale14 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 15</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale15 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 16</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale16 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 17</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale17 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 18</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale18 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 19</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale19 }}</span> </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مرحله 20</div>
-            <div class="collapsible-body"> <span>{{ spd.marhale20 }}</span> </div>
-        </li>
+        {% for spdtmejra in spd.type.marhalel_ejra_s.values %}
+            <li>
+                <div class="collapsible-header"><i class="material-icons">filter_{{ forloop.counter }}</i>  {{ spdtmejra.marhale }}</div>
+                <div class="collapsible-body">
+                    <span>
+                        {% if forloop.counter == 1 %}
+                            {{ spd.marhale1 }}
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale1percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 2 %}
+                            {{ spd.marhale2 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale2percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 3 %}
+                            {{ spd.marhale3 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale3percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 4 %}
+                            {{ spd.marhale4 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale4percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 5 %}
+                            {{ spd.marhale5 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale5percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 6 %}
+                            {{ spd.marhale6 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale6percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 7 %}
+                            {{ spd.marhale7 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale7percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 8 %}
+                            {{ spd.marhale8 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale8percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 9 %}
+                            {{ spd.marhale9 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale9percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 10 %}
+                            {{ spd.marhale10 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale10percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 11 %}
+                            {{ spd.marhale11 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale11percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 12 %}
+                            {{ spd.marhale12 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale12percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 13 %}
+                            {{ spd.marhale13 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale13percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 14 %}
+                            {{ spd.marhale14 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale14percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 15 %}
+                            {{ spd.marhale15 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale15percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 16 %}
+                            {{ spd.marhale16 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale16percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 17 %}
+                            {{ spd.marhale17 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale17percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 18 %}
+                            {{ spd.marhale18 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale18percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 19 %}
+                            {{ spd.marhale19 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale19percent }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 20 %}
+                            {{ spd.marhale20 }}
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ spd.marhale20percent }}%"></div>
+                            </div>
+                        {% endif %}
+                    </span>
+                </div>
+            </li>
+        {% endfor %}
     {% endfor %}
     </ul>
 {% endblock RightContent %}
@@ -231,11 +280,5 @@
   });
 
 
-
-    $(document).ready(function(){
-        $('.tap-target').tapTarget();
-        $('.collapsible').collapsible();
-        $('.modal').modal();
-    });
 
 {% endblock scripts %}

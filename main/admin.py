@@ -8,11 +8,21 @@ import django_jalali.admin as jadmin
 
 
 class ProjectAdmin(admin.ModelAdmin):
+    class Media:
+        # js = ('js/admin/my_own_admin.js',)
+        css = {
+             'all': ('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css','css/font.css')
+        }
     list_filter = (
         ('date_end', JDateFieldListFilter),
     )
 
 class SubProjectAdmin(admin.ModelAdmin):
+    class Media:
+        # js = ('js/admin/my_own_admin.js',)
+        css = {
+             'all': ('https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css','css/font.css')
+        }
     list_filter = (
         ('date_end', JDateFieldListFilter),
     )

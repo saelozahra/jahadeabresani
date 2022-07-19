@@ -4,10 +4,12 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 import main.models
+from main.middleware import AuthRequiredMiddleware
 
 
 class index(TemplateView):
     def get(self,request):
+        # AuthRequiredMiddleware
         from django.db.models import Q
         projects_data = []
         all_projects = main.models.project.objects.all()
