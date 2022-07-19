@@ -5,6 +5,14 @@
 
 html,body{margin: auto;font-family: sahel;}
 
+/*html, body {*/
+/*	margin: auto;*/
+/*	font-family: sahel;*/
+/*	width: 100%;*/
+/*	display: inline-block;*/
+/*	background-color: #f001;*/
+/*	height: 100%;*/
+/*}*/
 nav {
     color: #ee6e73;
     background-color: white;
