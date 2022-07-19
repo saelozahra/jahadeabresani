@@ -476,7 +476,7 @@ input, textarea, select, .form-row p, form .button {
     margin: 2px 0;
     padding: 2px 3px;
     vertical-align: middle;
-    font-family: "sahel" ,"Roboto", "Lucida Grande", Verdana, Arial;
+    font-family: "sahel","Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
     font-weight: normal;
     font-size: 13px;
 }

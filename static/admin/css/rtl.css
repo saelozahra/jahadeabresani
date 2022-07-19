@@ -225,3 +225,7 @@ form .form-row p.datetime {
     margin-left: inherit;
     margin-right: 2px;
 }
+
+body, code, pre, input, textarea, select, .form-row p, form .button {
+    font-family: "sahel","Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+}
