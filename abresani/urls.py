@@ -24,11 +24,12 @@ urlpatterns = [
     path('', include('project.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', include('api.urls')),
+    path('', include('ticket.urls')),
 ]
 
-admin.site.site_header = ' کنترل پروژه آبرسانی شهید مالکوم ایکس'
-admin.site.site_title  = ' کنترل پروژه آبرسانی شهید مالکوم ایکس'
-admin.site.index_title   = 'پنل مدیریت'
+admin.site.site_header  = ' کنترل پروژه آبرسانی شهید مالکوم ایکس'
+admin.site.site_title   = ' کنترل پروژه آبرسانی شهید مالکوم ایکس'
+admin.site.index_title  = 'پنل مدیریت'
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

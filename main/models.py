@@ -45,7 +45,7 @@ class project(models.Model):
     slug = models.SlugField(default=title, unique=True, verbose_name='نشانی')
     photo = models.ImageField(upload_to='files/images/project', verbose_name='تصویر پروژه', default="")
     city = models.CharField(max_length=202, verbose_name='شهر')
-    location = PlainLocationField(based_fields=['city'], zoom=8, suffix=['city'], verbose_name='موقعیت مکانی')
+    location = PlainLocationField(based_fields=['city'], zoom=4, suffix=['city'], verbose_name='موقعیت مکانی')
     date_start = jmodels.jDateField(verbose_name='تاریخ شروع پروژه')
     date_end = jmodels.jDateField(verbose_name='تاریخ پایان پروژه')
     miangin_pishraft = models.IntegerField(default=0, editable=False, verbose_name='میانگین پیشرفت کل')
