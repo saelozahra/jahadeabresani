@@ -27,7 +27,8 @@ class MapObjectTypes(models.Model):
 
 
 class MaraheleEjra(models.Model):
-    marhale = models.CharField(max_length=110, verbose_name='مرحله')
+    marhale = models.CharField(max_length=110, verbose_name='نام مرحله')
+    vahed   = models.CharField(max_length=110, verbose_name='واحد')
 
     class Meta:
         verbose_name = "مراحل اجرا"

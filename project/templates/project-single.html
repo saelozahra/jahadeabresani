@@ -116,6 +116,10 @@
 
     function updateNoteText(selfObject,PSlug){
         var xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            var HtmlToast = '<span>یادداشت ذخیره شد</span><button class="btn-flat toast-action">بازگشت</button>';
+            M.toast({html: HtmlToast, classes: 'rounded'});
+        }
         xhttp.open("POST", "/api/project/");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("project="+PSlug+"&csrfmiddlewaretoken={{ csrf_token }}&text="+selfObject.value);
