@@ -1,0 +1,39 @@
+{% extends 'admin/base.html' %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+:root {
+  --primary: #9774d5;
+  --secondary: #785cab;
+  --link-fg: #7c449b;
+  --link-selected-fg: #8f5bb2;
+}
+
+
+
+@font-face {
+    font-family: 'sahel';
+    src: url('/static/fonts/sahel/Sahel-Black-FD-WOL.woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sahel';
+    src: url('/static/fonts/sahel/Sahel-FD-WOL.woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sahel';
+    src: url('/static/fonts/sahel/Sahel-Light-FD-WOL.woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+body, code, pre, input, textarea, select, .form-row p, form .button {
+    font-family: "sahel";
+}
+</style>
+{% endblock %}

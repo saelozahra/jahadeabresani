@@ -23,21 +23,21 @@
 
 @font-face {
     font-family: 'sahel';
-    src: url('../fonts/sahel/Sahel-Black-FD-WOL.woff');
+    src: url('../../fonts/sahel/Sahel-Black-FD-WOL.woff');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'sahel';
-    src: url('../fonts/sahel/Sahel-FD-WOL.woff');
+    src: url('../../fonts/sahel/Sahel-FD-WOL.woff');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'sahel';
-    src: url('../fonts/sahel/Sahel-Light-FD-WOL.woff');
+    src: url('../../fonts/sahel/Sahel-Light-FD-WOL.woff');
     font-weight: 300;
     font-style: normal;
 }
