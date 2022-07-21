@@ -134,122 +134,182 @@
                     <span>
                         {% if forloop.counter == 1 %}
                             {{ spd.marhale1 }}
+                            <br>واحد کل: <b>{{ spd.marha1e0full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marha1e0full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marha1e0full - spd.marha1e0accomplished %}</b>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale21ccomplished * 100 / spd.marhale1full %}%"></div>
                             </div>
                         {% elif forloop.counter == 2 %}
                             {{ spd.marhale2 }}
+                            <br>واحد کل: <b>{{ spd.marhale2full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale2full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale2full - spd.marhale2accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale2percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale2accomplished * 100 / spd.marhale2full %}%"></div>
                             </div>
                         {% elif forloop.counter == 3 %}
                             {{ spd.marhale3 }}
+                            <br>واحد کل: <b>{{ spd.marhale3full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale3full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale3full - spd.marhale3accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale3percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale3accomplished * 100 / spd.marhale3full %}%"></div>
                             </div>
                         {% elif forloop.counter == 4 %}
                             {{ spd.marhale4 }}
+                            <br>واحد کل: <b>{{ spd.marhale4full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale4full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale4full - spd.marhale4accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale4percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale4accomplished * 100 / spd.marhale4full %}%"></div>
                             </div>
                         {% elif forloop.counter == 5 %}
                             {{ spd.marhale5 }}
+                            <br>واحد کل: <b>{{ spd.marhale5full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale5full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale5full - spd.marhale5accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale5percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale5accomplished * 100 / spd.marhale5full %}%"></div>
                             </div>
                         {% elif forloop.counter == 6 %}
                             {{ spd.marhale6 }}
+                            <br>واحد کل: <b>{{ spd.marhale6full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale6full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale6full - spd.marhale6accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale6percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale6accomplished * 100 / spd.marhale6full %}%"></div>
                             </div>
                         {% elif forloop.counter == 7 %}
                             {{ spd.marhale7 }}
+                            <br>واحد کل: <b>{{ spd.marhale7full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale7full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale7full - spd.marhale7accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale7percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale7accomplished * 100 / spd.marhale7full %}%"></div>
                             </div>
                         {% elif forloop.counter == 8 %}
                             {{ spd.marhale8 }}
+                            <br>واحد کل: <b>{{ spd.marhale8full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale8full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale8full - spd.marhale8accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale8percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale8accomplished * 100 / spd.marhale8full %}%"></div>
                             </div>
                         {% elif forloop.counter == 9 %}
                             {{ spd.marhale9 }}
+                            <br>واحد کل: <b>{{ spd.marhale9full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale9full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale9full - spd.marhale9accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale9percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale9accomplished * 100 / spd.marhale9full %}%"></div>
                             </div>
                         {% elif forloop.counter == 10 %}
                             {{ spd.marhale10 }}
+                            <br>واحد کل: <b>{{ spd.marhale10full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale10full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale10full - spd.marhale10accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale10percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale10ccomplished * 100 / spd.marhale10full %}%"></div>
                             </div>
                         {% elif forloop.counter == 11 %}
                             {{ spd.marhale11 }}
+                            <br>واحد کل: <b>{{ spd.marhale11full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale11full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale11full - spd.marhale11accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale11percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale11accomplished * 100 / spd.marhale11full %}%"></div>
                             </div>
                         {% elif forloop.counter == 12 %}
                             {{ spd.marhale12 }}
+                            <br>واحد کل: <b>{{ spd.marhale12full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale12full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale12full - spd.marhale12accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale12percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale12accomplished * 100 / spd.marhale12full %}%"></div>
                             </div>
                         {% elif forloop.counter == 13 %}
                             {{ spd.marhale13 }}
+                            <br>واحد کل: <b>{{ spd.marhale13full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale13full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale13full - spd.marhale13accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale13percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale13accomplished * 100 / spd.marhale13full %}%"></div>
                             </div>
                         {% elif forloop.counter == 14 %}
                             {{ spd.marhale14 }}
+                            <br>واحد کل: <b>{{ spd.marhale14full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale14full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale14full - spd.marhale14accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale14percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale14accomplished * 100 / spd.marhale14full %}%"></div>
                             </div>
                         {% elif forloop.counter == 15 %}
                             {{ spd.marhale15 }}
+                            <br>واحد کل: <b>{{ spd.marhale15full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale15full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale15full - spd.marhale15accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale15percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale15accomplished * 100 / spd.marhale15full %}%"></div>
                             </div>
                         {% elif forloop.counter == 16 %}
                             {{ spd.marhale16 }}
+                            <br>واحد کل: <b>{{ spd.marhale16full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale16full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale16full - spd.marhale16accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale16percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale16accomplished * 100 / spd.marhale16full %}%"></div>
                             </div>
                         {% elif forloop.counter == 17 %}
                             {{ spd.marhale17 }}
+                            <br>واحد کل: <b>{{ spd.marhale17full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale17full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale17full - spd.marhale17accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale17percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale17accomplished * 100 / spd.marhale17full %}%"></div>
                             </div>
                         {% elif forloop.counter == 18 %}
                             {{ spd.marhale18 }}
+                            <br>واحد کل: <b>{{ spd.marhale18full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale18full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale18full - spd.marhale18accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale18percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale18accomplished * 100 / spd.marhale18full %}%"></div>
                             </div>
                         {% elif forloop.counter == 19 %}
                             {{ spd.marhale19 }}
+                            <br>واحد کل: <b>{{ spd.marhale19full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale19full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale19full - spd.marhale19accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale19percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale19accomplished * 100 / spd.marhale19full %}%"></div>
                             </div>
                         {% elif forloop.counter == 20 %}
                             {{ spd.marhale20 }}
+                            <br>واحد کل: <b>{{ spd.marhale20full }}</b>
+                            <br>واحد اجرا شده: <b>{{ spd.marhale20full }}</b>
+                            <br>میزان باقیمانده شده: <b>{% spd.marhale20full - spd.marhale20accomplished %}</b>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale20percent }}%"></div>
+                                <div class="determinate" style="width: {% spd.marhale20accomplished * 100 / spd.marhale20full %}%"></div>
                             </div>
                         {% endif %}
                     </span>
