@@ -1,6 +1,9 @@
 {% extends 'admin/base.html' %}
 
 {% block extrastyle %}{{ block.super }}
+
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" />
+
 <style>
 :root {
   --primary: #9774d5;
@@ -11,26 +14,26 @@
 
 
 
-@font-face {
-    font-family: 'sahel';
-    src: url('/static/fonts/sahel/Sahel-Black-FD-WOL.woff');
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'sahel';
-    src: url('/static/fonts/sahel/Sahel-FD-WOL.woff');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'sahel';
-    src: url('/static/fonts/sahel/Sahel-Light-FD-WOL.woff');
-    font-weight: 300;
-    font-style: normal;
-}
+{#@font-face {#}
+{#    font-family: 'sahel';#}
+{#    src: url('/static/fonts/sahel/Sahel-Black-FD-WOL.woff');#}
+{#    font-weight: 700;#}
+{#    font-style: normal;#}
+{#}#}
+{##}
+{#@font-face {#}
+{#    font-family: 'sahel';#}
+{#    src: url('/static/fonts/sahel/Sahel-FD-WOL.woff');#}
+{#    font-weight: 400;#}
+{#    font-style: normal;#}
+{#}#}
+{##}
+{#@font-face {#}
+{#    font-family: 'sahel';#}
+{#    src: url('/static/fonts/sahel/Sahel-Light-FD-WOL.woff');#}
+{#    font-weight: 300;#}
+{#    font-style: normal;#}
+{#}#}
 
 body, code, pre, input, textarea, select, .form-row p, form .button {
     font-family: "sahel";

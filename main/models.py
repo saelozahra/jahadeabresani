@@ -1,4 +1,8 @@
+import accounts.models
 from django.core.exceptions import ValidationError
+from django.urls import reverse
+from django.utils.safestring import mark_safe
+from django.utils.text import slugify
 from django_jalali.db.models import jDateTimeField
 from django.db import models
 from django_jalali.db import models as jmodels
@@ -27,8 +31,8 @@ class MapObjectTypes(models.Model):
 
 
 class MaraheleEjra(models.Model):
-    marhale = models.CharField(max_length=110, verbose_name='نام مرحله')
-    vahed   = models.CharField(max_length=110, verbose_name='واحد')
+    marhale = models.CharField(max_length=110, verbose_name='نام مرحله', null=False, blank=False)
+    vahed = models.CharField(max_length=110, verbose_name='واحد', null=True, blank=True)
 
     class Meta:
         verbose_name = "مراحل اجرا"
@@ -41,21 +45,12 @@ class MaraheleEjra(models.Model):
 class project(models.Model):
     objects = jmodels.jManager()
     title = models.CharField(max_length=202, verbose_name='عنوان')
-    slug = models.SlugField(default=title, unique=True, verbose_name='نشانی')
+    slug = models.SlugField(null=True, unique=True, verbose_name='نشانی لینک')
     photo = models.ImageField(upload_to='files/images/project', verbose_name='تصویر پروژه', default="")
     city = models.CharField(max_length=202, verbose_name='شهر')
     location = PlainLocationField(based_fields=['city'], zoom=4, suffix=['city'], verbose_name='موقعیت مکانی')
-    date_start = jmodels.jDateField(verbose_name='تاریخ شروع پروژه', blank=True, null=True)
-    date_end = jmodels.jDateField(verbose_name='تاریخ پایان پروژه', blank=True, null=True)
     miangin_pishraft = models.IntegerField(default=0, editable=False, verbose_name='میانگین پیشرفت کل')
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
-    #
-    mojavez = models.FileField(upload_to='files/images/project/mojavez', blank=True, null=True,
-                               verbose_name='مجوزهای پروژه', default="")
-    mostanadat = models.FileField(upload_to='files/images/project/mostanadat', blank=True, null=True,
-                                  verbose_name='مستندات پروژه', default="")
-    file_ha = models.FileField(upload_to='files/images/project', blank=True, null=True, verbose_name='فایلهای پروژه',
-                               default="")
     #
     note = models.TextField(default="", verbose_name='یادداشت', blank=True, null=True)
 
@@ -67,8 +62,19 @@ class project(models.Model):
     def __str__(self):
         return self.title
 
-    def jdate_end(self):
-        return self.date_end
+    def get_absolute_url(self):
+        return reverse("project", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs):  # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
+    @property
+    def thumbnail_preview(self):
+        if self.photo:
+            return mark_safe('<img src="{}" style="object-fit:contain; height:auto; max-height:110px; " width="110" />'.format(self.photo.url))
+        return ""
 
 
 class subproject(models.Model):
@@ -81,7 +87,7 @@ class subproject(models.Model):
     pishrafte_kol = models.IntegerField(validators=[validate_darsad], verbose_name='پیشرفت کل')
     date_start = jmodels.jDateField(verbose_name='تاریخ شروع')
     date_end = jmodels.jDateField(verbose_name='تاریخ پایان')
-    team = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='مدیر پروژه')
+    team = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, verbose_name='مدیر پروژه')
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
     #
     naghshe = models.FileField(upload_to='files/images/subproject/naghshe', blank=True, null=True,

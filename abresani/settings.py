@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0$1qwfk*)l^ml&pz$i@4t^%3m*ri@4og9o-_5l*%z3)kc-w7ma'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_jalali',
     'rest_framework',
     'ticket',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +128,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -157,14 +161,11 @@ else:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
 LOCATION_FIELD = {
     'map.provider': 'openstreetmap',
 }
 
 
-
 # media settings
 MEDIA_URL = 'files/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
-

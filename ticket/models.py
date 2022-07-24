@@ -1,3 +1,4 @@
+import accounts.models
 from django.db import models
 from django_jalali.db import models as jmodels
 from django.contrib.auth.models import User, Group
@@ -20,7 +21,7 @@ class Department(models.Model):
 
 class Ticket(models.Model):
     Title   = models.CharField(max_length=202, verbose_name='موضوع')
-    User    = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='کاربر')
+    User    = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, verbose_name='کاربر')
     Zaman  = models.CharField(max_length=202, verbose_name='زمان آخرین تغییر')
     RelatedDepartment = models.ForeignKey(Department, blank=False, null=False, on_delete=models.CASCADE, verbose_name='دپارتمان')
     Attachments = models.ImageField(upload_to='files/images/ticket-attachs', verbose_name='پیوست', default="")

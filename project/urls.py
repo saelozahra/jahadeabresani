@@ -8,6 +8,3 @@ urlpatterns = [
     path('project/<slug>/<id>', views.single_sub_project.as_view(), name="single_sub_project"),
     path('search/',              views.project.as_view(), name="search"),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
