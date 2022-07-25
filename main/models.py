@@ -4,7 +4,6 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
-from django_jalali.db.models import jDateTimeField
 from django.db import models
 from django_jalali.db import models as jmodels
 from location_field.models.plain import PlainLocationField
@@ -12,16 +11,11 @@ from django.contrib.auth.models import User, Group
 
 
 def mohasebe_darsad(self, kol, jozea):
-    print(kol)
-    print(jozea)
     if kol == 0:
-        print("khali")
         return 0
     elif kol == jozea:
-        print("tamam")
         return 100
     else:
-        print("herelley")
         return int(jozea) * 100 / int(kol)
 
 
@@ -196,99 +190,103 @@ class SubProject(models.Model):
         real_miangin_all = 0
         real_miangin_count = 0
 
-        if self.marhale1full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale1full.__str__(), self.marhale1accomplished.__str__())
+        if self.marhale1full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale1full.numerator, self.marhale1accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale2full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale2full.__str__(), self.marhale2accomplished.__str__())
+        if self.marhale2full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale2full.numerator, self.marhale2accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale3full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale3full.__str__(), self.marhale3accomplished.__str__())
+        if self.marhale3full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale3full.numerator, self.marhale3accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale4full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale4full.__str__(), self.marhale4accomplished.__str__())
+        if self.marhale4full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale4full.numerator, self.marhale4accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale5full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale5full.__str__(), self.marhale5accomplished.__str__())
+        if self.marhale5full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale5full.numerator, self.marhale5accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale6full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale6full.__str__(), self.marhale6accomplished.__str__())
+        if self.marhale6full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale6full.numerator, self.marhale6accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale7full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale7full.__str__(), self.marhale7accomplished.__str__())
+        if self.marhale7full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale7full.numerator, self.marhale7accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale8full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale8full.__str__(), self.marhale8accomplished.__str__())
+        if self.marhale8full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale8full.numerator, self.marhale8accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale9full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale9full.__str__(), self.marhale9accomplished.__str__())
+        if self.marhale9full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale9full.numerator, self.marhale9accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale10full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale10full.__str__(), self.marhale10accomplished.__str__())
+        if self.marhale10full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale10full.numerator, self.marhale10accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale11full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale11full.__str__(), self.marhale11accomplished.__str__())
+        if self.marhale11full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale11full.numerator, self.marhale11accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale12full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale12full.__str__(), self.marhale12accomplished.__str__())
+        if self.marhale12full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale12full.numerator, self.marhale12accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale13full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale13full.__str__(), self.marhale13accomplished.__str__())
+        if self.marhale13full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale13full.numerator, self.marhale13accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale14full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale14full.__str__(), self.marhale14accomplished.__str__())
+        if self.marhale14full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale14full.numerator, self.marhale14accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale15full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale15full.__str__(), self.marhale15accomplished.__str__())
+        if self.marhale15full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale15full.numerator, self.marhale15accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale16full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale16full.__str__(), self.marhale16accomplished.__str__())
+        if self.marhale16full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale16full.numerator, self.marhale16accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale17full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale17full.__str__(), self.marhale17accomplished.__str__())
+        if self.marhale17full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale17full.numerator, self.marhale17accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale18full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale18full.__str__(), self.marhale18accomplished.__str__())
+        if self.marhale18full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale18full.numerator, self.marhale18accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale19full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale19full.__str__(), self.marhale19accomplished.__str__())
+        if self.marhale19full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale19full.numerator, self.marhale19accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale20full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale20full.__str__(), self.marhale20accomplished.__str__())
+        if self.marhale20full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale20full.numerator, self.marhale20accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale21full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale21full.__str__(), self.marhale21accomplished.__str__())
+        if self.marhale21full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale21full.numerator, self.marhale21accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale22full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale22full.__str__(), self.marhale22accomplished.__str__())
+        if self.marhale22full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale22full.numerator, self.marhale22accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale23full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale23full.__str__(), self.marhale23accomplished.__str__())
+        if self.marhale23full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale23full.numerator, self.marhale23accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale24full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale24full.__str__(), self.marhale24accomplished.__str__())
+        if self.marhale24full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale24full.numerator, self.marhale24accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
-        elif self.marhale25full.__str__():
-            real_miangin_all = mohasebe_darsad(self, self.marhale25full.__str__(), self.marhale25accomplished.__str__())
+        if self.marhale25full.numerator > 0:
+            real_miangin_all = real_miangin_all + mohasebe_darsad(self, self.marhale25full.numerator, self.marhale25accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
 
-        if real_miangin_all:
-            self.pishrafte_kol = real_miangin_all / real_miangin_count
-        else:
+        if real_miangin_all == 0:
             self.pishrafte_kol = 0
+        else:
+            self.pishrafte_kol = real_miangin_all / real_miangin_count
 
         subs = SubProject.objects.filter(Q(project_id__slug__contains=self.project_id.slug))
         miangin_pishrafte_project = 0
         miangin_pishrafte_project_count = 0
 
         for spd_temp in subs:
-            miangin_pishrafte_project=miangin_pishrafte_project+spd_temp.pishrafte_kol
-            miangin_pishrafte_project_count=miangin_pishrafte_project_count+1
+            print(spd_temp.title)
+            print(spd_temp.pishrafte_kol)
+            miangin_pishrafte_project = miangin_pishrafte_project+spd_temp.pishrafte_kol
+            miangin_pishrafte_project_count = miangin_pishrafte_project_count+1
 
         if miangin_pishrafte_project == 0:
             self.project_id.miangin_pishraft = 0
         else:
             self.project_id.miangin_pishraft = miangin_pishrafte_project/miangin_pishrafte_project_count
+
+        Project.objects.filter(Q(slug__contains=self.project_id.slug)).update(miangin_pishraft=self.project_id.miangin_pishraft)
 
         return super().save(*args, **kwargs)
 

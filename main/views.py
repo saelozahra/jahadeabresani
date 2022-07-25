@@ -23,6 +23,7 @@ class Index(TemplateView):
                 miangin_pishrafte_project = 0
                 print("miangin error dade")
             miangin_pishrafte_all_projects += miangin_pishrafte_project
+            print(pd.miangin_pishraft)
             projects_data.append({
                 'title': pd.title,
                 'city': pd.city,
