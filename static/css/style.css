@@ -19,6 +19,9 @@ nav {
     margin: 2% 10%;
     border-radius: 7px;
 }
+nav .brand-logo {
+	font-size: 1.8rem;
+}
 nav .brand-logo, nav ul a {
     color: var(--color_secondary);
     margin-left: 2%;

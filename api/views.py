@@ -12,14 +12,14 @@ class ApiSaveProjectNote(APIView):
             note  = self.request.POST['text']
             print(PSlug)
             print(note)
-            main.models.project.objects.filter(slug=PSlug).update(note=note)
+            main.models.Project.objects.filter(slug=PSlug).update(note=note)
             return Response({"response":"ok"},status=status.HTTP_200_OK)
         except:
             return Response({"response":"error"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     def get(self , request , format=None):
         try:
             projects_data = []
-            all_projects = main.models.project.objects.all()
+            all_projects = main.models.Project.objects.all()
             for pd in all_projects:
                 projects_data.append({
                     'id': pd.id,

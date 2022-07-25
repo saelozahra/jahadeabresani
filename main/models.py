@@ -1,3 +1,4 @@
+from django.db.models import Q
 import accounts.models
 from django.core.exceptions import ValidationError
 from django.urls import reverse
@@ -8,6 +9,20 @@ from django.db import models
 from django_jalali.db import models as jmodels
 from location_field.models.plain import PlainLocationField
 from django.contrib.auth.models import User, Group
+
+
+def mohasebe_darsad(self, kol, jozea):
+    print(kol)
+    print(jozea)
+    if kol == 0:
+        print("khali")
+        return 0
+    elif kol == jozea:
+        print("tamam")
+        return 100
+    else:
+        print("herelley")
+        return int(jozea) * 100 / int(kol)
 
 
 def validate_darsad(value):
@@ -42,7 +57,7 @@ class MaraheleEjra(models.Model):
         return self.marhale
 
 
-class project(models.Model):
+class Project(models.Model):
     objects = jmodels.jManager()
     title = models.CharField(max_length=202, verbose_name='عنوان')
     slug = models.SlugField(null=True, unique=True, verbose_name='نشانی لینک')
@@ -73,14 +88,16 @@ class project(models.Model):
     @property
     def thumbnail_preview(self):
         if self.photo:
-            return mark_safe('<img src="{}" style="object-fit:contain; height:auto; max-height:110px; " width="110" />'.format(self.photo.url))
+            return mark_safe(
+                '<img src="{}" style="object-fit:contain; height:auto; max-height:110px; " width="110" />'.format(
+                    self.photo.url))
         return ""
 
 
-class subproject(models.Model):
+class SubProject(models.Model):
     title = models.CharField(max_length=202, null=False, blank=False, verbose_name='عنوان')
     photo = models.ImageField(upload_to='files/images/project/sub', verbose_name='تصویر زیرپروژه', default="")
-    project_id = models.ForeignKey(project, blank=False, null=False, on_delete=models.CASCADE,
+    project_id = models.ForeignKey(Project, blank=False, null=False, on_delete=models.CASCADE,
                                    verbose_name="پروژه مربوطه")
     type = models.ForeignKey(MapObjectTypes, blank=False, null=False, on_delete=models.CASCADE,
                              verbose_name='نوع پروژه')
@@ -159,6 +176,121 @@ class subproject(models.Model):
     marhale20 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='متن مرحله 20')
     marhale20full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 20')
     marhale20accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 20')
+    marhale21 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='متن مرحله 21')
+    marhale21full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 21')
+    marhale21accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 21')
+    marhale22 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='متن مرحله 22')
+    marhale22full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 22')
+    marhale22accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 22')
+    marhale23 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='متن مرحله 23')
+    marhale23full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 23')
+    marhale23accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 23')
+    marhale24 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='متن مرحله 24')
+    marhale24full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 24')
+    marhale24accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 24')
+    marhale25 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='متن مرحله 25')
+    marhale25full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 25')
+    marhale25accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 25')
+
+    def save(self, *args, **kwargs):
+        real_miangin_all = 0
+        real_miangin_count = 0
+
+        if self.marhale1full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale1full.__str__(), self.marhale1accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale2full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale2full.__str__(), self.marhale2accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale3full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale3full.__str__(), self.marhale3accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale4full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale4full.__str__(), self.marhale4accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale5full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale5full.__str__(), self.marhale5accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale6full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale6full.__str__(), self.marhale6accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale7full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale7full.__str__(), self.marhale7accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale8full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale8full.__str__(), self.marhale8accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale9full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale9full.__str__(), self.marhale9accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale10full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale10full.__str__(), self.marhale10accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale11full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale11full.__str__(), self.marhale11accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale12full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale12full.__str__(), self.marhale12accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale13full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale13full.__str__(), self.marhale13accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale14full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale14full.__str__(), self.marhale14accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale15full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale15full.__str__(), self.marhale15accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale16full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale16full.__str__(), self.marhale16accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale17full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale17full.__str__(), self.marhale17accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale18full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale18full.__str__(), self.marhale18accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale19full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale19full.__str__(), self.marhale19accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale20full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale20full.__str__(), self.marhale20accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale21full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale21full.__str__(), self.marhale21accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale22full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale22full.__str__(), self.marhale22accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale23full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale23full.__str__(), self.marhale23accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale24full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale24full.__str__(), self.marhale24accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+        elif self.marhale25full.__str__():
+            real_miangin_all = mohasebe_darsad(self, self.marhale25full.__str__(), self.marhale25accomplished.__str__())
+            real_miangin_count = real_miangin_count + 1
+
+        if real_miangin_all:
+            self.pishrafte_kol = real_miangin_all / real_miangin_count
+        else:
+            self.pishrafte_kol = 0
+
+        subs = SubProject.objects.filter(Q(project_id__slug__contains=self.project_id.slug))
+        miangin_pishrafte_project = 0
+        miangin_pishrafte_project_count = 0
+
+        for spd_temp in subs:
+            miangin_pishrafte_project=miangin_pishrafte_project+spd_temp.pishrafte_kol
+            miangin_pishrafte_project_count=miangin_pishrafte_project_count+1
+
+        if miangin_pishrafte_project == 0:
+            self.project_id.miangin_pishraft = 0
+        else:
+            self.project_id.miangin_pishraft = miangin_pishrafte_project/miangin_pishrafte_project_count
+
+        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = "زیرپروژه ها"

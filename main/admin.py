@@ -39,7 +39,7 @@ class SubProjectAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(project,ProjectAdmin)
-admin.site.register(subproject,SubProjectAdmin)
+admin.site.register(Project, ProjectAdmin)
+admin.site.register(SubProject, SubProjectAdmin)
 admin.site.register(MapObjectTypes)
 admin.site.register(MaraheleEjra)

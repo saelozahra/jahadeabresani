@@ -1,14 +1,23 @@
 from django.shortcuts import render
 import main.models
-from main.models import *
 # Create your views here.
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import Permission
 from django.views.generic import TemplateView
 from django.db.models import Q
 
 
-def darsad_icon(self,adad):
+def darsad_icon(self, adad):
+    if adad == 100:
+        icon = "<i class='material-icons'>battery_full</i>"
+    elif adad < 10:
+        icon = "<i class='material-icons'>percent</i>" \
+               "<i class='material-icons'>" + darsad_icon(self, str(adad)) + "</i>"
+    else:
+        icon = "<i class='material-icons'>percent</i>" \
+               "<i class='material-icons'>" + darsad_icon_name(self, str(adad)[:1]) + "</i>" \
+                "<i class='material-icons'>" + darsad_icon_name(self, str(adad)[1:2]) + "</i>"
+    return icon
+
+def darsad_icon_name(self,adad):
     if adad == "0":
         return "exposure_zero"
     else:
@@ -16,57 +25,46 @@ def darsad_icon(self,adad):
 
 
 
-class project(TemplateView):
+
+def calc_proj_values(self, search):
+    if search == "":
+        all_projects = main.models.Project.objects.filter(Q(title__contains=search))
+    else:
+        all_projects = main.models.Project.objects.all()
+
+    projects_data = []
+    for pd in all_projects:
+        projects_data.append({
+            'title': pd.title,
+            'city': pd.city,
+            'photo': pd.photo.url,
+            'slug': pd.slug,
+            'miangin_pishraft': pd.miangin_pishraft,
+            'date_start': pd.date_start,
+            'date_end': pd.date_end,
+            'sub_projects': main.models.MaraheleEjra.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
+        })
+    context = {'projects_data': projects_data}
+    return context
+
+
+class Project(TemplateView):
+
     def post(self, request):
         search_word = self.request.POST['text']
-        print("Searched: "+search_word)
-        all_projects = main.models.project.objects.filter(Q(title__contains=search_word))
-        projects_data = []
-        for pd in all_projects:
-            projects_data.append({
-                'title': pd.title,
-                'city': pd.city,
-                'photo': pd.photo.url,
-                'slug': pd.slug,
-                'miangin_pishraft': pd.miangin_pishraft,
-                'date_start': pd.date_start,
-                'date_end': pd.date_end,
-                'sub_projects' : main.models.MaraheleEjra.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
-            })
-        context = {'projects_data': projects_data}
-        return render(request, 'project.html', context)
+        return render(request, 'project.html', calc_proj_values(self, search_word))
+
     def get(self, request):
-        all_projects = main.models.project.objects.all()
-        projects_data = []
-        for pd in all_projects:
-            projects_data.append({
-                'title': pd.title,
-                'city': pd.city,
-                'photo': pd.photo.url,
-                'slug': pd.slug,
-                'miangin_pishraft': pd.miangin_pishraft,
-                'date_start': pd.date_start,
-                'date_end': pd.date_end,
-                'sub_projects' : main.models.subproject.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
-            })
-        context = {'projects_data': projects_data}
-        return render(request, 'project.html', context)
+        return render(request, 'project.html', calc_proj_values(self, ""))
 
 
-class single_project(TemplateView):
-    def get(self,request,slug):
-        all_projects = main.models.project.objects.filter(Q(slug__contains=slug))
+class SingleProject(TemplateView):
+    def get(self, request,slug):
+        all_projects = main.models.Project.objects.filter(Q(slug__contains=slug))
         subprojects_data = []
-        this_sub_projects = main.models.subproject.objects.filter(Q(project_id__slug__contains=slug))
-        miangin_pishrafte_kol = 0
+        this_sub_projects = main.models.SubProject.objects.filter(Q(project_id__slug__contains=slug))
         for pd in this_sub_projects:
-            miangin_pishrafte_kol += pd.pishrafte_kol
-            if pd.pishrafte_kol == 100:
-                icon = "<i class='material-icons'>battery_full</i>"
-            elif pd.pishrafte_kol < 10:
-                icon = "<i class='material-icons'>percent</i><i class='material-icons'>"+darsad_icon(self,str(pd.pishrafte_kol))+"</i>"
-            else:
-                icon = "<i class='material-icons'>percent</i><i class='material-icons'>"+darsad_icon(self,str(pd.pishrafte_kol)[:1])+"</i><i class='material-icons'>"+darsad_icon(self,str(pd.pishrafte_kol)[1:2])+"</i>"
+            icon = darsad_icon(self, pd.pishrafte_kol)
             subprojects_data.append({
                 'id': pd.id,
                 'title': pd.title,
@@ -80,17 +78,6 @@ class single_project(TemplateView):
                 'view_count': pd.view_count,
             })
 
-        try:
-            miangin_pishrafte_kol = miangin_pishrafte_kol / this_sub_projects.count()
-            print(miangin_pishrafte_kol)
-            print(miangin_pishrafte_kol)
-            print(this_sub_projects.count())
-        except:
-            miangin_pishrafte_kol = 0
-            print("miangin error dade")
-
-        main.models.project.objects.filter(slug=slug).update(miangin_pishraft=miangin_pishrafte_kol)
-
         for pd in all_projects:
             all_projects.update(view_count=(pd.view_count)+1)
             final_data = {
@@ -100,40 +87,26 @@ class single_project(TemplateView):
                 'lat': pd.location.split(",")[0],
                 'lng': pd.location.split(",")[1],
                 'photo': pd.photo.url,
-                'mojavez': pd.mojavez.url,
-                'mostanadat': pd.mostanadat.url,
-                'file_ha': pd.file_ha.url,
                 'slug': pd.slug,
-                'date_start': pd.date_start,
-                'date_end': pd.date_end,
                 'note': pd.note,
                 'subprojects': subprojects_data,
-                'miangin_pishraft': miangin_pishrafte_kol,
+                'miangin_pishraft': pd.miangin_pishraft,
                 'user_login': self.request.user.is_authenticated,
                 'user_id': self.request.user.id,
                 'view_count': pd.view_count,
             }
         print(final_data)
         return render(request, 'project-single.html', {'projects_data': final_data})
-class single_sub_project(TemplateView):
-    def get(self, request, slug , id):
-        all_projects = main.models.project.objects.filter(Q(slug__contains=slug))
+
+
+class SingleSubProject(TemplateView):
+    def get(self, request, slug, id):
+        all_projects = main.models.Project.objects.filter(Q(slug__contains=slug))
         subprojects_data = []
-        this_sub_projects = main.models.subproject.objects.filter(Q(project_id__slug__contains=slug))
-        this_single_sub_projects = main.models.subproject.objects.filter(id=id)
-        miangin_pishrafte_kol = 0
+        this_sub_projects = main.models.SubProject.objects.filter(Q(project_id__slug__contains=slug))
+        this_single_sub_projects = main.models.SubProject.objects.filter(id=id)
         for pd in this_sub_projects:
-            miangin_pishrafte_kol += pd.pishrafte_kol
-            if pd.pishrafte_kol == 100:
-                icon = "<i class='material-icons'>battery_full</i>"
-            elif pd.pishrafte_kol < 10:
-                icon = "<i class='material-icons'>percent</i><i class='material-icons'>" + darsad_icon(self,
-                                                                                                       str(pd.pishrafte_kol)) + "</i>"
-            else:
-                icon = "<i class='material-icons'>percent</i><i class='material-icons'>" + darsad_icon(self,
-                                                                                                       str(pd.pishrafte_kol)[
-                                                                                                       :1]) + "</i><i class='material-icons'>" + darsad_icon(
-                    self, str(pd.pishrafte_kol)[1:2]) + "</i>"
+            icon = darsad_icon(self, pd.pishrafte_kol)
             subprojects_data.append({
                 'id': pd.id,
                 'title': pd.title,
@@ -150,16 +123,8 @@ class single_sub_project(TemplateView):
                 'icon': icon,
                 'view_count': pd.view_count,
             })
-        try:
-            miangin_pishrafte_kol = miangin_pishrafte_kol / this_sub_projects.count()
-            print(miangin_pishrafte_kol)
-            print(miangin_pishrafte_kol)
-            print(this_sub_projects.count())
-        except:
-            miangin_pishrafte_kol = 0
-            print("miangin error dade")
         for pd in all_projects:
-            all_projects.update(view_count=(pd.view_count) + 1)
+            all_projects.update(view_count=pd.view_count + 1)
             final_data = {
                 'sp_id': id,
                 'title': pd.title,
@@ -176,7 +141,7 @@ class single_sub_project(TemplateView):
                 'date_end': pd.date_end,
                 'subprojects': subprojects_data,
                 'this_single_sub_projects': this_single_sub_projects,
-                'miangin_pishraft': miangin_pishrafte_kol,
+                'miangin_pishraft': pd.miangin_pishraft,
                 'view_count': pd.view_count,
             }
         print(final_data)
