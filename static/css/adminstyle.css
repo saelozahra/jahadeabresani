@@ -1,0 +1,45 @@
+.model-subproject fieldset.module {
+	list-style: none;
+	counter-reset: item;
+}
+
+.model-subproject .form-row:nth-child(n+13) {
+	width: 30%;
+	display: inline-block;
+	margin-top: -6px;
+	border-left: 1px solid #fff2;
+	box-sizing: border-box;
+}
+
+.model-subproject .form-row:nth-child(3n+13) {
+    counter-increment: item;
+	list-style-type: circle;
+}
+.model-subproject .form-row:nth-child(3n+15) {
+    border-left: 0;
+}
+.model-subproject .form-row:nth-child(12) {
+	margin-bottom: 72px;
+}
+.model-subproject .form-row:nth-child(13) {
+	padding-top: 50px;
+}
+.model-subproject .form-row:nth-child(13)::after {
+	content: "مراحل اجرا";
+	font: 33px "IRANSansXFaNum Black";
+	float: left;
+	margin-top: -142px;
+}
+
+.model-subproject .form-row:nth-child(3n+13)::before {
+	margin-right: -5px;
+	content: counter(item);
+	background: var(--primary);
+	border-radius: 100%;
+	color: white;
+	width: 2em;
+	text-align: center;
+	display: inline-block;
+	height: 2em;
+	line-height: 2;
+}

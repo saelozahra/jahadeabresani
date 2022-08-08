@@ -38,6 +38,9 @@ class MapObjectTypes(models.Model):
     def __str__(self):
         return self.title
 
+    def get_marahels(self):
+        return self.marhalel_ejra_s.all().count()
+
 
 class MaraheleEjra(models.Model):
     marhale = models.CharField(max_length=110, verbose_name='نام مرحله', null=False, blank=False)
