@@ -1,15 +1,27 @@
 {% extends 'admin/base.html' %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
-{% block extrastyle %}{{ block.super }}
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('Django administration') }}
+            {{ block.super }}
+        </a>
+    </h1>
+
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
 
 <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" />
 
 <style>
 :root {
-  --primary: #9774d5;
-  --secondary: #785cab;
-  --link-fg: #7c449b;
-  --link-selected-fg: #8f5bb2;
+  --primary: #ee6e73;
+  --secondary: rgba(238, 110, 115, 0.9);
+  --link-fg: #d76266;
+  --link-selected-fg: #96494d;
 }
 
 

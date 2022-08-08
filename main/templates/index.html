@@ -12,7 +12,7 @@
         <div class="determinate" style="width: {{ pishraft }}%"></div>
     </div>
 {% endblock UnderMap %}
-
+{% block ContainerRowClass %}fl left{% endblock ContainerRowClass %}
 {% block LeftContent %}
     <ul class="collection" >
         {% for pd in projects_data %}
@@ -21,18 +21,17 @@
                     <img src="{{ pd.photo }}" alt="" class="circle" style="margin-top: 10px;">
                     <span class="title">{{ pd.title }}</span>
                     <p>
-                        {{ pd.city }} - {{ pd.date_end }}
-                        <br>
                         <div class="progress">
                             <div class="determinate" style="width: {{ pd.miangin_pishraft }}%"></div>
                         </div>
                     </p>
                 </a>
-                <a href="./project/{{ pd.slug }}" class="secondary-content" style="margin-top: 5px;margin-right: -8px;"><i class="material-icons">send</i></a>
             </li>
         {% endfor %}
     </ul>
 {% endblock LeftContent %}
+
+{% block RightContent %}{% endblock RightContent %}
 
 {% block BottomContent %}
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
@@ -137,8 +136,6 @@ var data=[
             "project_name":"{{ pd.title }}",
             "photo":"{{ pd.photo }}",
             "miangin_pishraft":"{{ pd.miangin_pishraft }}",
-            "date_start":"{{ pd.date_start }}",
-            "date_end":"{{ pd.date_end }}",
             "Lon":{{ pd.lng }},
             "Lat":{{ pd.lat }},
             "url":"{{ pd.slug }}"
@@ -157,7 +154,7 @@ function addPointGeom(data) {
                     'EPSG:3857')),
                 type: 'Point',
                 url: item.url,
-                desc: '<div style="font-family: sahel;direction: rtl;"> <p style="float: right;"><b>' + project_name + ' </b> ' + '<br><i class="material-icons">date_range</i>' + item.date_end + '</p>  <div class="progress"><div class="determinate" style="width: '+item.miangin_pishraft+'%"></div> </div> <img style="max-width: 162px;display: inline-block;border-radius: 5px;margin-bottom: -5px" src="'+item.photo+'" > </div>'}),
+                desc: '<div style="font-family: sahel;direction: rtl;"> <p style="float: right;"><b>' + project_name + ' </b> ' + '</p>  <div class="progress"><div class="determinate" style="width: '+item.miangin_pishraft+'%"></div> </div> <img style="max-width: 162px;display: inline-block;border-radius: 5px;margin-bottom: -5px" src="'+item.photo+'" > </div>'}),
             iconStyle = new ol.style.Style({
                 image: new ol.style.Icon({
                   anchor: [0.5, 1],

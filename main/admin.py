@@ -1,8 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django_jalali.admin.filters import JDateFieldListFilter
-# from .models import project
-import main.models
 from .models import *
 
 # you need import this for adding jalali calander widget
@@ -14,7 +12,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ("title", "city", "miangin_pishraft", "thumbnail_preview", "view_count")
     prepopulated_fields = {"slug": ("title",)}
     list_filter = (
-        # ('city', main.models.project.city),
+        ('date_end', JDateFieldListFilter),
     )
 
     readonly_fields = ('thumbnail_preview',)

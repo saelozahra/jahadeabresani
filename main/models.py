@@ -58,6 +58,8 @@ class Project(models.Model):
     photo = models.ImageField(upload_to='files/images/project', verbose_name='تصویر پروژه', default="")
     city = models.CharField(max_length=202, verbose_name='شهر')
     location = PlainLocationField(based_fields=['city'], zoom=4, suffix=['city'], verbose_name='موقعیت مکانی')
+    date_start = jmodels.jDateField(null=True, blank=True, verbose_name='تاریخ شروع')
+    date_end = jmodels.jDateField(null=True, blank=True, verbose_name='تاریخ پایان')
     miangin_pishraft = models.IntegerField(default=0, editable=False, verbose_name='میانگین پیشرفت کل')
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
     #

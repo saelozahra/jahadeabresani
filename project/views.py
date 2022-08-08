@@ -24,13 +24,12 @@ def darsad_icon_name(self,adad):
         return "filter_"+adad
 
 
-
-
 def calc_proj_values(self, search):
     if search == "":
-        all_projects = main.models.Project.objects.filter(Q(title__contains=search))
-    else:
         all_projects = main.models.Project.objects.all()
+    else:
+        print("search_word: "+search)
+        all_projects = main.models.Project.objects.filter(Q(title__contains=search))
 
     projects_data = []
     for pd in all_projects:
@@ -40,9 +39,7 @@ def calc_proj_values(self, search):
             'photo': pd.photo.url,
             'slug': pd.slug,
             'miangin_pishraft': pd.miangin_pishraft,
-            'date_start': pd.date_start,
-            'date_end': pd.date_end,
-            'sub_projects': main.models.MaraheleEjra.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
+            'sub_projects': main.models.SubProject.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
         })
     context = {'projects_data': projects_data}
     return context
@@ -107,15 +104,36 @@ class SingleSubProject(TemplateView):
         this_single_sub_projects = main.models.SubProject.objects.filter(id=id)
         for pd in this_sub_projects:
             icon = darsad_icon(self, pd.pishrafte_kol)
+
+            if pd.naghshe :
+                naghshe = pd.naghshe.url
+            else:
+                naghshe = ""
+
+            if pd.mostanadat :
+                mostanadat = pd.mostanadat.url
+            else:
+                mostanadat = ""
+
+            if pd.mojavez :
+                mojavez = pd.mojavez.url
+            else:
+                mojavez = ""
+
+            if pd.file_ha :
+                file_ha = pd.file_ha.url
+            else:
+                file_ha = ""
+
             subprojects_data.append({
                 'id': pd.id,
                 'title': pd.title,
                 'type': pd.type,
                 'photo': pd.photo.url,
-                'naghshe': pd.naghshe.url,
-                'mostanadat': pd.mostanadat.url,
-                'mojavez': pd.mojavez.url,
-                'file_ha': pd.file_ha.url,
+                'naghshe': naghshe,
+                'mostanadat': mostanadat,
+                'mojavez': mojavez,
+                'file_ha': file_ha,
                 'pishrafte_kol': pd.pishrafte_kol,
                 'date_start': pd.date_start,
                 'date_end': pd.date_end,
@@ -124,6 +142,7 @@ class SingleSubProject(TemplateView):
                 'view_count': pd.view_count,
             })
         for pd in all_projects:
+
             all_projects.update(view_count=pd.view_count + 1)
             final_data = {
                 'sp_id': id,
@@ -133,9 +152,6 @@ class SingleSubProject(TemplateView):
                 'lat': pd.location.split(",")[0],
                 'lng': pd.location.split(",")[1],
                 'photo': pd.photo.url,
-                'mojavez': pd.mojavez.url,
-                'mostanadat': pd.mostanadat.url,
-                'file_ha': pd.file_ha.url,
                 'slug': pd.slug,
                 'date_start': pd.date_start,
                 'date_end': pd.date_end,

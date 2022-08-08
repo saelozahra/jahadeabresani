@@ -11,6 +11,8 @@ services:
     volumes:
       - abresani_static_volume:/abresani/static
       - abresani_files_volume:/abresani/files
+      - fars_habitat_static_volume:/fars_habitat/static
+      - fars_habitat_files_volume:/fars_habitat/files
     networks:
       - nginx_network
 
@@ -18,6 +20,10 @@ volumes:
   abresani_static_volume:
     external: true
   abresani_files_volume:
+    external: true
+  fars_habitat_static_volume:
+    external: true
+  fars_habitat_files_volume:
     external: true
 networks:
   nginx_network:
