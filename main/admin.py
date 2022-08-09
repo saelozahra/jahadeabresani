@@ -5,7 +5,12 @@ from .models import *
 
 # you need import this for adding jalali calander widget
 import django_jalali.admin as jadmin
-from import_export import resources
+
+
+@admin.register(MapObjectTypes)
+class MemberAdmin(ImportExportModelAdmin):
+    list_display = ("title", "icon")
+    pass
 
 
 class ProjectAdmin(ExportActionMixin, admin.ModelAdmin):
@@ -49,5 +54,5 @@ class SubProjectAdmin(ExportActionMixin, admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(SubProject, SubProjectAdmin)
-admin.site.register(MapObjectTypes, MapObjectTypesAdmin)
+# admin.site.register(MapObjectTypes, MapObjectTypesAdmin)
 admin.site.register(MaraheleEjra, MaraheleEjraAdmin)
