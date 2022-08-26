@@ -43,3 +43,11 @@
 	height: 2em;
 	line-height: 2;
 }
+
+
+
+#map_location {
+	width: 100% !important;
+	height: 500px !important;
+	border-radius: 18px;
+}

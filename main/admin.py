@@ -26,6 +26,11 @@ class ProjectAdmin(ExportActionMixin, admin.ModelAdmin):
     def thumbnail_preview(self, obj):
         return obj.thumbnail_preview
 
+    class Media:
+        # js = ('js/admin/my_own_admin.js',)
+        css = {
+             'all': ('css/adminstyle.css',),
+        }
     thumbnail_preview.short_description = 'تصویر پروژه'
     thumbnail_preview.allow_tags = True
 
