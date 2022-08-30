@@ -17,7 +17,7 @@
     <ul class="collection" >
         {% for pd in projects_data %}
             <li class="collection-item avatar">
-                <a  href="./project/{{ pd.slug }}" title="{{ pd.title }}">
+                <a  href="./project/{{ pd.id }}" title="{{ pd.title }}">
                     <img src="{{ pd.photo }}" alt="" class="circle" style="margin-top: 10px;">
                     <span class="title">{{ pd.title }}</span>
                     <p>
@@ -138,7 +138,7 @@ var data=[
             "miangin_pishraft":"{{ pd.miangin_pishraft }}",
             "Lon":{{ pd.lng }},
             "Lat":{{ pd.lat }},
-            "url":"{{ pd.slug }}"
+            "url":"{{ pd.id }}"
         },
     {% endfor %}
 ];

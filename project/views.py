@@ -28,20 +28,20 @@ def darsad_icon_name(self,adad):
 
 def calc_proj_values(self, search):
     if search == "":
-        all_projects = main.models.CityProject.objects.all()
+        all_cities = main.models.CityProject.objects.all()
     else:
         print("search_word: "+search)
-        all_projects = main.models.CityProject.objects.filter(Q(title__contains=search))
+        all_cities = main.models.CityProject.objects.filter(Q(title__contains=search))
 
     projects_data = []
-    for pd in all_projects:
+    for pd in all_cities:
         projects_data.append({
             'title': pd.title,
             'city': pd.city,
             'photo': pd.photo.url,
             'slug': pd.slug,
             'miangin_pishraft': pd.miangin_pishraft,
-            'sub_projects': main.models.SubProject.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
+            'sub_projects': main.models.Project.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
         })
     context = {'projects_data': projects_data}
     return context
@@ -59,9 +59,10 @@ class Project(TemplateView):
 
 class SingleProject(TemplateView):
     def get(self, request, slug, **kwargs):
-        all_projects = main.models.CityProject.objects.filter(Q(slug__contains=slug))
+        final_data=[]
+        all_cities = main.models.CityProject.objects.filter(Q(slug__contains=slug))
         subprojects_data = []
-        this_sub_projects = main.models.SubProject.objects.filter(Q(project_id__slug__contains=slug))
+        this_sub_projects = main.models.Project.objects.filter(Q(project_id__slug__contains=slug))
         for pd in this_sub_projects:
             icon = darsad_icon(self, pd.pishrafte_kol)
             subprojects_data.append({
@@ -77,8 +78,8 @@ class SingleProject(TemplateView):
                 'view_count': pd.view_count,
             })
 
-        for pd in all_projects:
-            all_projects.update(view_count=(pd.view_count)+1)
+        for pd in all_cities:
+            all_cities.update(view_count=(pd.view_count)+1)
             final_data = {
                 'title': pd.title,
                 'city': pd.city,
@@ -100,10 +101,11 @@ class SingleProject(TemplateView):
 
 class SingleSubProject(TemplateView):
     def get(self, request, slug, id):
-        all_projects = main.models.Project.objects.filter(Q(slug__contains=slug))
+        final_data=[]
+        all_cities = main.models.Project.objects.filter(Q(slug__contains=slug))
         subprojects_data = []
-        this_sub_projects = main.models.SubProject.objects.filter(Q(project_id__slug__contains=slug))
-        this_single_sub_projects = main.models.SubProject.objects.filter(id=id)
+        this_sub_projects = main.models.Project.objects.filter(Q(project_id__slug__contains=slug))
+        this_single_sub_projects = main.models.Project.objects.filter(id=id)
         for pd in this_sub_projects:
             icon = darsad_icon(self, pd.pishrafte_kol)
 
@@ -143,9 +145,9 @@ class SingleSubProject(TemplateView):
                 'icon': icon,
                 'view_count': pd.view_count,
             })
-        for pd in all_projects:
+        for pd in all_cities:
 
-            all_projects.update(view_count=pd.view_count + 1)
+            all_cities.update(view_count=pd.view_count + 1)
             final_data = {
                 'sp_id': id,
                 'title': pd.title,

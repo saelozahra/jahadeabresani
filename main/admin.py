@@ -13,7 +13,7 @@ class MemberAdmin(ImportExportModelAdmin):
     pass
 
 
-class ProjectAdmin(ExportActionMixin, admin.ModelAdmin):
+class CityAdmin(ExportActionMixin, admin.ModelAdmin):
 
     list_display = ("city", "miangin_pishraft", "view_count")
     prepopulated_fields = {"slug": ("city",)}
@@ -33,9 +33,9 @@ class MapObjectTypesAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ("title", "icon", "get_marahels")
 
 
-class SubProjectAdmin(ExportActionMixin, admin.ModelAdmin):
+class ProjectAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ("title", "team", "photo", "pishrafte_kol", "thumbnail_preview", "view_count")
-
+    raw_id_fields = ['team']
     readonly_fields = ('thumbnail_preview',)
 
     def thumbnail_preview(self, obj):
@@ -54,7 +54,7 @@ class SubProjectAdmin(ExportActionMixin, admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(CityProject, ProjectAdmin)
-admin.site.register(Project, SubProjectAdmin)
+admin.site.register(CityProject, CityAdmin)
+admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectFiles)
 admin.site.register(MaraheleEjra, MaraheleEjraAdmin)

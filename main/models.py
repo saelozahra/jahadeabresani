@@ -299,7 +299,7 @@ class Project(models.Model):
         else:
             self.pishrafte_kol = real_miangin_all / real_miangin_count
 
-        subs = Project.objects.filter(Q(project_id__slug__contains=self.RelatedCity.slug))
+        subs = Project.objects.filter(Q(RelatedCity__slug__contains=self.RelatedCity.slug))
         miangin_pishrafte_project = 0
         miangin_pishrafte_project_count = 0
 
