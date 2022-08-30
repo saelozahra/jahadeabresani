@@ -54,15 +54,9 @@ class MaraheleEjra(models.Model):
         return self.marhale
 
 
-class Project(models.Model):
-    objects = jmodels.jManager()
-    title = models.CharField(max_length=202, verbose_name='عنوان')
-    slug = models.SlugField(null=True, unique=True, verbose_name='نشانی لینک')
-    photo = models.ImageField(upload_to='files/images/project', verbose_name='تصویر پروژه', default="")
-    city = models.CharField(max_length=202, verbose_name='شهر')
-    location = PlainLocationField(based_fields=['city'], zoom=4, suffix=['city'], verbose_name='موقعیت مکانی')
-    date_start = jmodels.jDateField(null=True, blank=True, verbose_name='تاریخ شروع')
-    date_end = jmodels.jDateField(null=True, blank=True, verbose_name='تاریخ پایان')
+class CityProject(models.Model):
+    city = models.CharField(max_length=202, verbose_name='نام شهر')
+    slug = models.SlugField(null=True, unique=True, verbose_name='نام انگلیسی')
     miangin_pishraft = models.IntegerField(default=0, editable=False, verbose_name='میانگین پیشرفت کل')
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
     #
@@ -70,41 +64,34 @@ class Project(models.Model):
 
     #
     class Meta:
-        verbose_name = "پروژه"
-        verbose_name_plural = "پروژه"
+        verbose_name = "شهر"
+        verbose_name_plural = "شهر"
 
     def __str__(self):
-        return self.title
+        return self.city
 
     def get_absolute_url(self):
         return reverse("project", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):  # new
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.city)
         return super().save(*args, **kwargs)
 
-    @property
-    def thumbnail_preview(self):
-        if self.photo:
-            return mark_safe(
-                '<img src="{}" style="object-fit:contain; height:auto; max-height:110px; " width="110" />'.format(
-                    self.photo.url))
-        return ""
 
-
-class SubProject(models.Model):
+class Project(models.Model):
     title = models.CharField(max_length=202, null=False, blank=False, verbose_name='عنوان')
-    photo = models.ImageField(upload_to='files/images/project/sub', verbose_name='تصویر زیرپروژه', default="")
-    project_id = models.ForeignKey(Project, blank=False, null=False, on_delete=models.CASCADE,
-                                   verbose_name="پروژه مربوطه")
+    photo = models.ImageField(upload_to='files/images/project/sub', verbose_name='تصویر پروژه', default="")
+    RelatedCity = models.ForeignKey(CityProject, blank=False, null=True, on_delete=models.CASCADE,
+                                   verbose_name="شهر مربوطه")
     type = models.ForeignKey(MapObjectTypes, blank=False, null=False, on_delete=models.CASCADE,
                              verbose_name='نوع پروژه')
     pishrafte_kol = models.IntegerField(validators=[validate_darsad], verbose_name='پیشرفت کل')
     date_start = jmodels.jDateField(verbose_name='تاریخ شروع')
     date_end = jmodels.jDateField(verbose_name='تاریخ پایان')
-    team = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, verbose_name='مدیر پروژه')
+    team = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, verbose_name='سرپرست کارگاه')
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
+    location = PlainLocationField(based_fields=['city'], zoom=4, null=True, suffix=['city'], verbose_name='موقعیت مکانی')
     #
     naghshe = models.FileField(upload_to='files/images/subproject/naghshe', blank=True, null=True,
                                verbose_name='نقشه اجرا', default="")
@@ -276,7 +263,7 @@ class SubProject(models.Model):
         else:
             self.pishrafte_kol = real_miangin_all / real_miangin_count
 
-        subs = SubProject.objects.filter(Q(project_id__slug__contains=self.project_id.slug))
+        subs = Project.objects.filter(Q(project_id__slug__contains=self.RelatedCity.slug))
         miangin_pishrafte_project = 0
         miangin_pishrafte_project_count = 0
 
@@ -287,17 +274,25 @@ class SubProject(models.Model):
             miangin_pishrafte_project_count = miangin_pishrafte_project_count+1
 
         if miangin_pishrafte_project == 0:
-            self.project_id.miangin_pishraft = 0
+            self.RelatedCity.miangin_pishraft = 0
         else:
-            self.project_id.miangin_pishraft = miangin_pishrafte_project/miangin_pishrafte_project_count
+            self.RelatedCity.miangin_pishraft = miangin_pishrafte_project/miangin_pishrafte_project_count
 
-        Project.objects.filter(Q(slug__contains=self.project_id.slug)).update(miangin_pishraft=self.project_id.miangin_pishraft)
+        CityProject.objects.filter(Q(slug__contains=self.RelatedCity.slug)).update(miangin_pishraft=self.RelatedCity.miangin_pishraft)
 
         return super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "زیرپروژه ها"
-        verbose_name_plural = "زیرپروژه"
+        verbose_name = "پروژه ها"
+        verbose_name_plural = "پروژه"
 
     def __str__(self):
         return self.title
+
+    @property
+    def thumbnail_preview(self):
+        if self.photo:
+            return mark_safe(
+                '<img src="{}" style="object-fit:contain; height:auto; max-height:110px; " width="110" />'.format(
+                    self.photo.url))
+        return ""

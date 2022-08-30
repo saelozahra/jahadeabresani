@@ -15,24 +15,14 @@ class MemberAdmin(ImportExportModelAdmin):
 
 class ProjectAdmin(ExportActionMixin, admin.ModelAdmin):
 
-    list_display = ("title", "city", "miangin_pishraft", "thumbnail_preview", "view_count")
-    prepopulated_fields = {"slug": ("title",)}
-    list_filter = (
-        ('date_end', JDateFieldListFilter),
-    )
-
-    readonly_fields = ('thumbnail_preview',)
-
-    def thumbnail_preview(self, obj):
-        return obj.thumbnail_preview
+    list_display = ("city", "miangin_pishraft", "view_count")
+    prepopulated_fields = {"slug": ("city",)}
 
     class Media:
         # js = ('js/admin/my_own_admin.js',)
         css = {
              'all': ('css/adminstyle.css',),
         }
-    thumbnail_preview.short_description = 'تصویر پروژه'
-    thumbnail_preview.allow_tags = True
 
 
 class MaraheleEjraAdmin(ExportActionMixin, admin.ModelAdmin):
@@ -44,7 +34,14 @@ class MapObjectTypesAdmin(ExportActionMixin, admin.ModelAdmin):
 
 
 class SubProjectAdmin(ExportActionMixin, admin.ModelAdmin):
-    list_display = ("title", "team", "photo", "pishrafte_kol", "view_count")
+    list_display = ("title", "team", "photo", "pishrafte_kol", "thumbnail_preview", "view_count")
+
+    readonly_fields = ('thumbnail_preview',)
+
+    def thumbnail_preview(self, obj):
+        return obj.thumbnail_preview
+    thumbnail_preview.short_description = 'تصویر پروژه'
+    thumbnail_preview.allow_tags = True
 
     class Media:
         # js = ('js/admin/my_own_admin.js',)
@@ -57,7 +54,7 @@ class SubProjectAdmin(ExportActionMixin, admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Project, ProjectAdmin)
-admin.site.register(SubProject, SubProjectAdmin)
+admin.site.register(CityProject, ProjectAdmin)
+admin.site.register(Project, SubProjectAdmin)
 # admin.site.register(MapObjectTypes, MapObjectTypesAdmin)
 admin.site.register(MaraheleEjra, MaraheleEjraAdmin)
