@@ -6,16 +6,18 @@ from django.db.models import Q
 
 
 def darsad_icon(self, adad):
+    adad = str(adad)
     if adad == 100:
         icon = "<i class='material-icons'>battery_full</i>"
-    elif adad < 10:
+    elif adad.__len__()>1:
         icon = "<i class='material-icons'>percent</i>" \
-               "<i class='material-icons'>" + darsad_icon(self, str(adad)) + "</i>"
+               "<i class='material-icons'>" + darsad_icon(self, adad) + "</i>"
     else:
         icon = "<i class='material-icons'>percent</i>" \
-               "<i class='material-icons'>" + darsad_icon_name(self, str(adad)[:1]) + "</i>" \
-                "<i class='material-icons'>" + darsad_icon_name(self, str(adad)[1:2]) + "</i>"
+               "<i class='material-icons'>" + darsad_icon_name(self, adad[:1]) + "</i>" \
+                "<i class='material-icons'>" + darsad_icon_name(self, adad[1:2]) + "</i>"
     return icon
+
 
 def darsad_icon_name(self,adad):
     if adad == "0":
@@ -26,10 +28,10 @@ def darsad_icon_name(self,adad):
 
 def calc_proj_values(self, search):
     if search == "":
-        all_projects = main.models.Project.objects.all()
+        all_projects = main.models.CityProject.objects.all()
     else:
         print("search_word: "+search)
-        all_projects = main.models.Project.objects.filter(Q(title__contains=search))
+        all_projects = main.models.CityProject.objects.filter(Q(title__contains=search))
 
     projects_data = []
     for pd in all_projects:
@@ -56,8 +58,8 @@ class Project(TemplateView):
 
 
 class SingleProject(TemplateView):
-    def get(self, request,slug):
-        all_projects = main.models.Project.objects.filter(Q(slug__contains=slug))
+    def get(self, request, slug, **kwargs):
+        all_projects = main.models.CityProject.objects.filter(Q(slug__contains=slug))
         subprojects_data = []
         this_sub_projects = main.models.SubProject.objects.filter(Q(project_id__slug__contains=slug))
         for pd in this_sub_projects:
