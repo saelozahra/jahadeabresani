@@ -56,5 +56,5 @@ class SubProjectAdmin(ExportActionMixin, admin.ModelAdmin):
 # Register your models here.
 admin.site.register(CityProject, ProjectAdmin)
 admin.site.register(Project, SubProjectAdmin)
-# admin.site.register(MapObjectTypes, MapObjectTypesAdmin)
+admin.site.register(ProjectFiles)
 admin.site.register(MaraheleEjra, MaraheleEjraAdmin)
