@@ -135,6 +135,7 @@ var data=[
         {
             "project_name":"{{ pd.title }}",
             "photo":"{{ pd.photo }}",
+            "icon":"{{ pd.icon }}",
             "miangin_pishraft":"{{ pd.miangin_pishraft }}",
             "Lon":{{ pd.lng }},
             "Lat":{{ pd.lat }},
@@ -158,7 +159,8 @@ function addPointGeom(data) {
             iconStyle = new ol.style.Style({
                 image: new ol.style.Icon({
                   anchor: [0.5, 1],
-                  src: '/static/img/social_media_network_online_maps-64.webp'
+{#                  src: '/static/img/social_media_network_online_maps-64.webp'#}
+                  src: item.icon,
                 })
             });
 

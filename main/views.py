@@ -21,6 +21,7 @@ class Index(TemplateView):
                 'lat': pd.location.split(",")[0],
                 'lng': pd.location.split(",")[1],
                 'photo': pd.photo.url,
+                'icon': pd.type.icon.url,
                 'miangin_pishraft': pd.pishrafte_kol,
             })
 
