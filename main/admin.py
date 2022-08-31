@@ -44,7 +44,7 @@ class ProjectAdmin(ExportActionMixin, admin.ModelAdmin):
     thumbnail_preview.allow_tags = True
 
     class Media:
-        # js = ('js/admin/my_own_admin.js',)
+        js = ('admin_scripts.js',)
         css = {
              'all': ('css/adminstyle.css',),
         }
