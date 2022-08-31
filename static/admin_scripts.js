@@ -13,7 +13,7 @@ $(document).ready(function(){
                             if(index >= 9 && index % 3 == 0){
                                 console.log(index / 3 - 3);
                                 $(this).find("label").text($(this).find("label").text()+" | "+result.marahel[(index / 3 - 3)]);
-                                // $(this).css({"color": "red", "background-color": "green"});
+                                $(this).find("label").css({"width": "100%"});
                             }
                             if( index >= 9+(parseInt(result.marahel_count)*3 )){
                                 // console.log(index+": "+$(this).text());
