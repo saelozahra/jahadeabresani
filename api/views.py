@@ -5,18 +5,21 @@ from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
 
+
 class ApiSaveProjectNote(APIView):
-    def post(self , request , format=None):
+
+    def post(self, request, format=None):
         try:
-            PSlug = self.request.POST['project']
-            note  = self.request.POST['text']
-            print(PSlug)
+            pid = self.request.POST['project']
+            note = self.request.POST['text']
+            print(pid)
             print(note)
-            main.models.Project.objects.filter(slug=PSlug).update(note=note)
-            return Response({"response":"ok"},status=status.HTTP_200_OK)
+            main.models.Project.objects.filter(slug=pid).update(note=note)
+            return Response({"response": "ok"},status=status.HTTP_200_OK)
         except:
-            return Response({"response":"error"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    def get(self , request , format=None):
+            return Response({"response": "error"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def get(self, request, format=None):
         try:
             projects_data = []
             all_projects = main.models.Project.objects.all()
@@ -37,6 +40,33 @@ class ApiSaveProjectNote(APIView):
                     'note': pd.note,
                     'view_count': pd.view_count,
                 })
-            return Response({"response":projects_data},status=status.HTTP_200_OK)
+            return Response({"response": projects_data}, status=status.HTTP_200_OK)
         except:
-            return Response({"response":"error"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"response": "error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ApiProjectType(APIView):
+
+    def get(self, request, pt_id, format=None):
+        try:
+            print("pt_id: "+pt_id)
+            all_map_obj_types_data = []
+            all_marahel_ejra_data = []
+            all_map_obj_types = main.models.MapObjectTypes.objects.filter(id=pt_id)
+            for pd in all_map_obj_types:
+                mejr_all = pd.marhalel_ejra_s.all()
+                for me in mejr_all:
+                    all_marahel_ejra_data.append(me.marhale)
+                all_map_obj_types_data = {
+                    'id': pd.id,
+                    'title': pd.title,
+                    'icon': pd.icon.url,
+                    'marahel': all_marahel_ejra_data,
+                    'marahel_count': pd.marhalel_ejra_s.count(),
+                }
+            if all_map_obj_types.count() == 0:
+                return Response({"response": "noting found any value"}, status=status.HTTP_200_OK)
+            else:
+                return Response(all_map_obj_types_data, status=status.HTTP_200_OK)
+        except:
+            return Response({"response": "error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

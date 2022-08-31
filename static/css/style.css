@@ -5,14 +5,40 @@
 
 html,body{margin: auto;font-family: sahel;}
 
-/*html, body {*/
-/*	margin: auto;*/
-/*	font-family: sahel;*/
-/*	width: 100%;*/
-/*	display: inline-block;*/
-/*	background-color: #f001;*/
-/*	height: 100%;*/
-/*}*/
+
+.effect-im {
+	position: relative;
+	overflow: hidden;
+	display: block;
+	line-height: 0;
+}
+
+.big-img .effect-im {
+    border: 2px solid #333;
+    box-shadow: 0 0 7px rgba(0, 0, 0, .23);
+}
+
+.top-slider .effect-im {
+	border: transparent;
+	box-shadow: transparent
+}
+
+.effect-im::before {
+	background: rgba(255, 255, 255, 0.5) none repeat scroll 0 0;
+	content: "";
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	transform: scale3d(1.9, 2.4, 1) rotate3d(0, 0, 1, 135deg) translate3d(0px, 180%, 0px);
+	transition: transform 1s ease 0s;
+	width: 100%
+}
+
+.effect-im:hover::before {
+	transform: scale3d(1.9, 2.4, 1) rotate3d(0, 0, 1, 135deg) translate3d(0px, -180%, 0px)
+}
+
 nav {
     color: #ee6e73;
     background-color: white;

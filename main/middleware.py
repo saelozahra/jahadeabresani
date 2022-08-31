@@ -9,8 +9,10 @@ class AuthRequiredMiddleware(object):
         self.get_response = get_response
 
     def __call__(self, request):
-        if (not request.user.is_authenticated) and (not str(request.path).startswith("/modiriat")):
-            print("MiddleWare Working")
+        if (not request.user.is_authenticated)\
+                and (not str(request.path).startswith("/modiriat"))\
+                and (not str(request.path).startswith("/api/")):
+            print("MiddleWare Working on: "+request.path)
             return HttpResponseRedirect('../../../../modiriat')
         response = self.get_response(request)
         return response
