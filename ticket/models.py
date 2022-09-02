@@ -19,35 +19,46 @@ class Department(models.Model):
         return self.Title
 
 
-class Ticket(models.Model):
-    Title   = models.CharField(max_length=202, verbose_name='موضوع')
-    User    = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, verbose_name='کاربر')
-    Zaman  = models.CharField(max_length=202, verbose_name='زمان آخرین تغییر')
-    RelatedDepartment = models.ForeignKey(Department, blank=False, null=False, on_delete=models.CASCADE, verbose_name='دپارتمان')
-    Attachments = models.ImageField(upload_to='files/images/ticket-attachs', verbose_name='پیوست', default="")
-    Note    = models.TextField(default="", verbose_name='یادداشت مدیریت' )
+
+class Chat(models.Model):
+    User1 = models.ForeignKey(User, related_name="user1", on_delete=models.CASCADE, verbose_name='کاربر 1')
+    User2 = models.ForeignKey(User, related_name="user2", on_delete=models.CASCADE, verbose_name='کاربر 2')
+    Zaman = models.CharField(editable=False, default=datetime.now(), max_length=202, verbose_name='زمان آخرین پیام')
+    Lead = models.TextField(editable=False, verbose_name='خلاصه آخرین پیام')
 
     class Meta:
-        verbose_name = "تیکت"
-        verbose_name_plural = "تیکت"
+        verbose_name = "چت"
+        verbose_name_plural = "چت"
 
     def __str__(self):
-        return self.Title + " از " + self.User.get_short_name()
+        return "مکالمه " + self.User1.get_short_name() + " و " + self.User2.get_short_name()
 
 
-class TicketMessage(models.Model):
-    objects = jmodels.jManager()
-    RelatedTicket = models.ForeignKey(Ticket, on_delete=models.CASCADE, verbose_name='مربوط به تیکت')
-    Text    = models.TextField(default="" ,verbose_name='متن تیکت' )
-    Tarikh  = jmodels.jDateTimeField(verbose_name='تاریخ')
-    Attachments = models.ImageField(upload_to='files/images/ticket-attachs', verbose_name='پیوست', default="")
+class ChatMessage(models.Model):
+    RelatedChat = models.ForeignKey(Chat, on_delete=models.CASCADE, verbose_name='مربوط به چت')
+    Sender = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='فرستنده', blank=True, null=True)
+    Text = models.TextField(default="", verbose_name='متن پیام')
+    Tarikh = models.CharField(editable=False, blank=True ,null=True ,max_length=202, verbose_name='زمان')
+    Attachments = models.ImageField(upload_to='files/images/ticket-attachs', verbose_name='پیوست', default="", blank=True)
+    Readed = models.BooleanField(editable=False, verbose_name='دیده شده', default=False)
+    Visible = models.BooleanField(editable=False, verbose_name='نمایان', default=True)
 
     class Meta:
-        verbose_name = "پیام ها"
-        verbose_name_plural = "پیام ها"
+        verbose_name = "پیام‌ها"
+        verbose_name_plural = "پیام‌ها"
+
+    def save(self, *args, **kwargs):
+        if self.Tarikh is None or self.Tarikh == "":
+            print("Tarikh none hast")
+            self.Tarikh = datetime.now()
+        self.RelatedChat.Lead = self.Text[:202]
+        self.RelatedChat.save()
+        self.RelatedChat.Zaman = datetime.now()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.Title
+        return self.Text[:133]+"..."
 
     def jdate_tarikh(self):
         return self.Tarikh
+

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %} | پروفایل{% endblock title %}
+
+{% block main %}
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 99vh;
+        }
+        header{
+            box-shadow: 0 0 6px #00A69355;
+        }
+        main{
+            flex-grow: 1;
+        }
+    </style>
+    <section class="container ChatContainer wrapper {{ ShowMessages }}" >
+        <aside class="ChatList fr tr padding row-xs">
+            <ul class="row padding" style="padding: 0; margin: auto;">
+                {% for Chat in ChatList %}
+                    <li class="row padding tr">
+                        <a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{ request.get_host }}/chat/{{ Chat.id }}" class="row padding effect-shine">
+                            <img src="..{{ Chat.avatar }}" alt="{{ Chat.name }}" class="fr rounded">
+                            <h3 class="fl tar">{{ Chat.name }}</h3>
+                            <p class="fl tar white-space">{{ Chat.lead }}</p>
+                            <small class="fl">{{ Chat.zaman }}</small>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+    {% if ShowMessages == "SingleChatPage" %}
+        <figure class="MessagesList fl row-xs" style="min-height:888px;" >
+            <div class="MessagesItem row">
+                {% for m in Messages %}
+                    <div class="row padding" style="margin-bottom: 14px;">
+                        <div class="bubble br14 padding {% if m.Sender == request.user %}my_msg fl primary{% else %}fr{% endif %}">
+                            {{ m.Text }}
+                            <small class="row tal" style="color: lightgrey; margin-top: -5px;">{{ m.Tarikh }}</small>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <form class="row SendMsg tr" method="post">
+
+                {% csrf_token %}
+
+                <button type="submit" class="btn primary fl tr">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21.8068 3L1.67761 12L21.8068 21V14L7.4288 12L21.8068 10V3Z" fill="white"></path>
+                    </svg>
+                </button>
+
+                <div class="TextSection br14">
+                    <span contenteditable class="br14 textarea" id="message_text" > </span>
+                </div>
+            </form>
+        </figure>
+    {% endif %}
+    </section>
+    <script>
+        $(document).ready(function(){
+          $(".MessagesList .MessagesItem").animate({ scrollTop: $('.MessagesList .MessagesItem').prop("scrollHeight")}, 1000);
+          $(".SendMsg .btn").click(function(){
+            $.post("",
+            {
+              csrfmiddlewaretoken: "{{ csrf_token }}",
+              text: $("#message_text").text(),
+            },
+            function(data,status){
+              if(data=="saved"){
+
+                  var MsgText = '<div class="row padding" style="margin-bottom: 14px;">' +
+                      '<div class="bubble br14 padding my_msg fl primary">'+ $("#message_text").text() +'' +
+                        '<small class="row tal" style="color: lightgrey; margin-top: -5px;">چند لحظه پیش</small>' +
+                      '</div>' +
+                  '</div>';
+
+                  $(".MessagesList .MessagesItem").append(MsgText);
+                  $(".MessagesList .MessagesItem").animate({ scrollTop: $('.MessagesList .MessagesItem').prop("scrollHeight")}, 1000);
+                  $("#message_text").text("");
+
+              }
+            });
+            return false;
+          });
+        });
+    </script>
+{% endblock main %}
+
+{% block FooterContainerCSS %}margin-top: 0 !important;{% endblock FooterContainerCSS %}
+{% block MainFooterContainer %}height: 88px !important;{% endblock MainFooterContainer %}
