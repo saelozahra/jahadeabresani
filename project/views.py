@@ -47,7 +47,7 @@ def calc_proj_values(self, search):
     return context
 
 
-class Project(TemplateView):
+class ProjectsPage(TemplateView):
 
     def post(self, request):
         search_word = self.request.POST['text']
@@ -57,7 +57,7 @@ class Project(TemplateView):
         return render(request, 'project.html', calc_proj_values(self, ""))
 
 
-class SingleProject(TemplateView):
+class SingleCity(TemplateView):
     def get(self, request, slug, **kwargs):
         final_data=[]
         all_cities = main.models.CityProject.objects.filter(Q(slug__contains=slug))
@@ -99,7 +99,7 @@ class SingleProject(TemplateView):
         return render(request, 'project-single.html', {'projects_data': final_data})
 
 
-class SingleSubProject(TemplateView):
+class SingleProject(TemplateView):
     def get(self, request, slug, id):
         final_data=[]
         all_cities = main.models.Project.objects.filter(Q(slug__contains=slug))

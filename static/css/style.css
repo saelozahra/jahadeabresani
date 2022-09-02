@@ -1,9 +1,11 @@
 :root {
-  --color_primary:   #f2be4e;
-  --color_secondary: #ee6e73;
+  --color_primary: #ee6e73;
+  --color_secondary: darkolivegreen;
+  --color_secondary_light: #556b2f77;
+  --font: 'sahel';
 }
 
-html,body{margin: auto;font-family: sahel;}
+html,body{margin: auto;font-family: var(--font);}
 
 
 .effect-im {
@@ -64,7 +66,7 @@ nav .brand-logo, nav ul a {
 
 
 .ol-popup {
-    font-family: sahel;
+    font-family:  var(--font);
     position: absolute;
     background-color: white;
     /*--webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));*/
@@ -101,10 +103,12 @@ nav .brand-logo, nav ul a {
     margin-left: -11px;
 }
 
-
+.tap-target{
+	background-color: var(--color_secondary);
+}
 
 .progress {
-	background-color: #ee6e7377;
+	background-color: var(--color_secondary_light);
 }
 .progress.full_progress {
 	bottom: 0;

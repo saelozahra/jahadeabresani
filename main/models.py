@@ -109,9 +109,9 @@ class Project(models.Model):
     date_end = jmodels.jDateField(verbose_name='تاریخ پایان')
     team = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, verbose_name='سرپرست کارگاه')
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
-    location = PlainLocationField(based_fields=['city'], zoom=4, null=True, suffix=['city'],
+    location = PlainLocationField(based_fields=['city'], zoom=10, null=True, suffix=['city'],
                                   verbose_name='موقعیت مکانی')
-    Documents = models.ManyToManyField(ProjectFiles, verbose_name="مستندات و تصاویر")
+    Documents = models.ManyToManyField(ProjectFiles, blank=True, verbose_name="مستندات و تصاویر")
     #
     marhale1 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 1')
     marhale1full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 1')
