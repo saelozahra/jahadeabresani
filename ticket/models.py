@@ -1,15 +1,14 @@
-import accounts.models
+from datetime import datetime
 from django.db import models
-from django_jalali.db import models as jmodels
 from django.contrib.auth.models import User, Group
-
-
+import accounts.models
 # Create your models here.
 
+
 class Department(models.Model):
-    Title       = models.CharField(max_length=202, verbose_name='نام دپارتمان')
-    UserGroup   = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='گروه کاربری')
-    Desc        = models.TextField(default="" ,verbose_name='یادداشت' )
+    Title = models.CharField(max_length=202, verbose_name='نام دپارتمان')
+    UserGroup = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='گروه کاربری')
+    Desc = models.TextField(default="", verbose_name='یادداشت')
 
     class Meta:
         verbose_name = "دپارتمان"
@@ -19,10 +18,9 @@ class Department(models.Model):
         return self.Title
 
 
-
 class Chat(models.Model):
-    User1 = models.ForeignKey(User, related_name="user1", on_delete=models.CASCADE, verbose_name='کاربر 1')
-    User2 = models.ForeignKey(User, related_name="user2", on_delete=models.CASCADE, verbose_name='کاربر 2')
+    User1 = models.ForeignKey(accounts.models.CustomUser, related_name="user1", on_delete=models.CASCADE, verbose_name='کاربر 1')
+    User2 = models.ForeignKey(accounts.models.CustomUser, related_name="user2", on_delete=models.CASCADE, verbose_name='کاربر 2')
     Zaman = models.CharField(editable=False, default=datetime.now(), max_length=202, verbose_name='زمان آخرین پیام')
     Lead = models.TextField(editable=False, verbose_name='خلاصه آخرین پیام')
 
@@ -36,9 +34,9 @@ class Chat(models.Model):
 
 class ChatMessage(models.Model):
     RelatedChat = models.ForeignKey(Chat, on_delete=models.CASCADE, verbose_name='مربوط به چت')
-    Sender = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='فرستنده', blank=True, null=True)
+    Sender = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, verbose_name='فرستنده', blank=True, null=True)
     Text = models.TextField(default="", verbose_name='متن پیام')
-    Tarikh = models.CharField(editable=False, blank=True ,null=True ,max_length=202, verbose_name='زمان')
+    Tarikh = models.CharField(editable=False, blank=True, null=True, max_length=202, verbose_name='زمان')
     Attachments = models.ImageField(upload_to='files/images/ticket-attachs', verbose_name='پیوست', default="", blank=True)
     Readed = models.BooleanField(editable=False, verbose_name='دیده شده', default=False)
     Visible = models.BooleanField(editable=False, verbose_name='نمایان', default=True)
@@ -61,4 +59,3 @@ class ChatMessage(models.Model):
 
     def jdate_tarikh(self):
         return self.Tarikh
-
