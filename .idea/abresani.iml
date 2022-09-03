@@ -27,6 +27,7 @@
         <option value="$MODULE_DIR$/main/templates" />
         <option value="$MODULE_DIR$/project/templates" />
         <option value="$MODULE_DIR$/ticket/templates" />
+        <option value="$MODULE_DIR$/city/templates" />
       </list>
     </option>
   </component>

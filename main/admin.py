@@ -10,21 +10,6 @@ class MemberAdmin(ImportExportModelAdmin):
     list_display = ("title", "icon")
     pass
 
-
-class CityAdmin(ExportActionMixin, admin.ModelAdmin):
-
-    list_display = ("city", "slug", "miangin_pishraft", "view_count")
-    list_editable = ("slug", )
-    list_filter = ("miangin_pishraft", )
-    prepopulated_fields = {"slug": ("city",)}
-
-    class Media:
-        # js = ('js/admin/my_own_admin.js',)
-        css = {
-             'all': ('css/adminstyle.css',),
-        }
-
-
 class MaraheleEjraAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ("marhale", "vahed")
 
@@ -54,7 +39,6 @@ class ProjectAdmin(ExportActionMixin, admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(CityProject, CityAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectFiles)
 admin.site.register(MaraheleEjra, MaraheleEjraAdmin)

@@ -21,6 +21,7 @@ from django.urls import path, include
 urlpatterns = [
     path('modiriat/', admin.site.urls),
     path('', include('main.urls')),
+    path('', include('city.urls')),
     path('', include('project.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', include('api.urls')),

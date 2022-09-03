@@ -52,44 +52,6 @@ class SearchPage(TemplateView):
         return render(request, 'search.html', context)
 
 
-class SingleCity(TemplateView):
-    def get(self, request, slug, **kwargs):
-        final_data = []
-        all_cities = main.models.CityProject.objects.filter(Q(slug__contains=slug))
-        projects_data = []
-        this_city_projects = main.models.Project.objects.filter(Q(RelatedCity__slug__contains=slug))
-
-        for pd in this_city_projects:
-            icon = darsad_icon(self, pd.pishrafte_kol)
-            projects_data.append({
-                'id': pd.id,
-                'title': pd.title,
-                'type':  pd.type,
-                'photo':  pd.photo.url,
-                'pishrafte_kol':  pd.pishrafte_kol,
-                'date_start': pd.date_start,
-                'date_end': pd.date_end,
-                'team': pd.team,
-                'icon': icon,
-                'view_count': pd.view_count,
-            })
-
-        for cd in all_cities:
-            all_cities.update(view_count=cd.view_count + 1)
-            final_data = {
-                'city': cd.city,
-                'slug': cd.slug,
-                'projects': projects_data,
-                'miangin_pishraft': cd.miangin_pishraft,
-                'user_login': self.request.user.is_authenticated,
-                'user_id': self.request.user.id,
-                'view_count': cd.view_count,
-            }
-
-        print(final_data)
-        return render(request, 'city-single.html', {'projects_data': final_data})
-
-
 class SingleProject(TemplateView):
     def get(self, request, **kwargs):
         pid = int(kwargs.get("pid"))
