@@ -76,7 +76,8 @@ class ProjectFiles(models.Model):
 
 class CityProject(models.Model):
     city = models.CharField(max_length=202, verbose_name='نام شهر')
-    slug = models.SlugField(null=True, unique=True, verbose_name='نام انگلیسی', help_text="نام انگلیسی شهر را وارد کنید")
+    slug = models.SlugField(null=True, unique=True, verbose_name='نام انگلیسی',
+                            help_text="نام انگلیسی شهر را وارد کنید")
     miangin_pishraft = models.IntegerField(default=0, editable=False, verbose_name='میانگین پیشرفت کل')
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
     note = models.TextField(default="", verbose_name='یادداشت', blank=True, null=True)
@@ -195,103 +196,103 @@ class Project(models.Model):
 
         if self.marhale1full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale1full.numerator,
-                                                                  self.marhale1accomplished.numerator)
+                                                                    self.marhale1accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale2full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale2full.numerator,
-                                                                  self.marhale2accomplished.numerator)
+                                                                    self.marhale2accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale3full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale3full.numerator,
-                                                                  self.marhale3accomplished.numerator)
+                                                                    self.marhale3accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale4full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale4full.numerator,
-                                                                  self.marhale4accomplished.numerator)
+                                                                    self.marhale4accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale5full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale5full.numerator,
-                                                                  self.marhale5accomplished.numerator)
+                                                                    self.marhale5accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale6full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale6full.numerator,
-                                                                  self.marhale6accomplished.numerator)
+                                                                    self.marhale6accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale7full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale7full.numerator,
-                                                                  self.marhale7accomplished.numerator)
+                                                                    self.marhale7accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale8full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale8full.numerator,
-                                                                  self.marhale8accomplished.numerator)
+                                                                    self.marhale8accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale9full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale9full.numerator,
-                                                                  self.marhale9accomplished.numerator)
+                                                                    self.marhale9accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale10full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale10full.numerator,
-                                                                  self.marhale10accomplished.numerator)
+                                                                    self.marhale10accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale11full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale11full.numerator,
-                                                                  self.marhale11accomplished.numerator)
+                                                                    self.marhale11accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale12full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale12full.numerator,
-                                                                  self.marhale12accomplished.numerator)
+                                                                    self.marhale12accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale13full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale13full.numerator,
-                                                                  self.marhale13accomplished.numerator)
+                                                                    self.marhale13accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale14full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale14full.numerator,
-                                                                  self.marhale14accomplished.numerator)
+                                                                    self.marhale14accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale15full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale15full.numerator,
-                                                                  self.marhale15accomplished.numerator)
+                                                                    self.marhale15accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale16full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale16full.numerator,
-                                                                  self.marhale16accomplished.numerator)
+                                                                    self.marhale16accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale17full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale17full.numerator,
-                                                                  self.marhale17accomplished.numerator)
+                                                                    self.marhale17accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale18full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale18full.numerator,
-                                                                  self.marhale18accomplished.numerator)
+                                                                    self.marhale18accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale19full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale19full.numerator,
-                                                                  self.marhale19accomplished.numerator)
+                                                                    self.marhale19accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale20full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale20full.numerator,
-                                                                  self.marhale20accomplished.numerator)
+                                                                    self.marhale20accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale21full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale21full.numerator,
-                                                                  self.marhale21accomplished.numerator)
+                                                                    self.marhale21accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale22full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale22full.numerator,
-                                                                  self.marhale22accomplished.numerator)
+                                                                    self.marhale22accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale23full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale23full.numerator,
-                                                                  self.marhale23accomplished.numerator)
+                                                                    self.marhale23accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale24full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale24full.numerator,
-                                                                  self.marhale24accomplished.numerator)
+                                                                    self.marhale24accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
         if self.marhale25full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale25full.numerator,
-                                                                  self.marhale25accomplished.numerator)
+                                                                    self.marhale25accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
 
         if real_miangin_all == 0:

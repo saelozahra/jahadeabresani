@@ -1,9 +1,7 @@
 from django.contrib import admin
-from import_export.admin import ExportActionMixin, ImportExportModelAdmin, ImportExportActionModelAdmin
 from django_jalali.admin.filters import JDateFieldListFilter
+from import_export.admin import ExportActionMixin, ImportExportModelAdmin
 from .models import *
-import django_jalali.admin as jadmin
-
 # you need import this for adding jalali calander widget
 
 

@@ -34,14 +34,12 @@ def calc_proj_values(self, search):
         all_cities = main.models.CityProject.objects.filter(Q(title__contains=search))
 
     projects_data = []
-    for pd in all_cities:
+    for cd in all_cities:
         projects_data.append({
-            'title': pd.title,
-            'city': pd.city,
-            'photo': pd.photo.url,
-            'slug': pd.slug,
-            'miangin_pishraft': pd.miangin_pishraft,
-            'sub_projects': main.models.Project.objects.filter(Q(RelatedCity__slug__contains=pd.slug)).values(),
+            'title': cd.city,
+            'slug': cd.slug,
+            'miangin_pishraft': cd.miangin_pishraft,
+            'projects': main.models.Project.objects.filter(Q(RelatedCity__slug__contains=cd.slug)).values(),
         })
     context = {'projects_data': projects_data}
     return context
