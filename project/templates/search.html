@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}کنترل پروژه آب رسانی - جستجو{% endblock %}
+{% block MenuTitle %}کنترل پروژه آب رسانی - جستجو{% endblock %}
+
+{% block UnderMap %}
+    <style>
+        .map {
+            filter: blur(6px) brightness(1.1) saturate(1.2) sepia(0.1);
+        }
+
+        .all_projects figure {
+            display: inline-grid ;
+            position: relative;
+            width: calc( 20% - 24px );
+            border: 2px solid #ddd;
+            padding: 14px;
+            background-color: #fff5;
+            margin: 12px;
+        }
+
+        .all_projects figure .bg_img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            filter: blur(2.5px) opacity(0.3);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+.ptag {
+	background-color: var(--color_secondary);
+	color: white;
+	display: inline-block;
+	padding: 2px 6px;
+	border-radius: 3px;
+	margin-top: 10px;
+    transform: skewX(-8deg);
+}
+.ptag i {
+	font-size: 12px;
+	margin: 4px -4px auto 2px;
+	float: right;
+}
+    </style>
+
+
+
+{% endblock UnderMap %}
+
+{% block LeftContent %}
+{% endblock LeftContent %}
+
+{% block BottomContent %}
+
+    <div class="all_projects row" style="direction: rtl;">
+        {% for pd in projects_data %}
+            <figure class="" >
+                <img src="{{ pd.photo.url }}" alt="{{ pd.title }}" class="bg_img">
+                <a style="width: 100%;" class="row tooltipped" href="../project/{{ pd.id }}" title="{{ pd.title }}" data-position="top" data-tooltip="تاریخ نهایی تحویل پروژه: {{ pd.date_end }}">
+                    <figcaption class="title" style="color: black;font-weight: bolder;">{{ pd.title }}</figcaption>
+                    <div class="row">
+                        <div class="ptag">
+                            <i class="material-icons">nature</i>
+                            {{ pd.type.title }}
+                        </div>
+                        <div class="ptag">
+                            <i class="material-icons">near_me</i>
+                            {{ pd.RelatedCity.city }}
+                        </div>
+                        <div class="ptag">
+                            <i class="material-icons">trending_up</i>
+                            {{ pd.view_count }}
+                            <small style="font-size: 62%">بازدید</small>
+                        </div>
+                    </div>
+                    <div class="progress green lighten-4">
+                        <div class="determinate green " style="width: {{ pd.pishrafte_kol }}%"></div>
+                    </div>
+                    <img src="{{ pd.photo.url }}" alt="{{ pd.title }}" class="responsive-img">
+                </a>
+            </figure>
+        {% endfor %}
+    </div>
+
+{% endblock BottomContent %}
+
+
+{% block scripts %}
+
+  var map = new ol.Map({
+    target: 'map',
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      })
+    ],
+    view: new ol.View({
+      center: ol.proj.fromLonLat([52.5745685,29.6291444]),
+      zoom: 8
+    })
+  });
+
+{% endblock scripts %}

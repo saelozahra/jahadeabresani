@@ -45,10 +45,35 @@
             <div class="modal-content">
                 <h4>جستجو در پروژه ها</h4>
                 {% csrf_token %}
-                <p><input name="text" type="search" style="min-height: 188px;" placeholder="عنوان پروژه"></p>
+                <p><input name="text" type="search" style="min-height: 133px;" placeholder="متن جستجو"></p>
+
+                <p>
+                  <label>
+                    <input class="with-gap" name="search_in" type="radio" value="title" checked />
+                    <span>عناوین</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input class="with-gap" name="search_in" type="radio" value="city" />
+                    <span>نام شهر</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input class="with-gap" name="search_in" type="radio" value="admin"  />
+                    <span>سرپرست کارگاه</span>
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input class="with-gap" name="search_in" type="radio" value="project_type"  />
+                    <span>نوع پروژه</span>
+                  </label>
+                </p>
             </div>
             <div class="modal-footer">
-               <input type="submit" value="جستجو" class="btn modal-close waves-effect waves-green btn-flat" >
+               <input type="submit" value="جستجو" class="btn left modal-close waves-effect waves-green" >
             </div>
         </form>
 

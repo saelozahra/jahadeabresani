@@ -26,33 +26,29 @@ def darsad_icon_name(self, numbers):
         return "filter_"+numbers
 
 
-def calc_proj_values(self, search):
-    if search == "":
-        all_cities = main.models.CityProject.objects.all()
-    else:
-        print("search_word: "+search)
-        all_cities = main.models.CityProject.objects.filter(Q(title__contains=search))
-
-    projects_data = []
-    for cd in all_cities:
-        projects_data.append({
-            'title': cd.city,
-            'slug': cd.slug,
-            'miangin_pishraft': cd.miangin_pishraft,
-            'projects': main.models.Project.objects.filter(Q(RelatedCity__slug__contains=cd.slug)).values(),
-        })
-    context = {'projects_data': projects_data}
-    return context
-
-
 class ProjectsPage(TemplateView):
+
+    def get(self, request, **kwargs):
+        all_cities = main.models.CityProject.objects.all()
+        projects_data = []
+        for cd in all_cities:
+            projects_data.append({
+                'title': cd.city,
+                'slug': cd.slug,
+                'miangin_pishraft': cd.miangin_pishraft,
+                'projects': main.models.Project.objects.filter(Q(RelatedCity__slug__contains=cd.slug)).values(),
+            })
+        context = {'projects_data': projects_data}
+        return render(request, 'project.html', context)
+
+
+class SearchPage(TemplateView):
 
     def post(self, request):
         search_word = self.request.POST['text']
-        return render(request, 'project.html', calc_proj_values(self, search_word))
-
-    def get(self, request, **kwargs):
-        return render(request, 'project.html', calc_proj_values(self, ""))
+        print("search_word: "+search_word)
+        context = {'projects_data': main.models.Project.objects.filter(Q(title__contains=search_word))}
+        return render(request, 'search.html', context)
 
 
 class SingleCity(TemplateView):
