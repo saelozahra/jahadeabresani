@@ -45,8 +45,11 @@
             <div class="modal-content">
                 <h4>جستجو در پروژه ها</h4>
                 {% csrf_token %}
-                <p><input name="text" type="search" style="min-height: 133px;" placeholder="متن جستجو"></p>
-
+                <p class=" col s6">
+                    <div class="input-field col s6">
+                      <input name="text" id="last_name" type="search" class="validate">
+                      <label for="last_name">متن جستجو</label>
+                    </div>
                 <p>
                   <label>
                     <input class="with-gap" name="search_in" type="radio" value="title" checked />
