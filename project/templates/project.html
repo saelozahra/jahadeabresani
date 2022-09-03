@@ -42,7 +42,6 @@
     <div class="all_projects row" style="direction: rtl;">
         {% for pd in projects_data %}
             <figure class="" >
-                <img src="{{ pd.photo }}" alt="{{ pd.title }}" class="bg_img">
                 <a style="width: 100%;" class="row tooltipped" href="../project/{{ pd.slug }}" title="{{ pd.title }}" data-position="top" data-tooltip="تاریخ نهایی تحویل پروژه: {{ pd.date_end }}">
                     <figcaption class="title" style="color: black;font-weight: bolder;">{{ pd.title }}</figcaption>
                     <div class="progress green lighten-4">

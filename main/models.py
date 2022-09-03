@@ -63,6 +63,10 @@ class ProjectFiles(models.Model):
         ('map', 'نقشه'),
     )
     DocName = models.CharField(max_length=110, verbose_name='توضیحات', null=False, blank=False)
+    MDIIcon = models.CharField(verbose_name='آیکون', max_length=110, default="filter_drama",
+                               help_text="نام آیکون را از <a href='https://materializecss.com/icons.html'>"
+                                         "https://materializecss.com/icons.html</a>"
+                                         " انتخاب کنید")
     photo = models.FileField(upload_to='files/images/project/sub', verbose_name='فایل', default="")
     DocType = models.CharField(default="image", max_length=72, choices=DocChoices, verbose_name="نوع فایل")
 

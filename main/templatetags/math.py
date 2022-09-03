@@ -1,4 +1,5 @@
 from django import template
+from main.models import ProjectFiles
 
 register = template.Library()
 
@@ -12,6 +13,13 @@ def darsad(value, arg):
 
 def multiply(value, arg):
     return value * arg
+
+
+@register.filter
+def pd_name(value):
+    tuple_choice = ProjectFiles.DocChoices
+    val = dict(tuple_choice).get(value)
+    return val
 
 
 @register.filter

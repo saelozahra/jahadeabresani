@@ -1,8 +1,9 @@
+from django.http.response import Http404
 from django.shortcuts import render
 import main.models
-# Create your views here.
 from django.views.generic import TemplateView
 from django.db.models import Q
+# Create your views here.
 
 
 def darsad_icon(self, numbers):
@@ -90,23 +91,19 @@ class SingleCity(TemplateView):
 
 
 class SingleProject(TemplateView):
-    def get(self, request, slug, pid):
-        final_data = []
+    def get(self, request, **kwargs):
+        pid = int(kwargs.get("pid"))
         this_project = main.models.Project.objects.filter(Q(id=pid))
-        for pd in this_project:
-            icon = darsad_icon(self, pd.pishrafte_kol)
+        if not this_project.exists():
+            raise Http404
+        this_project.update(view_count=this_project[0].view_count + 1)
 
-            final_data.append({
-                'id': pd.id,
-                'title': pd.title,
-                'type': pd.type,
-                'photo': pd.photo.url,
-                'documents': pd.Documents,
-                'pishrafte_kol': pd.pishrafte_kol,
-                'date_start': pd.date_start,
-                'date_end': pd.date_end,
-                'team': pd.team,
-                'icon': icon,
-                'view_count': pd.view_count,
-            })
-        return render(request, 'project-single.html', {'projects_data': final_data})
+        this_project = this_project.get()
+
+        context = {
+            'project': this_project,
+            'lat': this_project.location.split(",")[0],
+            'lng': this_project.location.split(",")[1],
+            'icon': darsad_icon(self, this_project.pishrafte_kol),
+        }
+        return render(request, 'project-single.html', context)

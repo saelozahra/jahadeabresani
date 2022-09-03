@@ -1,29 +1,27 @@
 {% extends "base.html" %}
 {% load math %}
 
-{% block title %} کنترل پروژه آب رسانی -  {{ projects_data.title }} {% endblock %}
+{% block title %} کنترل پروژه آب رسانی -  {{ project.title }} {% endblock %}
 {% block MenuTitle %}
-    <div style="float: left;margin-right: 8px">
-        {% for spd in projects_data.this_single_sub_projects %}
-            {{ spd.title }}
-        {% endfor %}
-    </div>
     <i class="material-icons">reply</i>
-    <div style="float: left">{{ projects_data.title }}</div>
+    <div style="float: left">{{ project.title }}</div>
 {% endblock %}
 
 
 {% block UnderMap %}
     <style>
-      .map {
-        filter: blur(6px) brightness(1.1) saturate(1.2) sepia(0.1);
-      }
+        .map {
+            filter: blur(6px) brightness(1.1) saturate(1.2) sepia(0.1);
+        }
+        .collection a, .secondary-content {
+            color: whitesmoke;
+        }
     </style>
 
 
 
     <div class="progress full_progress">
-        <div class="determinate" style="width: {{ projects_data.miangin_pishraft }}%"></div>
+        <div class="determinate" style="width: {{ project.pishrafte_kol }}%"></div>
     </div>
 
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
@@ -35,11 +33,11 @@
     <div class="tap-target" data-target="menu">
       <div class="tap-target-content white-text">
         <h5>خط مرگ</h5>
-        <p class="white-text">این پروژه در تاریخ <b>{{ projects_data.date_start }}</b> شروع شده
+        <p class="white-text">این پروژه در تاریخ <b>{{ project.date_start }}</b> شروع شده
             <br>
-            و باید در تاریخ <b>{{ projects_data.date_end }}</b> به پایان برسد
+            و باید در تاریخ <b>{{ project.date_end }}</b> به پایان برسد
             <br>
-            اما تا کنون <b>{{ projects_data.miangin_pishraft }}%</b> از زیر پروژه ها پیشرفت داشته اند
+            اما تا کنون <b>{{ project.pishrafte_kol }}%</b> از زیر پروژه ها پیشرفت داشته اند
         </p>
       </div>
     </div>
@@ -47,277 +45,254 @@
 {% endblock UnderMap %}
 
 {% block LeftContent %}
-    <ul class="collection with-header">
-        <li class="collection-header" style="direction: rtl;"><h5>زیرپروژه های دیگر از {{ projects_data.title }}</h5></li>
-        {% for pd in projects_data.subprojects %}
-            <li class="collection-item avatar ">
-                <a href="../{{ projects_data.slug }}/{{ pd.id }}">
-                    <img src="{{ pd.photo }}" alt="" class="circle">
-                    <span class="title">{{ pd.title }}</span>
-                    <p>{{ pd.city }} - {{ pd.date_end }}</p>
+      <div class="row">
+        <div class="card-panel grey lighten-5 z-depth-1">
+          <div class="row valign-wrapper">
+            <div class="col s2">
+                {% if project.team.avatar %}
+                    <img src="{{ project.team.avatar.url}}" alt="" class="circle responsive-img">
+                {% else %}
+                    <img src="/static/Male-placeholder.jpeg" alt="" class="circle responsive-img">
+                {% endif %}
+            </div>
+            <div class="col s10" style="text-align: right">
+                <h5 style="margin: auto">سرپرست کارگاه</h5>
+                <br>
+                <span class="black-text">
+                    {{ project.team.get_full_name}} | {{ project.team.city}}
+                </span>
+                <a class="left" style="margin-right: 8px" href="tel:{{ project.team.phone}}">
+                    <i class="material-icons">call</i>
                 </a>
-                <a href="./{{ projects_data.slug }}/{{ pd.id }}" class="secondary-content waves-effect waves-light" style="margin-top: 5px;margin-right: -8px;">{{ pd.icon|safe }}</a>
-                <div class="progress">
-                    <div class="determinate" style="width: {{ pd.pishrafte_kol }}%"></div>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+                <a class="left" style="margin-left: 8px" href="tel:{{ project.team.email}}">
+                    <i class="material-icons">mail</i>
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>
     <br>
-    <br>
-    <ul class="collapsible popout">
-    {% for spd in projects_data.this_single_sub_projects %}
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>نقشه اجرا پروژه</div>
-            <div class="collapsible-body">
-                <span>
-                    <img style="max-width: 100%" src="{{ spd.naghshe }}">
-                    <br>
-                    <a download="" href="{{ spd.naghshe }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
-                        <i class="material-icons right">download</i>
-                        لینک دانلود
-                    </a>
-                </span>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i>مجوز پروژه</div>
-            <div class="collapsible-body">
-                <span>
-                    <img style="max-width: 100%" src="{{ spd.mojavez }}">
-                    <br>
-                    <a download="" href="{{ spd.mojavez }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
-                        <i class="material-icons right">download</i>
-                        لینک دانلود
-                    </a>
-                </span>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">place</i>مستندات پروژه</div>
-            <div class="collapsible-body">
-                <span>
-                    <img style="max-width: 100%" src="{{ spd.mostanadat }}">
-                    <br>
-                    <a download="" href="{{ spd.mostanadat }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
-                        <i class="material-icons right">download</i>
-                        لینک دانلود
-                    </a>
-                </span>
-            </div>
-        </li>
-        <li>
-            <div class="collapsible-header"><i class="material-icons">whatshot</i>فایل های پروژه</div>
-            <div class="collapsible-body">
-                <span>
-                    <img style="max-width: 100%" src="{{ spd.file_ha }}">
-                    <br>
-                    <a download="" href="{{ spd.file_ha }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
-                        <i class="material-icons right">download</i>
-                        لینک دانلود
-                    </a>
-                </span>
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
+
+
+
+    <div class="collection with-header">
+        <li class="collection-header" style="text-align: right;"><h5><b>مستندات</b> {{ project.title }}</h5></li>
+        <ul class="collapsible popout" style="padding: 14px;">
+
+            {% for pdoc in project.Documents.values %}
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">{{ pdoc.MDIIcon }}</i>{{ pdoc.DocType|pd_name }}</div>
+                    <div class="collapsible-body">
+                        <span>
+                            <img style="max-width: 100%" src="/files/{{ pdoc.photo }}">
+                            <br>
+                            <p class="row">{{ pdoc.DocName }}</p>
+                            <a download="" href="/files/{{ pdoc.photo }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
+                                <i class="material-icons right">download</i>
+                                لینک دانلود
+                            </a>
+                        </span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 {% endblock LeftContent %}
 
 {% block LeftBoxWidth %}48%{% endblock LeftBoxWidth %}
 
 {% block RightContent %}
-    <ul class="collapsible popout" style="direction: rtl;">
-    {% for spd in projects_data.this_single_sub_projects %}
-        {% for spdtmejra in spd.type.marhalel_ejra_s.values %}
+    <ul class="collapsible expandable popout" style="direction: rtl;">
+    {% for spdtmejra in project.type.marhalel_ejra_s.values %}
             <li>
                 <div class="collapsible-header"><i class="material-icons">filter_{{ forloop.counter }}</i>  {{ spdtmejra.marhale }}</div>
                 <div class="collapsible-body">
                     <span>
                         {% if forloop.counter == 1 %}
-                            {{ spd.marhale1 }}
-                            <br>واحد کل: <b>{{ spd.marhale1full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale1accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale1full|menha:spd.marhale1accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale1 }}
+                            <br>واحد کل: <b>{{ project.marhale1full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale1accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale1full|menha:project.marhale1accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 2 %}
-                            {{ spd.marhale2 }}
-                            <br>واحد کل: <b>{{ spd.marhale2full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale2accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale2full|menha:spd.marhale2accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale2 }}
+                            <br>واحد کل: <b>{{ project.marhale2full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale2accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale2full|menha:project.marhale2accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 3 %}
-                            {{ spd.marhale3 }}
-                            <br>واحد کل: <b>{{ spd.marhale3full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale3accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale3full|menha:spd.marhale3accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale3 }}
+                            <br>واحد کل: <b>{{ project.marhale3full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale3accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale3full|menha:project.marhale3accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 4 %}
-                            {{ spd.marhale4 }}
-                            <br>واحد کل: <b>{{ spd.marhale4full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale4accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale4full|menha:spd.marhale4accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale4 }}
+                            <br>واحد کل: <b>{{ project.marhale4full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale4accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale4full|menha:project.marhale4accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 5 %}
-                            {{ spd.marhale5 }}
-                            <br>واحد کل: <b>{{ spd.marhale5full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale5accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale5full|menha:spd.marhale5accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale5 }}
+                            <br>واحد کل: <b>{{ project.marhale5full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale5accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale5full|menha:project.marhale5accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 6 %}
-                            {{ spd.marhale6 }}
-                            <br>واحد کل: <b>{{ spd.marhale6full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale6accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale6full|menha:spd.marhale6accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale6 }}
+                            <br>واحد کل: <b>{{ project.marhale6full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale6accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale6full|menha:project.marhale6accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 7 %}
-                            {{ spd.marhale7 }}
-                            <br>واحد کل: <b>{{ spd.marhale7full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale7accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale7full|menha:spd.marhale7accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale7 }}
+                            <br>واحد کل: <b>{{ project.marhale7full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale7accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale7full|menha:project.marhale7accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 8 %}
-                            {{ spd.marhale8 }}
-                            <br>واحد کل: <b>{{ spd.marhale8full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale8accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale8full|menha:spd.marhale8accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale8 }}
+                            <br>واحد کل: <b>{{ project.marhale8full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale8accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale8full|menha:project.marhale8accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 9 %}
-                            {{ spd.marhale9 }}
-                            <br>واحد کل: <b>{{ spd.marhale9full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale9accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale9full|menha:spd.marhale9accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale9 }}
+                            <br>واحد کل: <b>{{ project.marhale9full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale9accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale9full|menha:project.marhale9accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 10 %}
-                            {{ spd.marhale10 }}
-                            <br>واحد کل: <b>{{ spd.marhale10full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale10accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale10full|menha:spd.marhale10accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale10 }}
+                            <br>واحد کل: <b>{{ project.marhale10full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale10accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale10full|menha:project.marhale10accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 11 %}
-                            {{ spd.marhale11 }}
-                            <br>واحد کل: <b>{{ spd.marhale11full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale11accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale11full|menha:spd.marhale11accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale11 }}
+                            <br>واحد کل: <b>{{ project.marhale11full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale11accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale11full|menha:project.marhale11accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 12 %}
-                            {{ spd.marhale12 }}
-                            <br>واحد کل: <b>{{ spd.marhale12full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale12accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale12full|menha:spd.marhale12accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale12 }}
+                            <br>واحد کل: <b>{{ project.marhale12full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale12accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale12full|menha:project.marhale12accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 13 %}
-                            {{ spd.marhale13 }}
-                            <br>واحد کل: <b>{{ spd.marhale13full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale13accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale13full|menha:spd.marhale13accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale13 }}
+                            <br>واحد کل: <b>{{ project.marhale13full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale13accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale13full|menha:project.marhale13accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 14 %}
-                            {{ spd.marhale14 }}
-                            <br>واحد کل: <b>{{ spd.marhale14full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale14accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale14full|menha:spd.marhale14accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale14 }}
+                            <br>واحد کل: <b>{{ project.marhale14full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale14accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale14full|menha:project.marhale14accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 15 %}
-                            {{ spd.marhale15 }}
-                            <br>واحد کل: <b>{{ spd.marhale15full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale15accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale15full|menha:spd.marhale15accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale15 }}
+                            <br>واحد کل: <b>{{ project.marhale15full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale15accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale15full|menha:project.marhale15accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 16 %}
-                            {{ spd.marhale16 }}
-                            <br>واحد کل: <b>{{ spd.marhale16full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale16accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale16full|menha:spd.marhale16accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale16 }}
+                            <br>واحد کل: <b>{{ project.marhale16full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale16accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale16full|menha:project.marhale16accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 17 %}
-                            {{ spd.marhale17 }}
-                            <br>واحد کل: <b>{{ spd.marhale17full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale17accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale17full|menha:spd.marhale17accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale17 }}
+                            <br>واحد کل: <b>{{ project.marhale17full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale17accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale17full|menha:project.marhale17accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 18 %}
-                            {{ spd.marhale18 }}
-                            <br>واحد کل: <b>{{ spd.marhale18full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale18accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale18full|menha:spd.marhale18accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale18 }}
+                            <br>واحد کل: <b>{{ project.marhale18full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale18accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale18full|menha:project.marhale18accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 19 %}
-                            {{ spd.marhale19 }}
-                            <br>واحد کل: <b>{{ spd.marhale19full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale19accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale19full|menha:spd.marhale19accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale19 }}
+                            <br>واحد کل: <b>{{ project.marhale19full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale19accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale19full|menha:project.marhale19accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 20 %}
-                            {{ spd.marhale20 }}
-                            <br>واحد کل: <b>{{ spd.marhale20full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ spd.marhale20accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ spd.marhale20full|menha:spd.marhale20accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            {{ project.marhale20 }}
+                            <br>واحد کل: <b>{{ project.marhale20full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale20accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale20full|menha:project.marhale20accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ spd.marhale1accomplished|darsad:spd.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% endif %}
                     </span>
                 </div>
             </li>
         {% endfor %}
-    {% endfor %}
     </ul>
 {% endblock RightContent %}
 
@@ -335,11 +310,19 @@
       })
     ],
     view: new ol.View({
-      center: ol.proj.fromLonLat([{{ projects_data.lng }},{{ projects_data.lat }}]),
+      center: ol.proj.fromLonLat([{{ lng }},{{ lat }}]),
       zoom: 14
     })
   });
 
+  $(document).ready(function(){
+
+    var elem = document.querySelector('.collapsible.expandable');
+    var instance = M.Collapsible.init(elem, {
+      accordion: false
+    });
+
+  });
 
 
 {% endblock scripts %}
