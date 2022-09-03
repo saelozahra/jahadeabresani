@@ -2,9 +2,9 @@ from django.contrib import admin
 from import_export.admin import ExportActionMixin, ImportExportModelAdmin, ImportExportActionModelAdmin
 from django_jalali.admin.filters import JDateFieldListFilter
 from .models import *
+import django_jalali.admin as jadmin
 
 # you need import this for adding jalali calander widget
-import django_jalali.admin as jadmin
 
 
 @admin.register(MapObjectTypes)
@@ -15,7 +15,9 @@ class MemberAdmin(ImportExportModelAdmin):
 
 class CityAdmin(ExportActionMixin, admin.ModelAdmin):
 
-    list_display = ("city", "miangin_pishraft", "view_count")
+    list_display = ("city", "slug", "miangin_pishraft", "view_count")
+    list_editable = ("slug", )
+    list_filter = ("miangin_pishraft", )
     prepopulated_fields = {"slug": ("city",)}
 
     class Media:

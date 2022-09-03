@@ -5,25 +5,25 @@ from django.views.generic import TemplateView
 from django.db.models import Q
 
 
-def darsad_icon(self, adad):
-    adad = str(adad)
-    if adad == 100:
+def darsad_icon(self, numbers):
+    numbers = str(numbers)
+    if numbers == 100:
         icon = "<i class='material-icons'>battery_full</i>"
-    elif adad.__len__()>1:
+    elif numbers.__len__() > 1:
         icon = "<i class='material-icons'>percent</i>" \
-               "<i class='material-icons'>" + darsad_icon(self, adad) + "</i>"
+               "<i class='material-icons'>" + darsad_icon(self, numbers) + "</i>"
     else:
         icon = "<i class='material-icons'>percent</i>" \
-               "<i class='material-icons'>" + darsad_icon_name(self, adad[:1]) + "</i>" \
-                "<i class='material-icons'>" + darsad_icon_name(self, adad[1:2]) + "</i>"
+               "<i class='material-icons'>" + darsad_icon_name(self, numbers[:1]) + "</i>" \
+                "<i class='material-icons'>" + darsad_icon_name(self, numbers[1:2]) + "</i>"
     return icon
 
 
-def darsad_icon_name(self,adad):
-    if adad == "0":
+def darsad_icon_name(self, numbers):
+    if numbers == "0":
         return "exposure_zero"
     else:
-        return "filter_"+adad
+        return "filter_"+numbers
 
 
 def calc_proj_values(self, search):
@@ -41,7 +41,7 @@ def calc_proj_values(self, search):
             'photo': pd.photo.url,
             'slug': pd.slug,
             'miangin_pishraft': pd.miangin_pishraft,
-            'sub_projects': main.models.Project.objects.filter(Q(project_id__slug__contains=pd.slug)).values(),
+            'sub_projects': main.models.Project.objects.filter(Q(RelatedCity__slug__contains=pd.slug)).values(),
         })
     context = {'projects_data': projects_data}
     return context
@@ -53,19 +53,20 @@ class ProjectsPage(TemplateView):
         search_word = self.request.POST['text']
         return render(request, 'project.html', calc_proj_values(self, search_word))
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         return render(request, 'project.html', calc_proj_values(self, ""))
 
 
 class SingleCity(TemplateView):
     def get(self, request, slug, **kwargs):
-        final_data=[]
+        final_data = []
         all_cities = main.models.CityProject.objects.filter(Q(slug__contains=slug))
-        subprojects_data = []
-        this_sub_projects = main.models.Project.objects.filter(Q(project_id__slug__contains=slug))
-        for pd in this_sub_projects:
+        projects_data = []
+        this_city_projects = main.models.Project.objects.filter(Q(RelatedCity__slug__contains=slug))
+
+        for pd in this_city_projects:
             icon = darsad_icon(self, pd.pishrafte_kol)
-            subprojects_data.append({
+            projects_data.append({
                 'id': pd.id,
                 'title': pd.title,
                 'type':  pd.type,
@@ -78,66 +79,35 @@ class SingleCity(TemplateView):
                 'view_count': pd.view_count,
             })
 
-        for pd in all_cities:
-            all_cities.update(view_count=(pd.view_count)+1)
+        for cd in all_cities:
+            all_cities.update(view_count=cd.view_count + 1)
             final_data = {
-                'title': pd.title,
-                'city': pd.city,
-                'location': pd.location,
-                'lat': pd.location.split(",")[0],
-                'lng': pd.location.split(",")[1],
-                'photo': pd.photo.url,
-                'slug': pd.slug,
-                'note': pd.note,
-                'subprojects': subprojects_data,
-                'miangin_pishraft': pd.miangin_pishraft,
+                'city': cd.city,
+                'slug': cd.slug,
+                'projects': projects_data,
+                'miangin_pishraft': cd.miangin_pishraft,
                 'user_login': self.request.user.is_authenticated,
                 'user_id': self.request.user.id,
-                'view_count': pd.view_count,
+                'view_count': cd.view_count,
             }
+
         print(final_data)
-        return render(request, 'project-single.html', {'projects_data': final_data})
+        return render(request, 'city-single.html', {'projects_data': final_data})
 
 
 class SingleProject(TemplateView):
-    def get(self, request, slug, id):
-        final_data=[]
-        all_cities = main.models.Project.objects.filter(Q(slug__contains=slug))
-        subprojects_data = []
-        this_sub_projects = main.models.Project.objects.filter(Q(project_id__slug__contains=slug))
-        this_single_sub_projects = main.models.Project.objects.filter(id=id)
-        for pd in this_sub_projects:
+    def get(self, request, slug, pid):
+        final_data = []
+        this_project = main.models.Project.objects.filter(Q(id=pid))
+        for pd in this_project:
             icon = darsad_icon(self, pd.pishrafte_kol)
 
-            if pd.naghshe :
-                naghshe = pd.naghshe.url
-            else:
-                naghshe = ""
-
-            if pd.mostanadat :
-                mostanadat = pd.mostanadat.url
-            else:
-                mostanadat = ""
-
-            if pd.mojavez :
-                mojavez = pd.mojavez.url
-            else:
-                mojavez = ""
-
-            if pd.file_ha :
-                file_ha = pd.file_ha.url
-            else:
-                file_ha = ""
-
-            subprojects_data.append({
+            final_data.append({
                 'id': pd.id,
                 'title': pd.title,
                 'type': pd.type,
                 'photo': pd.photo.url,
-                'naghshe': naghshe,
-                'mostanadat': mostanadat,
-                'mojavez': mojavez,
-                'file_ha': file_ha,
+                'documents': pd.Documents,
                 'pishrafte_kol': pd.pishrafte_kol,
                 'date_start': pd.date_start,
                 'date_end': pd.date_end,
@@ -145,24 +115,4 @@ class SingleProject(TemplateView):
                 'icon': icon,
                 'view_count': pd.view_count,
             })
-        for pd in all_cities:
-
-            all_cities.update(view_count=pd.view_count + 1)
-            final_data = {
-                'sp_id': id,
-                'title': pd.title,
-                'city': pd.city,
-                'location': pd.location,
-                'lat': pd.location.split(",")[0],
-                'lng': pd.location.split(",")[1],
-                'photo': pd.photo.url,
-                'slug': pd.slug,
-                'date_start': pd.date_start,
-                'date_end': pd.date_end,
-                'subprojects': subprojects_data,
-                'this_single_sub_projects': this_single_sub_projects,
-                'miangin_pishraft': pd.miangin_pishraft,
-                'view_count': pd.view_count,
-            }
-        print(final_data)
-        return render(request, 'subproject-single.html', {'projects_data': final_data})
+        return render(request, 'project-single.html', {'projects_data': final_data})
