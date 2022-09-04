@@ -24,7 +24,7 @@
             <h6>{{ projects_count }} پروژه فعال</h6>
         </li>
     </ul>
-    {% if user.is_authenticated %}
+    {% if user.is_superuser %}
         <ul class="collection with-header">
             <li class="collection-header tar"><h4>یادداشت مدیریتی</h4></li>
             <li class="collection-item rtl" style="padding: 0;">
@@ -62,27 +62,27 @@
 
 {% block scripts %}
 
-    function updateNoteText(selfObject,PSlug){
+    function updateNoteText(selfObject,CID){
         var xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
             var HtmlToast = '<span>یادداشت ذخیره شد</span><button class="btn-flat toast-action">بازگشت</button>';
             M.toast({html: HtmlToast, classes: 'rounded'});
         }
-        xhttp.open("POST", "/api/project/");
+        xhttp.open("POST", "/api/city/");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("project="+PSlug+"&csrfmiddlewaretoken={{ csrf_token }}&text="+selfObject.value);
+        xhttp.send("city="+CID+"&csrfmiddlewaretoken={{ csrf_token }}&text="+selfObject.value);
     }
 
     var map = new ol.Map({
         target: 'map',
         layers: [
-          new ol.layer.Tile({
-            source: new ol.source.OSM()
-          })
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
         ],
         view: new ol.View({
-          center: ol.proj.fromLonLat([{{ lng }},{{ lat }}]),
-          zoom: 14
+            center: ol.proj.fromLonLat([{{ lng }},{{ lat }}]),
+            zoom: 14
         })
     });
 

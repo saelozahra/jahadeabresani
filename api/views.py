@@ -1,9 +1,43 @@
 from django.shortcuts import render
+
+import city.models
 import main.models
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
+
+
+class ApiSaveCityNote(APIView):
+
+    def post(self, request, format=None):
+        try:
+            pid = self.request.POST['city']
+            note = self.request.POST['text']
+            print(pid)
+            print(note)
+            city.models.CityProject.objects.filter(slug=pid).update(note=note)
+            return Response({"response": "ok"}, status=status.HTTP_200_OK)
+        except NameError:
+            print(NameError)
+            return Response({"response": NameError}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def get(self, request, format=None):
+        try:
+            projects_data = []
+            all_projects = city.models.CityProject.objects.all()
+            for pd in all_projects:
+                projects_data.append({
+                    'id': pd.id,
+                    'city': pd.city,
+                    'slug': pd.slug,
+                    'miangin_pishraft': pd.miangin_pishraft,
+                    'view_count': pd.view_count,
+                    'note': pd.note,
+                })
+            return Response({"response": projects_data}, status=status.HTTP_200_OK)
+        except:
+            return Response({"response": "error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ApiSaveProjectNote(APIView):
@@ -14,7 +48,7 @@ class ApiSaveProjectNote(APIView):
             note = self.request.POST['text']
             print(pid)
             print(note)
-            main.models.Project.objects.filter(slug=pid).update(note=note)
+            main.models.Project.objects.filter(id=pid).update(note=note)
             return Response({"response": "ok"},status=status.HTTP_200_OK)
         except:
             return Response({"response": "error"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)

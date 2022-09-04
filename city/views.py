@@ -36,6 +36,7 @@ class SingleCity(TemplateView):
             final_data = {
                 'city': cd.city,
                 'slug': cd.slug,
+                'note': cd.note,
                 'projects': projects_data,
                 'projects_count': projects_data.__len__(),
                 'miangin_pishraft': cd.miangin_pishraft,

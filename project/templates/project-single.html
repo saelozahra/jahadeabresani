@@ -76,7 +76,6 @@
           </div>
         </div>
       </div>
-    <br>
 
 
 
@@ -104,6 +103,15 @@
             {% endfor %}
         </ul>
     </div>
+
+    {% if user.is_superuser %}
+        <ul class="collection with-header">
+            <li class="collection-header tar"><h4>یادداشت مدیریتی</h4></li>
+            <li class="collection-item rtl" style="padding: 0;">
+                <textarea class="row" placeholder="یادداشت" onchange="updateNoteText(this,'{{ slug }}');" style="border: 0 none; width: 100%; min-height: 110px; min-width: 100%;margin: auto;" >{{ note }}</textarea>
+            </li>
+        </ul>
+    {% endif %}
 
 {% endblock LeftContent %}
 
@@ -309,18 +317,29 @@
 
 {% block scripts %}
 
-  var map = new ol.Map({
-    target: 'map',
-    layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
-      })
-    ],
-    view: new ol.View({
-      center: ol.proj.fromLonLat([{{ lng }},{{ lat }}]),
-      zoom: 14
-    })
-  });
+    function updateNoteText(selfObject,PID){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            var HtmlToast = '<span>یادداشت ذخیره شد</span><button class="btn-flat toast-action">بازگشت</button>';
+            M.toast({html: HtmlToast, classes: 'rounded'});
+        }
+        xhttp.open("POST", "/api/project/");
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("project="+PID+"&csrfmiddlewaretoken={{ csrf_token }}&text="+selfObject.value);
+    }
+
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([{{ lng }},{{ lat }}]),
+            zoom: 14
+        })
+    });
 
   $(document).ready(function(){
 
