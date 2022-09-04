@@ -11,20 +11,30 @@
 
 {% endblock %}
 
+
+{% block userlinks %}
+    {% if site_url %}
+        <a href="{{ site_url }}#project">مدیریت پروژه</a>
+    {% endif %}
+    {{ block.super }}
+{% endblock %}
+
 {% block extrastyle %}
     {{ block.super }}
 
 <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" />
 
 <style>
-:root {
-  --primary: #ee6e73;
-  --secondary: rgba(238, 110, 115, 0.9);
-  --link-fg: #d76266;
-  --link-selected-fg: #96494d;
-}
+    :root {
+      --primary: #ee6e73;
+      --secondary: rgba(238, 110, 115, 0.9);
+      --link-fg: #d76266;
+      --link-selected-fg: #96494d;
+    }
 
-
+    a[href="{{ site_url }}"] {
+        display: none;
+    }
 
 {#@font-face {#}
 {#    font-family: 'sahel';#}
