@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load saelozahra_tags %}
 
 {% block title %}کنترل پروژه آب رسانی - نمایش پروژه ها{% endblock %}
 {% block MenuTitle %}کنترل پروژه آب رسانی - نمایش پروژه ها{% endblock %}
@@ -51,7 +52,9 @@
                         {% for spd in pd.projects %}
                             <li class="collection-item tooltipped" data-position="right" data-tooltip="تاریخ تحویل این پروژه: {{ spd.date_end }}">
                                 <a href="../../project/{{ spd.id }}">
-                                    {{ spd.title }}
+                                    <span style="color: {{ spd.pishrafte_kol|percent_color }}">
+                                        {{ spd.title }}
+                                    </span>
                                     <div class="progress">
                                         <div class="determinate" style="width: {{ spd.pishrafte_kol }}%"></div>
                                     </div>

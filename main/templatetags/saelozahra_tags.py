@@ -9,7 +9,8 @@ register = template.Library()
 def darsad(value, arg):
     if arg == 0 or value == 0:
         return 0
-    return (value * 100) / arg
+    our_value = (value * 100) / arg
+    return our_value
 
 
 def multiply(value, arg):
@@ -21,6 +22,17 @@ def pd_name(value):
     tuple_choice = ProjectFiles.DocChoices
     val = dict(tuple_choice).get(value)
     return val
+
+
+@register.filter
+def percent_color(value):
+    if value == 100:
+        color = "darkolivegreen"
+    elif value == 0:
+        color = "darkred"
+    else:
+        color = "darkgoldenrod"
+    return color
 
 
 @register.filter
