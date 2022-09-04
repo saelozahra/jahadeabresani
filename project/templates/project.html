@@ -42,22 +42,24 @@
     <div class="all_projects row" style="direction: rtl;">
         {% for pd in projects_data %}
             <figure class="" >
-                <a style="width: 100%;" class="row tooltipped" href="../city/{{ pd.slug }}" title="{{ pd.title }}" data-position="top" data-tooltip="پروژه‌های {{ pd.title }}">
-                    <figcaption class="title" style="color: black;font-weight: bolder;">{{ pd.title }}</figcaption>
+                <div style="width: 100%;" class="row tooltipped" data-position="top" data-tooltip="پروژه‌های {{ pd.title }}">
+                    <a title="{{ pd.title }}" href="../city/{{ pd.slug }}"><figcaption class="title" style="color: black;font-weight: bolder;">{{ pd.title }}</figcaption></a>
                     <div class="progress green lighten-4">
                         <div class="determinate green " style="width: {{ pd.miangin_pishraft }}%"></div>
                     </div>
                     <ul class="collection" style="padding: 0;">
                         {% for spd in pd.projects %}
                             <li class="collection-item tooltipped" data-position="right" data-tooltip="تاریخ تحویل این پروژه: {{ spd.date_end }}">
-                                {{ spd.title }}
-                                <div class="progress">
-                                    <div class="determinate" style="width: {{ spd.pishrafte_kol }}%"></div>
-                                </div>
+                                <a href="../../project/{{ spd.id }}">
+                                    {{ spd.title }}
+                                    <div class="progress">
+                                        <div class="determinate" style="width: {{ spd.pishrafte_kol }}%"></div>
+                                    </div>
+                                </a>
                             </li>
                         {% endfor %}
                     </ul>
-                </a>
+                </div>
             </figure>
         {% endfor %}
     </div>
