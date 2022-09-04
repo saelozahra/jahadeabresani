@@ -61,12 +61,17 @@
                 <span class="black-text">
                     {{ project.team.get_full_name}} | {{ project.team.city}}
                 </span>
-                <a class="left" style="margin-right: 8px" href="tel:{{ project.team.phone}}">
+                <a class="left btn-floating btn-small green darken-4" style="margin-right: 8px; margin-top: -14px;" href="tel:{{ project.team.phone}}">
                     <i class="material-icons">call</i>
                 </a>
-                <a class="left" style="margin-left: 8px" href="tel:{{ project.team.email}}">
+                <a class="left btn-floating btn-small green darken-4" style="margin-left: 8px; margin-top: -14px;" href="tel:{{ project.team.email}}">
                     <i class="material-icons">mail</i>
                 </a>
+                {% if request.user.username != project.team.username %}
+                    <a class="btn-floating btn-small pulse left green darken-4" style="margin-left: 18px; margin-top: -14px;" href="../../chat/{{ request.user.username }}/{{ project.team.username}}">
+                        <i class="material-icons">chat</i>
+                    </a>
+                {% endif %}
             </div>
           </div>
         </div>

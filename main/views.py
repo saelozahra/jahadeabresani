@@ -16,7 +16,7 @@ class Index(TemplateView):
             projects_data.append({
                 'id': pd.id,
                 'title': pd.title,
-                'city': pd.RelatedCity.city,
+                'city': pd.RelatedCity,
                 'location': pd.location,
                 'lat': pd.location.split(",")[0],
                 'lng': pd.location.split(",")[1],
