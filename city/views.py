@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 import city.models
 import main.models
-from project.views import darsad_icon
+from project.views import percent_icon
 # Create your views here.
 
 
@@ -16,7 +16,7 @@ class SingleCity(TemplateView):
         this_city_projects = main.models.Project.objects.filter(Q(RelatedCity__slug__contains=slug))
 
         for pd in this_city_projects:
-            icon = darsad_icon(self, pd.pishrafte_kol)
+            icon = percent_icon(pd.pishrafte_kol)
             projects_data.append({
                 'id': pd.id,
                 'title': pd.title,

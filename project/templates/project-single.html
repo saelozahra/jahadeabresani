@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load math %}
+{% load saelozahra_tags %}
 
 {% block title %} کنترل پروژه آب رسانی -  {{ project.title }} {% endblock %}
 {% block MenuTitle %}
@@ -106,7 +106,7 @@
     <ul class="collapsible expandable popout" style="direction: rtl;">
     {% for spdtmejra in project.type.marhalel_ejra_s.values %}
             <li>
-                <div class="collapsible-header"><i class="material-icons">filter_{{ forloop.counter }}</i>  {{ spdtmejra.marhale }}</div>
+                <div class="collapsible-header">{{ forloop.counter|filter_number_icon|safe }}  {{ spdtmejra.marhale }}</div>
                 <div class="collapsible-body">
                     <span>
                         {% if forloop.counter == 1 %}

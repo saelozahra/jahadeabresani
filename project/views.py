@@ -1,3 +1,5 @@
+import sys
+
 from django.http.response import Http404
 from django.shortcuts import render
 import main.models
@@ -6,21 +8,25 @@ from django.db.models import Q
 # Create your views here.
 
 
-def darsad_icon(self, numbers):
+def percent_icon(numbers, is_percent=True):
+    int_number = int(numbers)
     numbers = str(numbers)
-    if numbers == 100:
-        icon = "<i class='material-icons'>battery_full</i>"
-    elif numbers.__len__() > 1:
-        icon = "<i class='material-icons'>percent</i>" \
-               "<i class='material-icons'>" + darsad_icon(self, numbers) + "</i>"
+
+    percent_icon_html = ""
+    if is_percent:
+        percent_icon_html = "<i class='material-icons'>percent</i>"
+
+    if int_number == 100:
+        icon = "<i class='material-icons green'>battery_full</i>"
+    elif int_number < 10:
+        icon = percent_icon_html + "<i class='material-icons'>" + darsad_icon_name(numbers) + "</i>"
     else:
-        icon = "<i class='material-icons'>percent</i>" \
-               "<i class='material-icons'>" + darsad_icon_name(self, numbers[:1]) + "</i>" \
-                "<i class='material-icons'>" + darsad_icon_name(self, numbers[1:2]) + "</i>"
+        icon = percent_icon_html + "<i class='material-icons'>" + darsad_icon_name(numbers[:1]) + "</i>" \
+                "<i class='material-icons'>" + darsad_icon_name(numbers[1:2]) + "</i>"
     return icon
 
 
-def darsad_icon_name(self, numbers):
+def darsad_icon_name(numbers):
     if numbers == "0":
         return "exposure_zero"
     else:
@@ -46,6 +52,7 @@ class ProjectsPage(TemplateView):
 class SearchPage(TemplateView):
 
     def post(self, request):
+        query = ""
         search_word = self.request.POST['text']
         search_in = self.request.POST['search_in']
         baze_pishraft = self.request.POST['baze_pishraft']
@@ -82,8 +89,8 @@ class SearchPage(TemplateView):
             'search_word': search_word,
             'min': baze_min,
             'max': baze_max,
+            'projects_data': query,
             'projects_count': query.exists(),
-            'projects_data': query
         }
         print("search_in: "+search_in)
         print("search_word: "+search_word)
@@ -106,6 +113,6 @@ class SingleProject(TemplateView):
             'project': this_project,
             'lat': this_project.location.split(",")[0],
             'lng': this_project.location.split(",")[1],
-            'icon': darsad_icon(self, this_project.pishrafte_kol),
+            'icon': percent_icon(this_project.pishrafte_kol),
         }
         return render(request, 'project-single.html', context)

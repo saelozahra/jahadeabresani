@@ -10,6 +10,9 @@ html,body{margin: auto;font-family: var(--font);}
 .rtl{
     direction: rtl;
 }
+.ltr{
+    direction: ltr;
+}
 .tar{
     text-align: right;
 }
