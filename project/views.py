@@ -82,7 +82,7 @@ class SearchPage(TemplateView):
             'search_word': search_word,
             'min': baze_min,
             'max': baze_max,
-            'projects_count': query.count(),
+            'projects_count': query.exists(),
             'projects_data': query
         }
         print("search_in: "+search_in)

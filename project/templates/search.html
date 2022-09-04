@@ -55,6 +55,9 @@
 {% block BottomContent %}
 
     <div class="all_projects row" style="direction: rtl;">
+    {% if not projects_count %}
+        <h5>چیزی پیدا نشد  🤔</h5>
+    {% endif %}
         {% for pd in projects_data %}
             <figure class="" >
                 <img src="{{ pd.photo.url }}" alt="{{ pd.title }}" class="bg_img">
