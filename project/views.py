@@ -47,6 +47,8 @@ class SearchPage(TemplateView):
 
     def post(self, request):
         search_word = self.request.POST['text']
+        search_in = self.request.POST['search_in']
+        print("search_in: "+search_in)
         print("search_word: "+search_word)
         context = {'projects_data': main.models.Project.objects.filter(Q(title__contains=search_word))}
         return render(request, 'search.html', context)

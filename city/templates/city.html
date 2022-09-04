@@ -19,15 +19,15 @@
 
 {% block LeftContent %}
     <ul class="collection with-header">
-        <li class="collection-header" style="direction: rtl; text-align: right">
+        <li class="collection-header tar rtl">
             <h4>{{ city }}</h4>
             <h6>{{ projects_count }} پروژه فعال</h6>
         </li>
     </ul>
     {% if user.is_authenticated %}
         <ul class="collection with-header">
-            <li class="collection-header" style="text-align: right;"><h4>یادداشت مدیریتی</h4></li>
-            <li class="collection-item " style="direction: rtl;padding: 0;">
+            <li class="collection-header tar"><h4>یادداشت مدیریتی</h4></li>
+            <li class="collection-item rtl" style="padding: 0;">
                 <textarea class="row" placeholder="یادداشت" onchange="updateNoteText(this,'{{ slug }}');" style="border: 0 none; width: 100%; min-height: 202px;margin: auto;" >{{ note }}</textarea>
             </li>
         </ul>

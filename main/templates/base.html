@@ -8,11 +8,13 @@
     <link rel="shortcut icon" type="image/png" href="/static/favicon.ico" >
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/nouislider.css">
     <link rel="stylesheet" href="/static/css/ol.css">
     <link rel="stylesheet" href="/static/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/js/materialize.min.js"></script>
+    <script src="/static/js/nouislider.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
@@ -41,15 +43,25 @@
             </div>
         </nav>
         <!-- Search Structure -->
-        <form style="direction: rtl;" id="search" class="modal modal-fixed-footer" method="post" action="../../../search/">
+        <form id="search" class="modal modal-fixed-footer rtl" method="post" action="../../../search/">
             <div class="modal-content">
                 <h4>جستجو در پروژه ها</h4>
                 {% csrf_token %}
-                <p class=" col s6">
-                    <div class="input-field col s6">
-                      <input name="text" id="last_name" type="search" class="validate">
-                      <label for="last_name">متن جستجو</label>
-                    </div>
+                <br>
+                <div class="input-field col s6">
+                  <input name="text" id="last_name" type="search" class="validate">
+                  <label for="last_name">متن جستجو</label>
+                </div>
+                <br>
+                <label>
+                    جستجو بر اساس بازه پیشرفت پروژه:
+                    <input type="hidden" name="baze_pishraft" value="">
+                    <div id="baze_pishraft"></div>
+                </label>
+                <br>
+                <br>
+                <br>
+                <label>جستجو در فیلد : </label>
                 <p>
                   <label>
                     <input class="with-gap" name="search_in" type="radio" value="title" checked />
@@ -105,6 +117,25 @@
 
         {% block scripts %}
         {% endblock scripts %}
+
+        var slider = document.getElementById('baze_pishraft');
+        noUiSlider.create(slider, {
+            start: [0, 100],
+            connect: true,
+            step: 1,
+            orientation: 'horizontal', // 'horizontal' or 'vertical'
+            range: {
+                'min': 0,
+                'max': 100
+            },
+            format: wNumb({
+                decimals: 0
+            })
+        });
+
+        slider.noUiSlider.on('set.one', function (values) {
+            $('input[name="baze_pishraft"]').val(values);
+        });
 
         $(document).ready(function(){
             $('.tap-target').tapTarget();

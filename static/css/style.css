@@ -7,6 +7,25 @@
 
 html,body{margin: auto;font-family: var(--font);}
 
+.rtl{
+    direction: rtl;
+}
+.tar{
+    text-align: right;
+}
+.tal{
+    text-align: left;
+}
+.taj{
+    text-align: justify;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+
 button, input, optgroup, select, textarea {
 	font-family: var(--font);
 }
