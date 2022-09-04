@@ -29,7 +29,7 @@ class ProjectAdmin(ExportActionMixin, admin.ModelAdmin):
     thumbnail_preview.allow_tags = True
 
     class Media:
-        js = ('admin_scripts.js',)
+        js = ('js/admin_scripts.js',)
         css = {
              'all': ('css/adminstyle.css',),
         }
