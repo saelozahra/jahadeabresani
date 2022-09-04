@@ -47,15 +47,16 @@
             <div class="modal-content">
                 <h4>جستجو در پروژه ها</h4>
                 {% csrf_token %}
+{#                @TODO: autocomplete search#}
                 <br>
                 <div class="input-field col s6">
-                  <input name="text" id="last_name" type="search" class="validate">
-                  <label for="last_name">متن جستجو</label>
+                  <input name="text" id="search_text" type="search" value="{{ search_word }}" class="validate">
+                  <label for="search_text" id="search_text_label">متن جستجو</label>
                 </div>
                 <br>
                 <label>
                     جستجو بر اساس بازه پیشرفت پروژه:
-                    <input type="hidden" name="baze_pishraft" value="">
+                    <input type="hidden" name="baze_pishraft" value="0,100">
                     <div id="baze_pishraft"></div>
                 </label>
                 <br>
@@ -140,8 +141,29 @@
         $(document).ready(function(){
             $('.tap-target').tapTarget();
             $('.collapsible').collapsible();
-            $('.modal').modal();
-            $('.tooltipped').tooltip();
+            $(".modal").modal();
+            $(".tooltipped").tooltip();
+            $('input[name="search_in"]').change(function() {
+                if (this.value === 'title') {
+                    $("#search_text_label").text("عنوان پروژه را بنویسید");
+                }else if (this.value === 'city') {
+                    $("#search_text_label").text("نام شهر را بنویسید");
+                }else if (this.value === 'admin') {
+                    $("#search_text_label").text("نام، نام خانوادگی یا نام کاربری سرپرست کارگاه را بنویسید");
+                }else if (this.value === 'project_type') {
+                    $("#search_text_label").text("نوع پروژه را بنویسید");
+                }
+            });
+
+            if("{{ search_in }}" === "title"){
+                 $('input[value="title"]').attr("checked", "checked");
+            }else if("{{ search_in }}" === "city"){
+                 $('input[value="city"]').attr("checked", "checked");
+            }else if("{{ search_in }}" === "admin"){
+                 $('input[value="admin"]').attr("checked", "checked");
+            }else if("{{ search_in }}" === "project_type"){
+                 $('input[value="project_type"]').attr("checked", "checked");
+            }
         });
 
     </script>

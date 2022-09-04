@@ -48,9 +48,47 @@ class SearchPage(TemplateView):
     def post(self, request):
         search_word = self.request.POST['text']
         search_in = self.request.POST['search_in']
+        baze_pishraft = self.request.POST['baze_pishraft']
+        baze_min = baze_pishraft.split(",")[0]
+        baze_max = baze_pishraft.split(",")[1]
+        if search_in == "title":
+            query = main.models.Project.objects.filter(
+                Q(title__contains=search_word, pishrafte_kol__range=(baze_min, baze_max))
+            )
+        elif search_in == "city":
+            query = main.models.Project.objects.filter(
+                Q(RelatedCity__slug=search_word, pishrafte_kol__range=(baze_min, baze_max))
+                or
+                Q(RelatedCity__city__contains=search_word, pishrafte_kol__range=(baze_min, baze_max))
+            )
+        elif search_in == "admin":
+            query = main.models.Project.objects.filter(
+                Q(team__first_name__contains=search_word, pishrafte_kol__range=(baze_min, baze_max))
+                |
+                Q(team__last_name__contains=search_word, pishrafte_kol__range=(baze_min, baze_max))
+                |
+                Q(team__username__contains=search_word, pishrafte_kol__range=(baze_min, baze_max))
+            )
+        elif search_in == "project_type":
+            query = main.models.Project.objects.filter(
+                Q(
+                    type__title=search_word,
+                    pishrafte_kol__range=(baze_min, baze_max)
+                )
+            )
+
+        context = {
+            'search_in': search_in,
+            'search_word': search_word,
+            'min': baze_min,
+            'max': baze_max,
+            'projects_count': query.count(),
+            'projects_data': query
+        }
         print("search_in: "+search_in)
         print("search_word: "+search_word)
-        context = {'projects_data': main.models.Project.objects.filter(Q(title__contains=search_word))}
+        print("baze_pishraft: "+baze_pishraft+" min: "+baze_min+" max: "+baze_max)
+
         return render(request, 'search.html', context)
 
 
