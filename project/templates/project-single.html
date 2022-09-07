@@ -89,7 +89,7 @@
                     <div class="collapsible-body">
                         <span>
                             <a data-lightbox="lb" data-title="{{ pdoc.DocType|pd_name }}" href="/files/{{ pdoc.photo }}" >
-                                <img style="max-width: 100%" src="/files/{{ pdoc.photo }}">
+                                <img style="max-width: 100%" src="/files/{{ pdoc.photo }}" alt="{{ pdoc.DocName }}">
                             </a>
                             <br>
                             <p class="row">{{ pdoc.DocName }}</p>
@@ -139,7 +139,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale2full|menha:project.marhale2accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale2accomplished|darsad:project.marhale2full }}%"></div>
                             </div>
                         {% elif forloop.counter == 3 %}
                             {{ project.marhale3 }}
@@ -148,7 +148,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale3full|menha:project.marhale3accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale3accomplished|darsad:project.marhale3full }}%"></div>
                             </div>
                         {% elif forloop.counter == 4 %}
                             {{ project.marhale4 }}
@@ -157,7 +157,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale4full|menha:project.marhale4accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale4accomplished|darsad:project.marhale4full }}%"></div>
                             </div>
                         {% elif forloop.counter == 5 %}
                             {{ project.marhale5 }}
@@ -166,7 +166,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale5full|menha:project.marhale5accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale5accomplished|darsad:project.marhale5full }}%"></div>
                             </div>
                         {% elif forloop.counter == 6 %}
                             {{ project.marhale6 }}
@@ -175,7 +175,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale6full|menha:project.marhale6accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale6accomplished|darsad:project.marhale6full }}%"></div>
                             </div>
                         {% elif forloop.counter == 7 %}
                             {{ project.marhale7 }}
@@ -184,7 +184,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale7full|menha:project.marhale7accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale7accomplished|darsad:project.marhale7full }}%"></div>
                             </div>
                         {% elif forloop.counter == 8 %}
                             {{ project.marhale8 }}
@@ -193,7 +193,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale8full|menha:project.marhale8accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale8accomplished|darsad:project.marhale8full }}%"></div>
                             </div>
                         {% elif forloop.counter == 9 %}
                             {{ project.marhale9 }}
@@ -202,7 +202,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale9full|menha:project.marhale9accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale9accomplished|darsad:project.marhale9full }}%"></div>
                             </div>
                         {% elif forloop.counter == 10 %}
                             {{ project.marhale10 }}
@@ -211,7 +211,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale10full|menha:project.marhale10accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale10accomplished|darsad:project.marhale10full }}%"></div>
                             </div>
                         {% elif forloop.counter == 11 %}
                             {{ project.marhale11 }}
@@ -220,7 +220,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale11full|menha:project.marhale11accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale11accomplished|darsad:project.marhale11full }}%"></div>
                             </div>
                         {% elif forloop.counter == 12 %}
                             {{ project.marhale12 }}
@@ -229,7 +229,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale12full|menha:project.marhale12accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale12accomplished|darsad:project.marhale12full }}%"></div>
                             </div>
                         {% elif forloop.counter == 13 %}
                             {{ project.marhale13 }}
@@ -238,7 +238,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale13full|menha:project.marhale13accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale13accomplished|darsad:project.marhale13full }}%"></div>
                             </div>
                         {% elif forloop.counter == 14 %}
                             {{ project.marhale14 }}
@@ -247,7 +247,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale14full|menha:project.marhale14accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale14accomplished|darsad:project.marhale14full }}%"></div>
                             </div>
                         {% elif forloop.counter == 15 %}
                             {{ project.marhale15 }}
@@ -256,7 +256,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale15full|menha:project.marhale15accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale15accomplished|darsad:project.marhale15full }}%"></div>
                             </div>
                         {% elif forloop.counter == 16 %}
                             {{ project.marhale16 }}
@@ -265,7 +265,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale16full|menha:project.marhale16accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale16accomplished|darsad:project.marhale16full }}%"></div>
                             </div>
                         {% elif forloop.counter == 17 %}
                             {{ project.marhale17 }}
@@ -274,7 +274,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale17full|menha:project.marhale17accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale17accomplished|darsad:project.marhale17full }}%"></div>
                             </div>
                         {% elif forloop.counter == 18 %}
                             {{ project.marhale18 }}
@@ -283,7 +283,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale18full|menha:project.marhale18accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale18accomplished|darsad:project.marhale18full }}%"></div>
                             </div>
                         {% elif forloop.counter == 19 %}
                             {{ project.marhale19 }}
@@ -292,7 +292,7 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale19full|menha:project.marhale19accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale19accomplished|darsad:project.marhale19full }}%"></div>
                             </div>
                         {% elif forloop.counter == 20 %}
                             {{ project.marhale20 }}
@@ -301,7 +301,52 @@
                             <br>میزان باقیمانده: <b>{{ project.marhale20full|menha:project.marhale20accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
                             <br>
                             <div class="progress">
-                                <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
+                                <div class="determinate" style="width: {{ project.marhale20accomplished|darsad:project.marhale20full }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 21 %}
+                            {{ project.marhale21 }}
+                            <br>واحد کل: <b>{{ project.marhale21full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale21accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale21full|menha:project.marhale21accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ project.marhale21accomplished|darsad:project.marhale21full }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 22 %}
+                            {{ project.marhale22 }}
+                            <br>واحد کل: <b>{{ project.marhale22full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale22accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale22full|menha:project.marhale22accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ project.marhale22accomplished|darsad:project.marhale22full }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 23 %}
+                            {{ project.marhale23 }}
+                            <br>واحد کل: <b>{{ project.marhale23full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale23accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale23full|menha:project.marhale23accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ project.marhale23accomplished|darsad:project.marhale23full }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 24 %}
+                            {{ project.marhale24 }}
+                            <br>واحد کل: <b>{{ project.marhale24full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale24accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale24full|menha:project.marhale24accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ project.marhale24accomplished|darsad:project.marhale24full }}%"></div>
+                            </div>
+                        {% elif forloop.counter == 25 %}
+                            {{ project.marhale25 }}
+                            <br>واحد کل: <b>{{ project.marhale25full }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده: <b>{{ project.marhale25accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>میزان باقیمانده: <b>{{ project.marhale25full|menha:project.marhale25accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ project.marhale25accomplished|darsad:project.marhale25full }}%"></div>
                             </div>
                         {% endif %}
                     </span>

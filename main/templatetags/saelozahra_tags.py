@@ -10,6 +10,9 @@ def darsad(value, arg):
     if arg == 0 or value == 0:
         return 0
     our_value = (value * 100) / arg
+
+    print(str(value)+" | "+str(arg)+" | "+str(our_value))
+
     return our_value
 
 
