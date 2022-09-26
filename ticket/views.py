@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from rest_framework import status
 from .models import *
 from accounts.models import CustomUser
-import ticket.models
+
 
 # Create your views here.
 
@@ -81,10 +81,10 @@ class ChatList(TemplateView):
 
             print("me: " + self.request.user.first_name)
             if C.User1 == self.request.user:
-                print("to: "+C.User2.first_name)
+                print("to: " + C.User2.first_name)
                 to_user = C.User2
             else:
-                print("to: "+C.User1.first_name)
+                print("to: " + C.User1.first_name)
                 to_user = C.User1
 
             avatar_url = ""
@@ -94,6 +94,7 @@ class ChatList(TemplateView):
 
             chat_list.append({
                 "id": C.id,
+                "title": C.__str__(),
                 "name": to_user.first_name + " " + to_user.last_name,
                 "username": to_user.username,
                 "avatar": avatar_url,
@@ -173,7 +174,6 @@ class CreateNewChat(TemplateView):
         )
 
         if our_chat.count() == 0:
-
             new_chat_id = Chat.objects.create(
                 User1_id=my_user.get().id,
                 User2_id=to_user.get().id,
@@ -202,13 +202,14 @@ class CreateNewChat(TemplateView):
                 or
                 (Q(User1__username=to_slug) and Q(User2__username=my_slug))
             )
+
         print("our_chat")
         print(our_chat)
-        print("our_chat 2")
         new_chat_id = our_chat.get()
 
         print(new_chat_id)
         print(new_chat_id.id)
-        return HttpResponseRedirect('../../chat/'+str(new_chat_id.id))
+
+        return HttpResponseRedirect('../../chat/' + str(new_chat_id.id))
 
         # return render(request, 'Chat.html')
