@@ -5,6 +5,7 @@ from django.shortcuts import render
 import main.models
 from django.views.generic import TemplateView
 from django.db.models import Q
+
 # Create your views here.
 
 
@@ -95,6 +96,43 @@ class SearchPage(TemplateView):
         print("search_in: "+search_in)
         print("search_word: "+search_word)
         print("baze_pishraft: "+baze_pishraft+" min: "+baze_min+" max: "+baze_max)
+
+        return render(request, 'search.html', context)
+        # end method
+    # end method
+
+    def get(self, request, **kwargs):
+
+        path_name = request.resolver_match.view_name
+        print(path_name)
+
+        if path_name == "less_than_20":
+            title = "پروژه های با میانگین پیشرفت کمتر از 20%"
+            query = main.models.Project.objects.filter(
+                Q(pishrafte_kol__range=(0, 20))
+            )
+        elif path_name == "more_than_80":
+            title = "پروژه های با میانگین پیشرفت بالای 80%"
+            query = main.models.Project.objects.filter(
+                Q(pishrafte_kol__range=(80, 100))
+            )
+        elif path_name == "inactive2month":
+            title = "پروژه های غیرفعال در دو ماه اخیر"
+            query = main.models.Project.objects.filter(
+                # Q(title__contains=search_word, pishrafte_kol__range=(baze_min, baze_max))
+            )
+        else:
+            query = main.models.Project.objects.all()
+            title = "title"
+
+        context = {
+            'search_in': title,
+            'search_word': "",
+            'min': 0,
+            'max': 100,
+            'projects_data': query,
+            'projects_count': query.exists(),
+        }
 
         return render(request, 'search.html', context)
 

@@ -12,11 +12,14 @@
     <link rel="stylesheet" href="/static/css/nouislider.css">
     <link rel="stylesheet" href="/static/css/ol.css">
     <link rel="stylesheet" href="/static/css/lightbox.min.css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/css/owl.theme.green.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <script src="/static/js/jquery-3.2.1.min.js"></script>
     <script src="/static/js/materialize.min.js"></script>
     <script src="/static/js/nouislider.min.js"></script>
     <script src="/static/js/lightbox.min.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
@@ -97,6 +100,18 @@
 
 
         <div class="{% block ContainerRowClass %}row{% endblock ContainerRowClass %}">
+
+            <div class="row owl-carousel  owl-theme" id="display_search_list" style="direction: ltr ;display: {% block DisplaySearchList %}none{% endblock DisplaySearchList %}">
+                <a class="ptag" href="../../search/inactive2month">غیرفعال در دو ماه اخیر</a>
+                <a class="ptag" href="../../search/latest_actived">جدیدا بروز شده</a>
+                <a class="ptag" href="../../search/without_files">فاقد مستندات</a>
+                <a class="ptag" href="../../search/has_note">دارای یادداشت مدیریتی</a>
+                <a class="ptag" href="../../search/less_than_20">کمتر از 20% پیشرفت</a>
+                <a class="ptag" href="../../search/more_than_80">بالای 80% پیشرفت</a>
+                <a class="ptag" href="../../search/week_end_date">تاریخ پایان در این هفته</a>
+                <a class="ptag" href="../../search/month_end_date">تاریخ پایان در این ماه</a>
+            </div>
+
             <div style="float: left; width: {% block LeftBoxWidth %}313px{% endblock LeftBoxWidth %};max-height: 789px;overflow-y: auto;padding: 10px">
                 {% block LeftContent %}
                 {% endblock LeftContent %}
@@ -167,7 +182,13 @@
                  $('input[value="project_type"]').attr("checked", "checked");
             }
         });
-
+        $('#display_search_list').owlCarousel({
+            margin: 10,
+            loop: true,
+            center: true,
+            autoWidth: true,
+            items: 4,
+        })
     </script>
 
 </body>
