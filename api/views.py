@@ -57,6 +57,7 @@ class ApiUpdateProject(APIView):
                 print(pid+": "+level+": "+text)
                 lookup = "marhale%s" % level
                 main.models.Project.objects.filter(id=pid).update(**{lookup: text})
+                register_event(pid, "تغییر توضیحات مرحله", "ثبت " + text + "به عنوان توضیحات جدید مرحله " + level)
 
             elif "level" in self.request.POST:
                 text = self.request.POST['text']
