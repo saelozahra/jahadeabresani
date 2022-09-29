@@ -51,6 +51,8 @@ class ApiUpdateProject(APIView):
                 note = self.request.POST['note']
                 print(note)
                 main.models.Project.objects.filter(id=pid).update(note=note)
+                register_event(pid, "ثبت یادداشت پروژه", "متن " + note +
+                               "به عنوان یادداشت جدید برای پروژه " + pid + " ثبت شد. ")
             elif "desc" in self.request.POST:
                 text = self.request.POST['desc']
                 level = self.request.POST['level']
