@@ -1,3 +1,5 @@
+from datetime import timezone
+
 from django.db.models import Q
 import accounts.models
 from django.core.exceptions import ValidationError
@@ -91,6 +93,8 @@ class Project(models.Model):
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
     location = PlainLocationField(based_fields=['city'], zoom=10, null=True, suffix=['city'],
                                   verbose_name='موقعیت مکانی')
+    last_update = models.DateTimeField(auto_now_add=True, blank=True, null=True,
+                                       editable=False, verbose_name='آخرین بروزرسانی')
     Documents = models.ManyToManyField(ProjectFiles, blank=True, verbose_name="مستندات و تصاویر")
     #
     marhale1 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 1')

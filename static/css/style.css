@@ -160,3 +160,8 @@ nav .brand-logo, nav ul a {
 .collapsible-header i {
 	margin: auto;
 }
+
+[contenteditable="true"]:focus {
+	padding: 5px;
+	color: #3e2723;
+}

@@ -123,20 +123,27 @@
             <li>
                 <div class="collapsible-header">{{ forloop.counter|filter_number_icon|safe }}  {{ spdtmejra.marhale }}</div>
                 <div class="collapsible-body">
-                    <span>
+                    <span style="user-select: none">
+
+
                         {% if forloop.counter == 1 %}
                             {{ project.marhale1 }}
                             <br>واحد کل: <b>{{ project.marhale1full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale1accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale1full|menha:project.marhale1accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 1, {{ id }})" >{{ project.marhale1accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale1full|menha:project.marhale1accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
+                            <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale1accomplished|darsad:project.marhale1full }}%"></div>
                             </div>
                         {% elif forloop.counter == 2 %}
                             {{ project.marhale2 }}
                             <br>واحد کل: <b>{{ project.marhale2full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale2accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale2full|menha:project.marhale2accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 2, {{ id }})" >{{ project.marhale2accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale2full|menha:project.marhale2accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale2accomplished|darsad:project.marhale2full }}%"></div>
@@ -144,8 +151,10 @@
                         {% elif forloop.counter == 3 %}
                             {{ project.marhale3 }}
                             <br>واحد کل: <b>{{ project.marhale3full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale3accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale3full|menha:project.marhale3accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 3, {{ id }})" >{{ project.marhale3accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale3full|menha:project.marhale3accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale3accomplished|darsad:project.marhale3full }}%"></div>
@@ -153,8 +162,10 @@
                         {% elif forloop.counter == 4 %}
                             {{ project.marhale4 }}
                             <br>واحد کل: <b>{{ project.marhale4full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale4accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale4full|menha:project.marhale4accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 4, {{ id }})" >{{ project.marhale4accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale4full|menha:project.marhale4accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale4accomplished|darsad:project.marhale4full }}%"></div>
@@ -162,8 +173,10 @@
                         {% elif forloop.counter == 5 %}
                             {{ project.marhale5 }}
                             <br>واحد کل: <b>{{ project.marhale5full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale5accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale5full|menha:project.marhale5accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 5, {{ id }})" >{{ project.marhale5accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale5full|menha:project.marhale5accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale5accomplished|darsad:project.marhale5full }}%"></div>
@@ -171,8 +184,10 @@
                         {% elif forloop.counter == 6 %}
                             {{ project.marhale6 }}
                             <br>واحد کل: <b>{{ project.marhale6full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale6accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale6full|menha:project.marhale6accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 6, {{ id }})" >{{ project.marhale6accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale6full|menha:project.marhale6accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale6accomplished|darsad:project.marhale6full }}%"></div>
@@ -180,8 +195,10 @@
                         {% elif forloop.counter == 7 %}
                             {{ project.marhale7 }}
                             <br>واحد کل: <b>{{ project.marhale7full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale7accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale7full|menha:project.marhale7accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 7, {{ id }})" >{{ project.marhale7accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale7full|menha:project.marhale7accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale7accomplished|darsad:project.marhale7full }}%"></div>
@@ -189,8 +206,10 @@
                         {% elif forloop.counter == 8 %}
                             {{ project.marhale8 }}
                             <br>واحد کل: <b>{{ project.marhale8full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale8accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale8full|menha:project.marhale8accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 8, {{ id }})" >{{ project.marhale8accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale8full|menha:project.marhale8accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale8accomplished|darsad:project.marhale8full }}%"></div>
@@ -198,8 +217,10 @@
                         {% elif forloop.counter == 9 %}
                             {{ project.marhale9 }}
                             <br>واحد کل: <b>{{ project.marhale9full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale9accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale9full|menha:project.marhale9accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 9, {{ id }})" >{{ project.marhale9accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale9full|menha:project.marhale9accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale9accomplished|darsad:project.marhale9full }}%"></div>
@@ -207,8 +228,10 @@
                         {% elif forloop.counter == 10 %}
                             {{ project.marhale10 }}
                             <br>واحد کل: <b>{{ project.marhale10full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale10accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale10full|menha:project.marhale10accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 10, {{ id }})" >{{ project.marhale10accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale10full|menha:project.marhale10accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale10accomplished|darsad:project.marhale10full }}%"></div>
@@ -216,8 +239,10 @@
                         {% elif forloop.counter == 11 %}
                             {{ project.marhale11 }}
                             <br>واحد کل: <b>{{ project.marhale11full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale11accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale11full|menha:project.marhale11accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 11, {{ id }})" >{{ project.marhale11accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale11full|menha:project.marhale11accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale11accomplished|darsad:project.marhale11full }}%"></div>
@@ -225,8 +250,10 @@
                         {% elif forloop.counter == 12 %}
                             {{ project.marhale12 }}
                             <br>واحد کل: <b>{{ project.marhale12full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale12accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale12full|menha:project.marhale12accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 12, {{ id }})" >{{ project.marhale12accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale12full|menha:project.marhale12accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale12accomplished|darsad:project.marhale12full }}%"></div>
@@ -234,8 +261,10 @@
                         {% elif forloop.counter == 13 %}
                             {{ project.marhale13 }}
                             <br>واحد کل: <b>{{ project.marhale13full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale13accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale13full|menha:project.marhale13accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 13, {{ id }})" >{{ project.marhale13accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale13full|menha:project.marhale13accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale13accomplished|darsad:project.marhale13full }}%"></div>
@@ -243,8 +272,10 @@
                         {% elif forloop.counter == 14 %}
                             {{ project.marhale14 }}
                             <br>واحد کل: <b>{{ project.marhale14full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale14accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale14full|menha:project.marhale14accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 14, {{ id }})" >{{ project.marhale14accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale14full|menha:project.marhale14accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale14accomplished|darsad:project.marhale14full }}%"></div>
@@ -252,8 +283,10 @@
                         {% elif forloop.counter == 15 %}
                             {{ project.marhale15 }}
                             <br>واحد کل: <b>{{ project.marhale15full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale15accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale15full|menha:project.marhale15accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 15, {{ id }})" >{{ project.marhale15accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale15full|menha:project.marhale15accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale15accomplished|darsad:project.marhale15full }}%"></div>
@@ -261,8 +294,10 @@
                         {% elif forloop.counter == 16 %}
                             {{ project.marhale16 }}
                             <br>واحد کل: <b>{{ project.marhale16full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale16accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale16full|menha:project.marhale16accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 16, {{ id }})" >{{ project.marhale16accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale16full|menha:project.marhale16accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale16accomplished|darsad:project.marhale16full }}%"></div>
@@ -270,8 +305,10 @@
                         {% elif forloop.counter == 17 %}
                             {{ project.marhale17 }}
                             <br>واحد کل: <b>{{ project.marhale17full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale17accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale17full|menha:project.marhale17accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 17, {{ id }})" >{{ project.marhale17accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale17full|menha:project.marhale17accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale17accomplished|darsad:project.marhale17full }}%"></div>
@@ -279,8 +316,10 @@
                         {% elif forloop.counter == 18 %}
                             {{ project.marhale18 }}
                             <br>واحد کل: <b>{{ project.marhale18full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale18accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale18full|menha:project.marhale18accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 18, {{ id }})" >{{ project.marhale18accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale18full|menha:project.marhale18accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale18accomplished|darsad:project.marhale18full }}%"></div>
@@ -288,8 +327,10 @@
                         {% elif forloop.counter == 19 %}
                             {{ project.marhale19 }}
                             <br>واحد کل: <b>{{ project.marhale19full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale19accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale19full|menha:project.marhale19accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 19, {{ id }})" >{{ project.marhale19accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale19full|menha:project.marhale19accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale19accomplished|darsad:project.marhale19full }}%"></div>
@@ -297,8 +338,10 @@
                         {% elif forloop.counter == 20 %}
                             {{ project.marhale20 }}
                             <br>واحد کل: <b>{{ project.marhale20full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale20accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale20full|menha:project.marhale20accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 20, {{ id }})" >{{ project.marhale20accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale20full|menha:project.marhale20accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale20accomplished|darsad:project.marhale20full }}%"></div>
@@ -306,8 +349,10 @@
                         {% elif forloop.counter == 21 %}
                             {{ project.marhale21 }}
                             <br>واحد کل: <b>{{ project.marhale21full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale21accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale21full|menha:project.marhale21accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 21, {{ id }})" >{{ project.marhale21accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale21full|menha:project.marhale21accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale21accomplished|darsad:project.marhale21full }}%"></div>
@@ -315,8 +360,10 @@
                         {% elif forloop.counter == 22 %}
                             {{ project.marhale22 }}
                             <br>واحد کل: <b>{{ project.marhale22full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale22accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale22full|menha:project.marhale22accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 22, {{ id }})" >{{ project.marhale22accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale22full|menha:project.marhale22accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale22accomplished|darsad:project.marhale22full }}%"></div>
@@ -324,8 +371,10 @@
                         {% elif forloop.counter == 23 %}
                             {{ project.marhale23 }}
                             <br>واحد کل: <b>{{ project.marhale23full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale23accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale23full|menha:project.marhale23accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 23, {{ id }})" >{{ project.marhale23accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale23full|menha:project.marhale23accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale23accomplished|darsad:project.marhale23full }}%"></div>
@@ -333,8 +382,10 @@
                         {% elif forloop.counter == 24 %}
                             {{ project.marhale24 }}
                             <br>واحد کل: <b>{{ project.marhale24full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale24accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale24full|menha:project.marhale24accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 24, {{ id }})" >{{ project.marhale24accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale24full|menha:project.marhale24accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale24accomplished|darsad:project.marhale24full }}%"></div>
@@ -342,8 +393,10 @@
                         {% elif forloop.counter == 25 %}
                             {{ project.marhale25 }}
                             <br>واحد کل: <b>{{ project.marhale25full }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>واحد اجرا شده: <b>{{ project.marhale25accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
-                            <br>میزان باقیمانده: <b>{{ project.marhale25full|menha:project.marhale25accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <br>واحد اجرا شده:  <b contenteditable="true" oninput="UpdateMarhaleValue(this.innerText, 25, {{ id }})" >{{ project.marhale25accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            <div class="result_value">
+                                میزان باقیمانده: <b>{{ project.marhale25full|menha:project.marhale25accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+                            </div>
                             <br>
                             <div class="progress">
                                 <div class="determinate" style="width: {{ project.marhale25accomplished|darsad:project.marhale25full }}%"></div>
@@ -370,7 +423,18 @@
         }
         xhttp.open("POST", "/api/project/");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("project="+PID+"&csrfmiddlewaretoken={{ csrf_token }}&text="+selfObject.value);
+        xhttp.send("project="+PID+"&csrfmiddlewaretoken={{ csrf_token }}&note="+selfObject.value);
+    }
+
+    function UpdateMarhaleValue(Text, Level, PID){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            var HtmlToast = '<span>مرحله '+Level+' به '+Text+' تغییر کرد</span><button class="btn-flat toast-action" onclick="document.location.reload()">بارگزاری مجدد نتایج</button>';
+            M.toast({html: HtmlToast, classes: 'rounded'});
+        }
+        xhttp.open("POST", "/api/project/");
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("level="+Level+"&project="+PID+"&csrfmiddlewaretoken={{ csrf_token }}&text="+Text);
     }
 
     var map = new ol.Map({
