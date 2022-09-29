@@ -1,11 +1,11 @@
-from django.shortcuts import render
-
+import accounts.models
 import city.models
 import main.models
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
+from events.models import Events
 
 
 class ApiSaveCityNote(APIView):
@@ -35,6 +35,7 @@ class ApiSaveCityNote(APIView):
                     'view_count': pd.view_count,
                     'note': pd.note,
                 })
+
             return Response({"response": projects_data}, status=status.HTTP_200_OK)
         except:
             return Response({"response": "error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -119,3 +120,13 @@ class ApiProjectType(APIView):
                 return Response(all_map_obj_types_data, status=status.HTTP_200_OK)
         except:
             return Response({"response": "error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+def register_event(pid, ev_type, text):
+    ev = Events()
+    ev.EventType = ev_type
+    ev.description = text
+    ev.OwnerUser = accounts.models.CustomUser
+    ev.RelatedProject = main.models.Project.objects.filter(id=pid).get()
+    ev.save()
+    print(ev)

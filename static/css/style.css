@@ -161,6 +161,9 @@ nav .brand-logo, nav ul a {
 	margin: auto;
 }
 
+[contenteditable="true"] {
+	cursor: alias;
+}
 [contenteditable="true"]:focus {
 	padding: 5px;
 	color: #3e2723;

@@ -1,3 +1,5 @@
+import requests
+
 from main.models import *
 # Create your models here.
 
@@ -14,6 +16,8 @@ class Events(models.Model):
     # status = models.IntegerField(default=0, editable=False, verbose_name='وضعیت')
 
     def save(self, *args, **kwargs):
+        if self.OwnerUser is None:
+            self.OwnerUser = req
         self.RelatedProject.last_update = self.do_time
 
     class Meta:
