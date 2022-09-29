@@ -1,4 +1,4 @@
-import sys
+from datetime import timedelta, datetime
 
 from django.http.response import Http404
 from django.shortcuts import render
@@ -107,19 +107,19 @@ class SearchPage(TemplateView):
         print(path_name)
 
         if path_name == "less_than_20":
-            title = "پروژه های با میانگین پیشرفت کمتر از 20%"
+            title = "پروژه‌های با میانگین پیشرفت کم"
             query = main.models.Project.objects.filter(
                 Q(pishrafte_kol__range=(0, 20))
             )
         elif path_name == "more_than_80":
-            title = "پروژه های با میانگین پیشرفت بالای 80%"
+            title = "پروژه‌های با میانگین پیشرفت بالا"
             query = main.models.Project.objects.filter(
                 Q(pishrafte_kol__range=(80, 100))
             )
         elif path_name == "inactive2month":
-            title = "پروژه های غیرفعال در دو ماه اخیر"
+            title = "پروژه‌های غیرفعال در دو ماه اخیر"
             query = main.models.Project.objects.filter(
-                # Q(title__contains=search_word, pishrafte_kol__range=(baze_min, baze_max))
+                Q(last_update__lte=datetime.now() + timedelta(days=60))
             )
         else:
             query = main.models.Project.objects.all()
@@ -148,6 +148,7 @@ class SingleProject(TemplateView):
         this_project = this_project.get()
 
         context = {
+            'id': pid,
             'project': this_project,
             'lat': this_project.location.split(",")[0],
             'lng': this_project.location.split(",")[1],

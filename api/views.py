@@ -45,11 +45,19 @@ class ApiSaveProjectNote(APIView):
     def post(self, request, format=None):
         try:
             pid = self.request.POST['project']
-            note = self.request.POST['text']
             print(pid)
-            print(note)
-            main.models.Project.objects.filter(id=pid).update(note=note)
-            return Response({"response": "ok"},status=status.HTTP_200_OK)
+            if "note" in self.request.POST:
+                note = self.request.POST['note']
+                print(note)
+                main.models.Project.objects.filter(id=pid).update(note=note)
+            elif "level" in self.request.POST:
+                text = self.request.POST['text']
+                level = self.request.POST['level']
+                print(pid+": "+level+": "+text)
+                lookup = "marhale%saccomplished" % level
+                main.models.Project.objects.filter(id=pid).update(**{lookup: text})
+
+            return Response({"response": "ok"}, status=status.HTTP_200_OK)
         except:
             return Response({"response": "error"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

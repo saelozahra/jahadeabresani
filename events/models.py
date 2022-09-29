@@ -13,6 +13,9 @@ class Events(models.Model):
     description = models.TextField(default="", verbose_name='توضیحات', blank=True)
     # status = models.IntegerField(default=0, editable=False, verbose_name='وضعیت')
 
+    def save(self, *args, **kwargs):
+        self.RelatedProject.last_update = self.do_time
+
     class Meta:
         verbose_name = "رویدادها"
         verbose_name_plural = "رویدادهای پروژه"

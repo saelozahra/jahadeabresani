@@ -51,3 +51,17 @@ def filter_number_icon(value, arg=0):
 @register.filter
 def menha(value, arg):
     return value - arg
+
+
+# @register.filter()
+# def var_num(arg, num):
+#     if arg == "simple":
+#         var = "marhale{}".format(num)
+#     elif arg == "full":
+#         var = "marhale{}full".format(num)
+#     elif arg == "com":
+#         var = "marhale{}accomplished".format(num)
+#     else:
+#         var = "marhale{}".format(num)
+#     print(var)
+#     return var
