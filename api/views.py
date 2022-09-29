@@ -1,11 +1,11 @@
 import accounts.models
 import city.models
 import main.models
+from events.models import Events
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
-from events.models import Events
 
 
 class ApiSaveCityNote(APIView):
@@ -65,6 +65,7 @@ class ApiUpdateProject(APIView):
                 print(pid+": "+level+": "+text)
                 lookup = "marhale%saccomplished" % level
                 main.models.Project.objects.filter(id=pid).update(**{lookup: text})
+                register_event(pid, "تغییر وضعیت مرحله", "ثبت " + text + "به عنوان میزان کارکرد جدید مرحله " + level)
 
             return Response({"response": "ok"}, status=status.HTTP_200_OK)
         except:
