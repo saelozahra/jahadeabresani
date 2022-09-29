@@ -40,7 +40,7 @@ class ApiSaveCityNote(APIView):
             return Response({"response": "error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class ApiSaveProjectNote(APIView):
+class ApiUpdateProject(APIView):
 
     def post(self, request, format=None):
         try:
@@ -50,6 +50,13 @@ class ApiSaveProjectNote(APIView):
                 note = self.request.POST['note']
                 print(note)
                 main.models.Project.objects.filter(id=pid).update(note=note)
+            elif "desc" in self.request.POST:
+                text = self.request.POST['desc']
+                level = self.request.POST['level']
+                print(pid+": "+level+": "+text)
+                lookup = "marhale%s" % level
+                main.models.Project.objects.filter(id=pid).update(**{lookup: text})
+
             elif "level" in self.request.POST:
                 text = self.request.POST['text']
                 level = self.request.POST['level']
