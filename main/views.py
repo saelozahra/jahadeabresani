@@ -32,6 +32,7 @@ class Index(TemplateView):
 
         context = {
             'projects_data': projects_data,
+            'obj_type': main.models.MapObjectTypes.objects.all(),
             "pishraft": miangin_pishrafte_all_projects,
             "projects_number": all_projects.count()
         }

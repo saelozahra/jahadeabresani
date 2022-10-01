@@ -126,6 +126,7 @@ class SearchPage(TemplateView):
             title = "title"
 
         context = {
+            'obj_type': main.models.MapObjectTypes.objects.all().values(),
             'search_in': title,
             'search_word': "",
             'min': 0,
