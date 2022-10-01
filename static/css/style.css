@@ -168,3 +168,19 @@ nav .brand-logo, nav ul a {
 	padding: 5px;
 	color: #3e2723;
 }
+
+
+.ptag {
+	background-color: var(--color_secondary);
+	color: white;
+	display: inline-block;
+	padding: 2px 6px;
+	border-radius: 3px;
+	margin-top: 10px;
+    transform: skewX(-8deg);
+}
+.ptag i {
+	font-size: 12px;
+	margin: 4px -4px auto 2px;
+	float: right;
+}
