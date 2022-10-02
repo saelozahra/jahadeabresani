@@ -151,6 +151,22 @@ class SearchPage(TemplateView):
             query = main.models.Project.objects.exclude(
                 Q(Documents__DocName__exact="gharardad")
             )
+        elif path_name == "week_end_date":
+            title = "پایان در هفته آینده"
+            week_start = datetime.today()
+            week_start -= timedelta(days=week_start.weekday())
+            week_end = week_start + timedelta(days=7)
+            query = main.models.Project.objects.exclude(
+                date_end__gte=week_start, date_end__lt=week_end
+            )
+        elif path_name == "week_end_date":
+            title = "پایان در ماه آینده"
+            week_start = datetime.today()
+            week_start -= timedelta(days=week_start.weekday())
+            week_end = week_start + timedelta(days=30)
+            query = main.models.Project.objects.exclude(
+                date_end__gte=week_start, date_end__lt=week_end
+            )
         else:
             query = main.models.Project.objects.all()
             title = "title"
