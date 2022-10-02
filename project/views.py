@@ -1,5 +1,6 @@
 from datetime import timedelta, datetime
 
+import jdatetime
 from django.http.response import Http404
 from django.shortcuts import render
 import main.models
@@ -102,7 +103,6 @@ class SearchPage(TemplateView):
     # end method
 
     def get(self, request, **kwargs):
-
         path_name = request.resolver_match.view_name
         print(path_name)
 
@@ -116,6 +116,16 @@ class SearchPage(TemplateView):
             query = main.models.Project.objects.filter(
                 Q(last_update__lte=datetime.now() + timedelta(days=1))
             )
+        elif path_name == "inactive2month":
+            title = "پروژه‌های غیرفعال در دو ماه اخیر"
+            query = main.models.Project.objects.filter(
+                Q(last_update__lte=datetime.now() + timedelta(days=60))
+            )
+        elif path_name == "latest_actived":
+            title = "امروز فعال بوده"
+            query = main.models.Project.objects.filter(
+                Q(last_update__month=datetime.month, last_update__day=datetime.day)
+            )
         elif path_name == "less_than_20":
             title = "پروژه‌های با میانگین پیشرفت کم"
             query = main.models.Project.objects.filter(
@@ -125,11 +135,6 @@ class SearchPage(TemplateView):
             title = "پروژه‌های با میانگین پیشرفت بالا"
             query = main.models.Project.objects.filter(
                 Q(pishrafte_kol__range=(80, 100))
-            )
-        elif path_name == "inactive2month":
-            title = "پروژه‌های غیرفعال در دو ماه اخیر"
-            query = main.models.Project.objects.filter(
-                Q(last_update__lte=datetime.now() + timedelta(days=60))
             )
         else:
             query = main.models.Project.objects.all()
