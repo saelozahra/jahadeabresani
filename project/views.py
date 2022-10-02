@@ -111,6 +111,11 @@ class SearchPage(TemplateView):
             query = main.models.Project.objects.filter(
                 Q(promote=True)
             )
+        elif path_name == "inactive_today":
+            title = "غیرفعال‌های امروز"
+            query = main.models.Project.objects.filter(
+                Q(last_update__lte=datetime.now() + timedelta(days=1))
+            )
         elif path_name == "less_than_20":
             title = "پروژه‌های با میانگین پیشرفت کم"
             query = main.models.Project.objects.filter(

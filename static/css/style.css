@@ -194,15 +194,33 @@ nav .brand-logo, nav ul a {
 
 .ptag {
 	background-color: var(--color_secondary);
+    border: 2px solid transparent;
 	color: white;
 	display: inline-block;
 	padding: 2px 6px;
-	border-radius: 3px;
+	border-radius: 7px 22px 12px 7px;
 	margin-top: 10px;
-    transform: skewX(-8deg);
+	transform: skewX(-12deg);
+	padding: 1px 8px;
+    transition: 313ms;
 }
+
+.ptag:hover {
+	background-color: #fff6;
+    border: 2px solid var(--color_secondary);
+	color: var(--color_secondary);
+	padding: 1px 10px;
+    transition: 110ms;
+}
+
+.ptag:hover i {
+	margin: 4px 0px auto 8px;
+    transition: 110ms;
+}
+
 .ptag i {
 	font-size: 12px;
-	margin: 4px -4px auto 2px;
+	margin: 4px -2px auto 4px;
 	float: right;
+    transition: 313ms;
 }
