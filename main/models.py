@@ -97,6 +97,7 @@ class Project(models.Model):
                                        editable=False, verbose_name='آخرین بروزرسانی')
     promote = models.BooleanField(default=False, verbose_name="پروژه ویژه")
     Documents = models.ManyToManyField(ProjectFiles, blank=True, verbose_name="مستندات و تصاویر")
+    note = models.TextField(default="", verbose_name='یادداشت', blank=True, null=True)
     #
     marhale1 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 1')
     marhale1full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 1')

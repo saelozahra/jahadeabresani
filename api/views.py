@@ -74,8 +74,8 @@ class ApiUpdateProject(APIView):
                 register_event(self, pid, "تغییر وضعیت مرحله", "ثبت " + text + "به عنوان میزان کارکرد جدید مرحله " + level)
 
             return Response({"response": "ok"}, status=status.HTTP_200_OK)
-        except:
-            return Response({"response": "error"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except NameError:
+            return Response({"response": NameError.args}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request, format=None):
         try:

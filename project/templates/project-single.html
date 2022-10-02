@@ -108,7 +108,7 @@
         <ul class="collection with-header">
             <li class="collection-header tar"><h4>یادداشت مدیریتی</h4></li>
             <li class="collection-item rtl" style="padding: 0;">
-                <textarea class="row" placeholder="یادداشت" onchange="updateNoteText(this,'{{ slug }}');" style="border: 0 none; width: 100%; min-height: 110px; min-width: 100%;margin: auto;" >{{ note }}</textarea>
+                <textarea class="row" placeholder="یادداشت" onchange="updateNoteText(this,'{{ id }}');" style="border: 0 none; width: 100%; min-height: 110px; min-width: 100%;margin: auto;" >{{ project.note }}</textarea>
             </li>
         </ul>
     {% endif %}

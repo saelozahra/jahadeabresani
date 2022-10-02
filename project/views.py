@@ -126,6 +126,16 @@ class SearchPage(TemplateView):
             query = main.models.Project.objects.filter(
                 Q(last_update__month=datetime.month, last_update__day=datetime.day)
             )
+        elif path_name == "without_files":
+            title = "فاقد مستندات"
+            query = main.models.Project.objects.filter(
+                Q(Documents__isnull=True)
+            )
+        elif path_name == "has_note":
+            title = "دارای یادداشت مدیریتی"
+            query = main.models.Project.objects.exclude(
+                Q(note__exact="") | Q(note__isnull=True)
+            )
         elif path_name == "less_than_20":
             title = "پروژه‌های با میانگین پیشرفت کم"
             query = main.models.Project.objects.filter(
