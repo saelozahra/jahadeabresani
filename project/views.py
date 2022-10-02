@@ -106,7 +106,12 @@ class SearchPage(TemplateView):
         path_name = request.resolver_match.view_name
         print(path_name)
 
-        if path_name == "less_than_20":
+        if path_name == "promote":
+            title = "پروژه‌های ویژه"
+            query = main.models.Project.objects.filter(
+                Q(promote=True)
+            )
+        elif path_name == "less_than_20":
             title = "پروژه‌های با میانگین پیشرفت کم"
             query = main.models.Project.objects.filter(
                 Q(pishrafte_kol__range=(0, 20))
