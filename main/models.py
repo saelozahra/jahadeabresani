@@ -58,6 +58,7 @@ class MaraheleEjra(models.Model):
 class ProjectFiles(models.Model):
     DocChoices = (
         ('image', 'تصویر'),
+        ('gharardad', 'قرارداد'),
         ('documents', 'مستندات'),
         ('file', 'فایل'),
         ('license', 'مجوز'),

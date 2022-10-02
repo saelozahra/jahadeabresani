@@ -146,6 +146,11 @@ class SearchPage(TemplateView):
             query = main.models.Project.objects.filter(
                 Q(pishrafte_kol__range=(80, 100))
             )
+        elif path_name == "without_gharardad":
+            title = "پروژه‌های فاقد قرارداد"
+            query = main.models.Project.objects.exclude(
+                Q(Documents__DocName__exact="gharardad")
+            )
         else:
             query = main.models.Project.objects.all()
             title = "title"
