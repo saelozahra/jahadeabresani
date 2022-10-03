@@ -2,7 +2,10 @@
 
 {% block title %} {{ ChatList.title }} مکالمه{% endblock title %}
 
-{% block main %}
+
+{% block ContainerRowClass %}row{% endblock ContainerRowClass %}
+{% block LeftBoxWidth %}100%{% endblock LeftBoxWidth %}
+{% block LeftContent %}
     <style>
         body {
             display: flex;
@@ -31,7 +34,6 @@
                 {% endfor %}
             </ul>
         </aside>
-
     {% if ShowMessages == "SingleChatPage" %}
         <figure class="MessagesList fl row-xs" style="min-height:888px;" >
             <div class="MessagesItem row">
@@ -89,7 +91,6 @@
           });
         });
     </script>
-{% endblock main %}
+{% endblock LeftContent %}
 
-{% block FooterContainerCSS %}margin-top: 0 !important;{% endblock FooterContainerCSS %}
-{% block MainFooterContainer %}height: 88px !important;{% endblock MainFooterContainer %}
+{% block RightContent %}{% endblock RightContent %}

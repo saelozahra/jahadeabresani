@@ -238,3 +238,157 @@ nav .brand-logo, nav ul a {
 	float: right;
     transition: 313ms;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/*chat*/
+/*chat*/
+/*chat*/
+
+
+.ChatContainer {
+	height: 77vh;
+}
+
+.ChatContainer .ChatList {
+	width: 33%;
+	margin-top: 3%;
+	border-left: 1px dotted #00A69399;
+	overflow-y: scroll;
+	padding: 0 2%;
+	height: 98%;
+}
+
+
+.ChatContainer .ChatList li:hover {
+	background-color: #eee9;
+	border-radius: 9px;
+}
+
+.ChatContainer .ChatList img {
+	width: 95px;
+	height: 95px;
+	border-radius: 50%;
+	object-fit: cover;
+	background: linear-gradient(#76D6CB , #34716A, #057C6F );
+	padding: 3px;
+}
+
+.ChatContainer .ChatList li:hover img {
+	padding: 6px;
+}
+
+.ChatContainer .ChatList h3 {
+	width: calc( 100% - 110px);
+	margin-top: -5px;
+	padding: 10px;
+	font-family: var(--font);
+	font-weight: bolder;
+}
+
+.ChatContainer .ChatList p {
+	width: calc( 100% - 110px);
+	margin-top: -10px;
+	padding: 10px;
+	font-weight: lighter;
+	margin-bottom: -5px;
+}
+
+
+
+
+
+
+.MessagesList {
+	width: 67%;
+	margin-top: 3%;
+	overflow-y: scroll;
+	height: 76vh;
+    min-height: 888px;
+	padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-content: space-between;
+}
+
+.MessagesList .MessagesItem {
+	overflow-y: scroll;
+}
+
+.MessagesList .bubble {
+	border: 1px solid var(--color_primary);
+	max-width: 50%;
+	padding-top: 2%;
+	line-height: 2.5;
+	cursor: grab;
+	user-select: none;
+}
+.SendMsg {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	align-items: center;
+	padding: 7px 0;
+}
+.SendMsg .TextSection {
+	background-color: var(--color_primary);
+	display: grid;
+	margin-left: 6px;
+	float: right;
+	width: 100%;
+	line-height: 2;
+	border: 4px outset transparent;
+}
+.SendMsg .btn {
+	border: navajowhite;
+	width: 45px;
+	padding: 0.4% 12px;
+	height: 42px;
+	border-radius: 50%;
+	line-height: 4;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.SendMsg .textarea {
+	border: none;
+	resize: none;
+	background: none;
+	color: white;
+	padding: 2% 4%;
+}
+.SendMsg .textarea:focus {
+	outline: 1px solid transparent;
+}
+
+.SendMsg .textarea[contenteditable]:empty::before {
+  content: "متن پیام";
+  color: #eeee;
+}
+
+
+.SendMsg:focus-within .TextSection {
+	background-color: white;
+	color: var(--color_primary);
+	border: 4px outset var(--color_primary);
+}
+
+.SendMsg:focus-within .textarea {
+	color: var(--color_primary);
+}
+
+.SendMsg:focus-within .textarea[contenteditable]:empty::before {
+	color: var(--color_primary);
+    opacity: 0.7;
+}
