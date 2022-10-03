@@ -37,6 +37,6 @@ class Index(TemplateView):
             'obj_type': main.models.MapObjectTypes.objects.all(),
             "pishraft": miangin_pishrafte_all_projects,
             "projects_number": all_projects.count(),
-            "projects": all_projects
+            "has_not_doc": main.models.Project.objects.filter(Documents__isnull=True)
         }
         return render(request, 'index.html', context)
