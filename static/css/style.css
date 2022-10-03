@@ -179,7 +179,18 @@ nav .brand-logo, nav ul a {
 	background-color: var(--color_secondary);
 }
 
-
+.home-col:first-child {
+	margin-left: 0;
+}
+.home-col:last-child {
+	margin-right: 0;
+}
+.home-col {
+	margin: auto 8px;
+	width: calc(20% - 16px);
+	max-height: 680px;
+	overflow-y: auto;
+}
 
 
 .collapsible-header i {
