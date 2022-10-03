@@ -15,7 +15,7 @@
 {% block ContainerRowClass %}row{% endblock ContainerRowClass %}
 {% block LeftBoxWidth %}100%{% endblock LeftBoxWidth %}
 {% block LeftContent %}
-    <ul class="collection fl home-col" >
+    <ul class="collection fl home-col sc" data-mcs-theme="rounded-dots" >
         <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">جدیدا اضافه شده</label>
         <br>
         {% for pd in projects_data|dictsortreversed:"id" %}
@@ -32,7 +32,7 @@
             </li>
         {% endfor %}
     </ul>
-    <ul class="collection fl home-col" >
+    <ul class="collection fl home-col sc" data-mcs-theme="light-thick" >
         <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">جدیدا بروز شده</label>
         <br>
         {% for pd in projects_data|dictsortreversed:"last_update" %}
@@ -49,7 +49,7 @@
             </li>
         {% endfor %}
     </ul>
-    <ul class="collection fl home-col" >
+    <ul class="collection fl home-col sc" data-mcs-theme="dark-thin" >
         <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">پیشرفت بیشتر</label>
         <br>
         {% for pd in projects_data|dictsortreversed:"miangin_pishraft" %}
@@ -66,7 +66,7 @@
             </li>
         {% endfor %}
     </ul>
-    <ul class="collection fl home-col" >
+    <ul class="collection fl home-col sc" >
         <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">پروژه ویژه</label>
         <br>
         {% for pd in projects_data|dictsortreversed:"promote" %}
@@ -85,7 +85,7 @@
             {% endif %}
         {% endfor %}
     </ul>
-    <ul class="collection fl home-col" >
+    <ul class="collection fl home-col sc" data-mcs-theme="dark" >
         <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">فاقد مستندات</label>
         <br>
         {% for pd in has_not_doc %}
