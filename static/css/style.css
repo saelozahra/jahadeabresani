@@ -44,6 +44,9 @@ html,body{margin: auto;font-family: var(--font);}
 .taj{
     text-align: justify;
 }
+.tac{
+    text-align: center;
+}
 .fl{
     float: left;
 }

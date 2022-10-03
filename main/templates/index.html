@@ -13,9 +13,12 @@
     </div>
 {% endblock UnderMap %}
 {% block ContainerRowClass %}row{% endblock ContainerRowClass %}
+{% block LeftBoxWidth %}100%{% endblock LeftBoxWidth %}
 {% block LeftContent %}
-    <ul class="collection" >
-        {% for pd in projects_data %}
+    <ul class="collection fl" style="margin: auto 14px" >
+        <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">جدیدا اضافه شده</label>
+        <br>
+        {% for pd in projects_data|dictsortreversed:"id" %}
             <li class="collection-item avatar">
                 <a  href="./project/{{ pd.id }}" title="{{ pd.title }}">
                     <img src="{{ pd.photo }}" alt="" class="circle" style="margin-top: 10px;">
@@ -27,6 +30,59 @@
                     </p>
                 </a>
             </li>
+        {% endfor %}
+    </ul>
+    <ul class="collection fl" style="margin: auto 14px" >
+        <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">جدیدا بروز شده</label>
+        <br>
+        {% for pd in projects_data|dictsortreversed:"last_update" %}
+            <li class="collection-item avatar">
+                <a  href="./project/{{ pd.id }}" title="{{ pd.title }}">
+                    <img src="{{ pd.photo }}" alt="" class="circle" style="margin-top: 10px;">
+                    <span class="title">{{ pd.title }} - {{ pd.city }}</span>
+                    <p>
+                        <div class="progress">
+                            <div class="determinate" style="width: {{ pd.miangin_pishraft }}%"></div>
+                        </div>
+                    </p>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="collection fl" style="margin: auto 14px" >
+        <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">پیشرفت بیشتر</label>
+        <br>
+        {% for pd in projects_data|dictsortreversed:"miangin_pishraft" %}
+            <li class="collection-item avatar">
+                <a  href="./project/{{ pd.id }}" title="{{ pd.title }}">
+                    <img src="{{ pd.photo }}" alt="" class="circle" style="margin-top: 10px;">
+                    <span class="title">{{ pd.title }} - {{ pd.city }}</span>
+                    <p>
+                        <div class="progress">
+                            <div class="determinate" style="width: {{ pd.miangin_pishraft }}%"></div>
+                        </div>
+                    </p>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="collection fl" style="margin: auto 14px" >
+        <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">پروژه ویژه</label>
+        <br>
+        {% for pd in projects_data|dictsortreversed:"promote" %}
+            {% if pd.promote == True %}
+                <li class="collection-item avatar">
+                    <a  href="./project/{{ pd.id }}" title="{{ pd.title }}">
+                        <img src="{{ pd.photo }}" alt="" class="circle" style="margin-top: 10px;">
+                        <span class="title">{{ pd.title }} - {{ pd.city }}</span>
+                        <p>
+                            <div class="progress">
+                                <div class="determinate" style="width: {{ pd.miangin_pishraft }}%"></div>
+                            </div>
+                        </p>
+                    </a>
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% endblock LeftContent %}

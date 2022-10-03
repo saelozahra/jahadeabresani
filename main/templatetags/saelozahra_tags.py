@@ -53,6 +53,12 @@ def menha(value, arg):
     return value - arg
 
 
+# مرتب سازی کوئری ها
+@register.filter
+def order_by(queryset, args):
+    args = [x.strip() for x in args.split(',')]
+    return queryset.order_by(*args)
+
 # @register.filter()
 # def var_num(arg, num):
 #     if arg == "simple":

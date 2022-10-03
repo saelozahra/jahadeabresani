@@ -22,6 +22,8 @@ class Index(TemplateView):
                 'lng': pd.location.split(",")[1],
                 'photo': pd.photo.url,
                 'icon': pd.type.icon.url,
+                'last_update': pd.last_update,
+                'promote': pd.promote,
                 'miangin_pishraft': pd.pishrafte_kol,
             })
 
@@ -34,6 +36,7 @@ class Index(TemplateView):
             'projects_data': projects_data,
             'obj_type': main.models.MapObjectTypes.objects.all(),
             "pishraft": miangin_pishrafte_all_projects,
-            "projects_number": all_projects.count()
+            "projects_number": all_projects.count(),
+            "projects": all_projects
         }
         return render(request, 'index.html', context)

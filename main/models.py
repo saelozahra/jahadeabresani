@@ -94,7 +94,7 @@ class Project(models.Model):
     view_count = models.IntegerField(default=0, editable=False, verbose_name='تعداد بازدید')
     location = PlainLocationField(based_fields=['city'], zoom=10, null=True, suffix=['city'],
                                   verbose_name='موقعیت مکانی')
-    last_update = models.DateTimeField(auto_now_add=True, blank=True, null=True,
+    last_update = models.DateTimeField(auto_now=True, blank=True, null=True,
                                        editable=False, verbose_name='آخرین بروزرسانی')
     promote = models.BooleanField(default=False, verbose_name="پروژه ویژه")
     Documents = models.ManyToManyField(ProjectFiles, blank=True, verbose_name="مستندات و تصاویر")
