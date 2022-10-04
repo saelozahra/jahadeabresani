@@ -28,6 +28,12 @@
 }
 
 html,body{margin: auto;font-family: var(--font);}
+.tr, .tr *{
+	transition: 313ms;
+}
+.tr:hover, .tr *:hover{
+	transition: 110ms;
+}
 
 .rtl{
     direction: rtl;
@@ -52,6 +58,16 @@ html,body{margin: auto;font-family: var(--font);}
 }
 .fr{
     float: right;
+}
+.br14{
+	border-radius: 14px;
+}
+.padding{
+	padding: 2%;
+}
+
+.row{
+	width: 100%;
 }
 
 button, input, optgroup, select, textarea {
@@ -186,6 +202,7 @@ nav .brand-logo, nav ul a {
 	margin-right: 0;
 }
 .home-col {
+	border:0px solid transparent;
 	margin: auto 8px;
 	width: calc(20% - 16px);
 	max-height: 680px;
@@ -256,14 +273,14 @@ nav .brand-logo, nav ul a {
 
 
 .ChatContainer {
-	height: 77vh;
+	height: 80vh;
+	margin-top: -30px;
 }
 
 .ChatContainer .ChatList {
 	width: 33%;
 	margin-top: 3%;
 	border-left: 1px dotted #00A69399;
-	overflow-y: scroll;
 	padding: 0 2%;
 	height: 98%;
 }
@@ -287,12 +304,13 @@ nav .brand-logo, nav ul a {
 	padding: 6px;
 }
 
-.ChatContainer .ChatList h3 {
+.ChatContainer .ChatList h5 {
 	width: calc( 100% - 110px);
 	margin-top: -5px;
 	padding: 10px;
 	font-family: var(--font);
 	font-weight: bolder;
+	color: var(--color_secondary);
 }
 
 .ChatContainer .ChatList p {
@@ -301,6 +319,11 @@ nav .brand-logo, nav ul a {
 	padding: 10px;
 	font-weight: lighter;
 	margin-bottom: -5px;
+	color: var(--color_secondary_light);
+}
+
+.ChatContainer .ChatList small {
+	color: var(--color_secondary_light);
 }
 
 
@@ -309,17 +332,15 @@ nav .brand-logo, nav ul a {
 
 
 .MessagesList {
-	width: 67%;
-	margin-top: 3%;
-	overflow-y: scroll;
-	height: 76vh;
-    min-height: 888px;
+	width: 60%;
+	margin: 3%;
+	height: 97%;
 	padding-top: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    align-content: space-between;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	align-content: space-between;
 }
 
 .MessagesList .MessagesItem {
@@ -327,7 +348,7 @@ nav .brand-logo, nav ul a {
 }
 
 .MessagesList .bubble {
-	border: 1px solid var(--color_primary);
+	border: 1px solid var(--color_secondary);
 	max-width: 50%;
 	padding-top: 2%;
 	line-height: 2.5;
@@ -342,7 +363,7 @@ nav .brand-logo, nav ul a {
 	padding: 7px 0;
 }
 .SendMsg .TextSection {
-	background-color: var(--color_primary);
+	background-color: var(--color_secondary_light);
 	display: grid;
 	margin-left: 6px;
 	float: right;
@@ -351,9 +372,10 @@ nav .brand-logo, nav ul a {
 	border: 4px outset transparent;
 }
 .SendMsg .btn {
+	background-color: var(--color_secondary);
 	border: navajowhite;
 	width: 45px;
-	padding: 0.4% 12px;
+	padding: 1px 2px;
 	height: 42px;
 	border-radius: 50%;
 	line-height: 4;
@@ -380,12 +402,12 @@ nav .brand-logo, nav ul a {
 
 .SendMsg:focus-within .TextSection {
 	background-color: white;
-	color: var(--color_primary);
-	border: 4px outset var(--color_primary);
+	color: var(--color_secondary);
+	border: 4px outset var(--color_secondary);
 }
 
 .SendMsg:focus-within .textarea {
-	color: var(--color_primary);
+	color: var(--color_secondary);
 }
 
 .SendMsg:focus-within .textarea[contenteditable]:empty::before {
