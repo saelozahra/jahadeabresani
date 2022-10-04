@@ -1,3 +1,4 @@
+from django.dispatch import receiver
 from django.db.models import Q
 import accounts.models
 from django.core.exceptions import ValidationError
@@ -76,6 +77,29 @@ class ProjectFiles(models.Model):
 
     def __str__(self):
         return self.DocType + ":: " + self.DocName
+
+
+def update_avg_city(related_city):
+    hamshahri = Project.objects.filter(Q(RelatedCity__slug__contains=related_city.slug))
+    miangin_pishrafte_project = 0
+    miangin_pishrafte_project_count = 0
+
+    for spd_temp in hamshahri:
+        print("hamshahri: ", spd_temp.title, spd_temp.pishrafte_kol)
+        miangin_pishrafte_project = miangin_pishrafte_project + spd_temp.pishrafte_kol
+        miangin_pishrafte_project_count = miangin_pishrafte_project_count + 1
+
+    if miangin_pishrafte_project == 0:
+        related_city.miangin_pishraft = 0
+    else:
+        related_city.miangin_pishraft = miangin_pishrafte_project / miangin_pishrafte_project_count
+
+    print(related_city.slug, related_city.miangin_pishraft)
+    CityProject.objects.filter(Q(slug__contains=related_city.slug)).update(
+        miangin_pishraft=related_city.miangin_pishraft
+    )
+
+    return related_city.miangin_pishraft
 
 
 class Project(models.Model):
@@ -190,24 +214,8 @@ class Project(models.Model):
         else:
             self.pishrafte_kol = real_miangin_all / real_miangin_count
 
-        subs = Project.objects.filter(Q(RelatedCity__slug__contains=self.RelatedCity.slug))
-        miangin_pishrafte_project = 0
-        miangin_pishrafte_project_count = 0
+        update_avg_city(self.RelatedCity)
 
-        for spd_temp in subs:
-            print(spd_temp.title)
-            print(spd_temp.pishrafte_kol)
-            miangin_pishrafte_project = miangin_pishrafte_project + spd_temp.pishrafte_kol
-            miangin_pishrafte_project_count = miangin_pishrafte_project_count + 1
-
-        if miangin_pishrafte_project == 0:
-            self.RelatedCity.miangin_pishraft = 0
-        else:
-            self.RelatedCity.miangin_pishraft = miangin_pishrafte_project / miangin_pishrafte_project_count
-
-        CityProject.objects.filter(Q(slug__contains=self.RelatedCity.slug)).update(
-            miangin_pishraft=self.RelatedCity.miangin_pishraft)
-        print("save function used")
         return super().save(*args, **kwargs)
 
     class Meta:
@@ -224,3 +232,9 @@ class Project(models.Model):
                 '<img src="{}" style="object-fit:contain; height:auto; max-height:110px; " width="110" />'.format(
                     self.photo.url))
         return ""
+
+
+@receiver(models.signals.post_save, sender=Project)
+def proj_save(sender, instance, created, **kwargs):
+    update_avg_city(instance.RelatedCity)
+    print('post save callback')

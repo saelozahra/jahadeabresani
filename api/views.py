@@ -70,7 +70,9 @@ class ApiUpdateProject(APIView):
                 level = self.request.POST['level']
                 print(pid+": "+level+": "+text)
                 lookup = "marhale%saccomplished" % level
-                main.models.Project.objects.filter(id=pid).update(**{lookup: text})
+                p = main.models.Project.objects.filter(id=pid)
+                p.update(**{lookup: text})
+                p.get().save()
                 register_event(self, pid, "تغییر وضعیت مرحله", "ثبت " + text + "به عنوان میزان کارکرد جدید مرحله " + level)
 
             return Response({"response": "ok"}, status=status.HTTP_200_OK)
