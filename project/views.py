@@ -1,5 +1,6 @@
 from datetime import timedelta, datetime
 
+from django.core.paginator import Paginator
 import jdatetime
 from django.http.response import Http404
 from django.shortcuts import render
@@ -47,7 +48,16 @@ class ProjectsPage(TemplateView):
                 'miangin_pishraft': cd.miangin_pishraft,
                 'projects': main.models.Project.objects.filter(Q(RelatedCity__slug__contains=cd.slug)).values(),
             })
-        context = {'projects_data': projects_data}
+
+        paginator = Paginator(projects_data, 50)  # Show 15 city per page.
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'projects_data': projects_data,
+            'page_obj': page_obj,
+        }
         return render(request, 'project.html', context)
 
 
