@@ -36,7 +36,10 @@
 
     <div class="container">
         <nav class="row">
-            <div class="nav-wrapper">
+            <div class="nav-wrapper progress">
+                {% if project.pishrafte_kol %}
+                    <span class="determinate" style="width: {{ project.pishrafte_kol }}%"></span>
+                {% endif %}
                 <a href="../../../" class="brand-logo"><b><i class="material-icons">spa</i>{% block MenuTitle %}پروژه آب رسانی شهید مالکوم ایکس{% endblock MenuTitle %}</b></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a class="waves-effect waves-light modal-trigger" href="#search"><i class="material-icons">search</i></a></li>

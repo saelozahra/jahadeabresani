@@ -259,6 +259,13 @@ nav .brand-logo, nav ul a {
 
 
 
+.nav-wrapper.progress {
+	background-color: white;
+}
+.nav-wrapper.progress .determinate {
+	background-color: var(--color_secondary_light);
+	transform: skewX(-8deg) translateX(-4px);
+}
 
 
 

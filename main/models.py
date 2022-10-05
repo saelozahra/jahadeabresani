@@ -10,7 +10,7 @@ from django.contrib.auth.models import User, Group
 from city.models import CityProject
 
 
-def calculate_percent(self, kol, jozea):
+def calculate_percent(kol, jozea):
     if kol == 0:
         return 0
     elif kol == jozea:
@@ -205,7 +205,7 @@ class Project(models.Model):
             m_f = "marhale%sfull" % i
             m_a = "marhale%saccomplished" % i
             if self.__getattribute__(m_a).numerator > 0:
-                real_miangin_all = real_miangin_all + calculate_percent(self, self.__getattribute__(m_f).numerator,
+                real_miangin_all = real_miangin_all + calculate_percent(self.__getattribute__(m_f).numerator,
                                                                         self.__getattribute__(m_a).numerator)
                 real_miangin_count = real_miangin_count + 1
 

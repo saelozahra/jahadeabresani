@@ -1,6 +1,4 @@
 from datetime import datetime
-
-import accounts.models
 import city.models
 import main.models
 from events.models import Events

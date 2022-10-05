@@ -8,7 +8,7 @@ from .models import *
 @admin.register(MapObjectTypes)
 class MemberAdmin(ImportExportModelAdmin):
     list_display = ("title", "icon")
-    pass
+
 
 class MaraheleEjraAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ("marhale", "vahed")
