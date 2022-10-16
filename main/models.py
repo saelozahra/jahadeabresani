@@ -168,6 +168,21 @@ class Project(models.Model):
     marhale25 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 25')
     marhale25full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 25')
     marhale25accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 25')
+    marhale26 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 26')
+    marhale26full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 26')
+    marhale26accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 26')
+    marhale27 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 27')
+    marhale27full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 27')
+    marhale27accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 27')
+    marhale28 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 28')
+    marhale28full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 28')
+    marhale28accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 28')
+    marhale29 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 29')
+    marhale29full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 29')
+    marhale29accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 29')
+    marhale30 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 30')
+    marhale30full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 30')
+    marhale30accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 30')
 
     def save(self, *args, **kwargs):
         real_miangin_all = 0
@@ -272,6 +287,31 @@ class Project(models.Model):
         if self.marhale25full.numerator > 0:
             real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale25full.numerator,
                                                                     self.marhale25accomplished.numerator)
+            real_miangin_count = real_miangin_count + 1
+
+        if self.marhale26full.numerator > 0:
+            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale26full.numerator,
+                                                                    self.marhale26accomplished.numerator)
+            real_miangin_count = real_miangin_count + 1
+
+        if self.marhale27full.numerator > 0:
+            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale27full.numerator,
+                                                                    self.marhale27accomplished.numerator)
+            real_miangin_count = real_miangin_count + 1
+
+        if self.marhale28full.numerator > 0:
+            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale28full.numerator,
+                                                                    self.marhale28accomplished.numerator)
+            real_miangin_count = real_miangin_count + 1
+
+        if self.marhale29full.numerator > 0:
+            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale29full.numerator,
+                                                                    self.marhale29accomplished.numerator)
+            real_miangin_count = real_miangin_count + 1
+
+        if self.marhale30full.numerator > 0:
+            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale30full.numerator,
+                                                                    self.marhale30accomplished.numerator)
             real_miangin_count = real_miangin_count + 1
 
         if real_miangin_all == 0:
