@@ -39,6 +39,24 @@ def percent_color(value):
 
 
 @register.filter
+def percent_color_calc(value, arg):
+
+    if arg == 0 or value == 0:
+        return 0
+    our_value = (value * 100) / arg
+
+    print(str(value)+" | "+str(arg)+" | "+str(our_value))
+
+    if our_value == 100:
+        color = "darkolivegreen"
+    elif our_value == 0:
+        color = "darkred"
+    else:
+        color = "darkgoldenrod"
+    return color
+
+
+@register.filter
 def filter_number_icon(value, arg=0):
     is_percent = False
     if arg == 1:

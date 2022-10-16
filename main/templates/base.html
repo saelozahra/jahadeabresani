@@ -141,6 +141,14 @@
         });
 
         $(document).ready(function(){
+
+            $('.project_marhale_loop li').each(function(i, obj) {
+                var this_color = $(this).find(".loop_color").css("color");
+                $(this).find(".collapsible-header").css("background-color", this_color);
+                {#$(this).find(".progress .determinate").css("color", "red");#}
+            });
+
+
             $('.tap-target').tapTarget();
             $('.collapsible').collapsible();
             $(".modal").modal();
