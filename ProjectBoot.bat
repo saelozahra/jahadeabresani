@@ -1,4 +1,5 @@
-﻿
+﻿powershell -Command "(Get-Content .\abresani\settings.py) -Replace 'DEBUG = True', 'DEBUG = False' | Set-Content .\abresani\settings.py"
+
 git pull origin master
 
 docker rm abresani-abresani-1 --force
@@ -12,9 +13,8 @@ docker volume create abresani_postgresql
 docker network create abresani_network
 
 docker-compose up -d
-@REM (Get-Content .\abresani\settings.py) -Replace 'DEBUG = True', 'DEBUG = False' | Set-Content .\abresani\settings.py
 
-@REM (Get-Content .\abresani\settings.py) -Replace 'DEBUG = False', 'DEBUG = True' | Set-Content .\abresani\settings.py
+powershell -Command "(Get-Content .\abresani\settings.py) -Replace 'DEBUG = False', 'DEBUG = True' | Set-Content .\abresani\settings.py"
 
 python manage.py makemigrations
 python manage.py migrate
