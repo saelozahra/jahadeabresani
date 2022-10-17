@@ -1,4 +1,6 @@
 from django import template
+
+import main
 from main.models import ProjectFiles
 from project.views import percent_icon
 
@@ -40,7 +42,13 @@ def percent_color(value):
 
 @register.filter
 def percent_color_calc(value, arg):
+    if value is None:
+        value = 0
 
+    if arg is None:
+        arg = 0
+
+    print("percent_color_calc", value, arg)
     if arg == 0 or value == 0:
         return 0
     our_value = (value * 100) / arg
@@ -76,6 +84,26 @@ def menha(value, arg):
 def order_by(queryset, args):
     args = [x.strip() for x in args.split(',')]
     return queryset.order_by(*args)
+
+
+@register.filter()
+def marhale_desc(pid, num):
+    state_name = "marhale%s" % num
+    return main.models.Project.objects.filter(id=pid).get().__dict__.get(state_name)
+
+
+@register.filter()
+def marhale_accomplished(pid, num):
+    state_name = "marhale%saccomplished" % num
+    print(state_name)
+    return main.models.Project.objects.filter(id=pid).get().__dict__.get(state_name)
+
+
+@register.filter()
+def marhale_full(pid, num):
+    state_name = "marhale%sfull" % num
+    print(state_name)
+    return main.models.Project.objects.filter(id=pid).get().__dict__.get(state_name)
 
 # @register.filter()
 # def var_num(arg, num):
