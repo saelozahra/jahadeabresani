@@ -173,7 +173,8 @@
             $('.project_marhale_loop li').each(function(i, obj) {
                 var this_color = $(this).find(".loop_color").css("color");
                 $(this).find(".collapsible-header").css("background-color", this_color);
-                {#$(this).find(".progress .determinate").css("color", "red");#}
+                var this_darsad = $(this).find(".determinate").css("width");
+                $(this).find(".collapsible-header .gradient_hover").css("width", this_darsad);
             });
 
 
