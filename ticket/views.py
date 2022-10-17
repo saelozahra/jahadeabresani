@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework import status
 from .models import *
+from accounts.models import CustomUser
 
-import ticket.models
 
 # Create your views here.
 
@@ -19,7 +19,8 @@ class ChatList(TemplateView):
         print("text: " + text)
 
         try:
-
+            # MyUser = CustomUser.objects
+            print(self.request.user)
             chm = ChatMessage()
             chm.Text = text
             chm.Tarikh = datetime.now()
@@ -61,7 +62,7 @@ class ChatList(TemplateView):
             username = self.request.user.username
 
         if login_detail is None:
-            if User.objects.filter(username__contains=username):
+            if CustomUser.objects.filter(username=username):
                 user_response = 'password is incorrect'
             else:
                 user_response = 'username is incorrect'
@@ -80,17 +81,23 @@ class ChatList(TemplateView):
 
             print("me: " + self.request.user.first_name)
             if C.User1 == self.request.user:
-                print("to: "+C.User2.first_name)
+                print("to: " + C.User2.first_name)
                 to_user = C.User2
             else:
-                print("to: "+C.User1.first_name)
+                print("to: " + C.User1.first_name)
                 to_user = C.User1
+
+            avatar_url = ""
+            print(to_user.avatar)
+            if to_user.avatar is not None:
+                avatar_url = to_user.avatar
 
             chat_list.append({
                 "id": C.id,
+                "title": C.__str__(),
                 "name": to_user.first_name + " " + to_user.last_name,
                 "username": to_user.username,
-                "avatar": to_user.authuser.avatar.url,
+                "avatar": avatar_url,
                 "lead": C.Lead,
                 "zaman": self.time_diff(C.Zaman),
             })
@@ -155,31 +162,54 @@ class CreateNewChat(TemplateView):
         my_slug = kwargs.get("my_slug")
         to_slug = kwargs.get("to_slug")
 
+        my_user = CustomUser.objects.filter(username=my_slug)
+        to_user = CustomUser.objects.filter(username=to_slug)
+
         print("Chat From: " + my_slug + " to: " + to_slug)
 
         our_chat = Chat.objects.filter(
-            (Q(User1__username=self.request.user) | Q(User2__username=to_slug))
-            and
-            (Q(User1__username=to_slug) | Q(User2__username=self.request.user))
+            (Q(User1__username=my_slug) and Q(User2__username=to_slug))
+            or
+            (Q(User1__username=to_slug) and Q(User2__username=my_slug))
         )
 
         if our_chat.count() == 0:
-            ch = Chat()
-            ch.User1 = User.objects.filter(username=my_slug).get()
-            ch.User2 = User.objects.filter(username=to_slug).get()
-            ch.Zaman = datetime.now()
-            ch.save()
-
-            our_chat = Chat.objects.filter(
-                (Q(User1__username=self.request.user) | Q(User2__username=to_slug))
-                and
-                (Q(User1__username=to_slug) | Q(User2__username=self.request.user))
+            new_chat_id = Chat.objects.create(
+                User1_id=my_user.get().id,
+                User2_id=to_user.get().id,
+                Zaman=datetime.now(),
+                Lead="..."
             )
 
+            print(new_chat_id)
+            print(new_chat_id.id)
+            print("Chat Created")
+
+            # ch = Chat()
+            # ch.User1 = my_user
+            # ch.User2 = to_user
+            # ch.Zaman = datetime.now()
+            # ch.Lead = "..."
+            # print_chat = ch.save()
+            #
+            # print(print_chat)
+            # print(ch.User1)
+            # print(ch.User2)
+            # print("Chat 2 Created")
+
+            our_chat = Chat.objects.filter(
+                (Q(User1__username=my_slug) and Q(User2__username=to_slug))
+                or
+                (Q(User1__username=to_slug) and Q(User2__username=my_slug))
+            )
+
+        print("our_chat")
+        print(our_chat)
         new_chat_id = our_chat.get()
 
         print(new_chat_id)
         print(new_chat_id.id)
-        return HttpResponseRedirect('../../chat/'+str(new_chat_id.id))
+
+        return HttpResponseRedirect('../../chat/' + str(new_chat_id.id))
 
         # return render(request, 'Chat.html')

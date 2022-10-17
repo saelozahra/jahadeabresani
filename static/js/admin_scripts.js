@@ -17,7 +17,7 @@ $(document).ready(function(){
                         console.log(result.title);
                         //  var dd = JSON.parse(result);
                         $(".model-project .form-row").each(function(index,element){
-                            if(index >= 9 && index % 3 === 0){
+                            if(index >= 11 && index % 3 === 0){
                                 console.log(index / 3 - 3);
                                 if($(this).find("label").attr("first_run") === "false"){
                                     $(this).find("label").text(result.marahel[(index / 3 - 3)]);
@@ -28,7 +28,7 @@ $(document).ready(function(){
                                 }
                                 $(this).find("label").attr("first_run", "false");
                             }
-                            if( index >= 9+(parseInt(result.marahel_count)*3 )){
+                            if( index >= 11+(parseInt(result.marahel_count)*3 )){
                                 // console.log(index+": "+$(this).text());
                                 $(this).fadeOut();
                             }

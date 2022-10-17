@@ -8,7 +8,7 @@ import accounts.models
 class Department(models.Model):
     Title = models.CharField(max_length=202, verbose_name='نام دپارتمان')
     UserGroup = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='گروه کاربری')
-    Desc = models.TextField(default="", verbose_name='یادداشت')
+    Desc = models.TextField(default="", blank=True, verbose_name='یادداشت')
 
     class Meta:
         verbose_name = "دپارتمان"

@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %} | پروفایل{% endblock title %}
+{% block title %} {{ ChatList.title }} مکالمه{% endblock title %}
 
-{% block main %}
+
+{% block ContainerRowClass %}row{% endblock ContainerRowClass %}
+{% block BottomContent %}
     <style>
         body {
             display: flex;
@@ -16,14 +18,14 @@
             flex-grow: 1;
         }
     </style>
-    <section class="container ChatContainer wrapper {{ ShowMessages }}" >
-        <aside class="ChatList fr tr padding row-xs">
+    <section class="row ChatContainer wrapper {{ ShowMessages }}" >
+        <aside class="ChatList fr tr padding row-xs sc">
             <ul class="row padding" style="padding: 0; margin: auto;">
                 {% for Chat in ChatList %}
                     <li class="row padding tr">
                         <a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{ request.get_host }}/chat/{{ Chat.id }}" class="row padding effect-shine">
-                            <img src="..{{ Chat.avatar }}" alt="{{ Chat.name }}" class="fr rounded">
-                            <h3 class="fl tar">{{ Chat.name }}</h3>
+                            <img src="..{{ Chat.avatar.url }}" alt="{{ Chat.name }}" class="fr rounded">
+                            <h5 class="fl tar">{{ Chat.name }}</h5>
                             <p class="fl tar white-space">{{ Chat.lead }}</p>
                             <small class="fl">{{ Chat.zaman }}</small>
                         </a>
@@ -31,9 +33,8 @@
                 {% endfor %}
             </ul>
         </aside>
-
     {% if ShowMessages == "SingleChatPage" %}
-        <figure class="MessagesList fl row-xs" style="min-height:888px;" >
+        <figure class="MessagesList fl row-xs " >
             <div class="MessagesItem row">
                 {% for m in Messages %}
                     <div class="row padding" style="margin-bottom: 14px;">
@@ -48,15 +49,16 @@
 
                 {% csrf_token %}
 
+                <div class="TextSection br14">
+                    <span contenteditable class="br14 textarea" id="message_text" > </span>
+                </div>
+
                 <button type="submit" class="btn primary fl tr">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21.8068 3L1.67761 12L21.8068 21V14L7.4288 12L21.8068 10V3Z" fill="white"></path>
                     </svg>
                 </button>
 
-                <div class="TextSection br14">
-                    <span contenteditable class="br14 textarea" id="message_text" > </span>
-                </div>
             </form>
         </figure>
     {% endif %}
@@ -89,7 +91,6 @@
           });
         });
     </script>
-{% endblock main %}
+{% endblock BottomContent %}
 
-{% block FooterContainerCSS %}margin-top: 0 !important;{% endblock FooterContainerCSS %}
-{% block MainFooterContainer %}height: 88px !important;{% endblock MainFooterContainer %}
+{% block RightContent %}{% endblock RightContent %}

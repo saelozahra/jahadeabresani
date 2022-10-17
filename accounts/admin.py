@@ -14,6 +14,7 @@ class CustomUserAdmin(UserAdmin):
             {
                 "fields":
                     (
+                        "avatar",
                         "city",
                         "address",
                         "phone",

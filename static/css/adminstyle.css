@@ -3,7 +3,7 @@
 	counter-reset: item;
 }
 
-.model-project .form-row:nth-child(n+10) {
+.model-project .form-row:nth-child(n+12) {
 	width: 30%;
 	display: inline-block;
 	margin-top: -6px;
@@ -11,27 +11,27 @@
 	box-sizing: border-box;
 }
 
-.model-project .form-row:nth-child(3n+10) {
+.model-project .form-row:nth-child(3n+12) {
     counter-increment: item;
 	list-style-type: circle;
 }
-.model-project .form-row:nth-child(3n+12) {
+.model-project .form-row:nth-child(3n+14) {
     border-left: 0;
 }
-.model-project .form-row:nth-child(9) {
+.model-project .form-row:nth-child(11) {
 	margin-bottom: 72px;
 }
-.model-project .form-row:nth-child(10) {
+.model-project .form-row:nth-child(12) {
 	padding-top: 50px;
 }
-.model-project .form-row:nth-child(10)::after {
+.model-project .form-row:nth-child(12)::after {
 	content: "مراحل اجرا";
 	font: 33px "IRANSansXFaNum Black";
 	float: left;
 	margin-top: -142px;
 }
 
-.model-project .form-row:nth-child(3n+10)::before {
+.model-project .form-row:nth-child(3n+12)::before {
 	margin-right: -5px;
 	content: counter(item);
 	background: var(--primary);

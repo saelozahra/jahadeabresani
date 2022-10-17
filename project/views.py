@@ -1,10 +1,13 @@
-import sys
+from datetime import timedelta, datetime
 
+from django.core.paginator import Paginator
+import jdatetime
 from django.http.response import Http404
 from django.shortcuts import render
 import main.models
 from django.views.generic import TemplateView
 from django.db.models import Q
+
 # Create your views here.
 
 
@@ -45,7 +48,16 @@ class ProjectsPage(TemplateView):
                 'miangin_pishraft': cd.miangin_pishraft,
                 'projects': main.models.Project.objects.filter(Q(RelatedCity__slug__contains=cd.slug)).values(),
             })
-        context = {'projects_data': projects_data}
+
+        paginator = Paginator(projects_data, 50)  # Show 15 city per page.
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'projects_data': projects_data,
+            'page_obj': page_obj,
+        }
         return render(request, 'project.html', context)
 
 
@@ -97,6 +109,89 @@ class SearchPage(TemplateView):
         print("baze_pishraft: "+baze_pishraft+" min: "+baze_min+" max: "+baze_max)
 
         return render(request, 'search.html', context)
+        # end method
+    # end method
+
+    def get(self, request, **kwargs):
+        path_name = request.resolver_match.view_name
+        print(path_name)
+
+        if path_name == "promote":
+            title = "پروژه‌های ویژه"
+            query = main.models.Project.objects.filter(
+                Q(promote=True)
+            )
+        elif path_name == "inactive_today":
+            title = "غیرفعال‌های امروز"
+            query = main.models.Project.objects.filter(
+                Q(last_update__lte=datetime.now() + timedelta(days=1))
+            )
+        elif path_name == "inactive2month":
+            title = "پروژه‌های غیرفعال در دو ماه اخیر"
+            query = main.models.Project.objects.filter(
+                Q(last_update__lte=datetime.now() + timedelta(days=60))
+            )
+        elif path_name == "latest_actived":
+            title = "امروز فعال بوده"
+            query = main.models.Project.objects.filter(
+                Q(last_update__month=datetime.month, last_update__day=datetime.day)
+            )
+        elif path_name == "without_files":
+            title = "فاقد مستندات"
+            query = main.models.Project.objects.filter(
+                Q(Documents__isnull=True)
+            )
+        elif path_name == "has_note":
+            title = "دارای یادداشت مدیریتی"
+            query = main.models.Project.objects.exclude(
+                Q(note__exact="") | Q(note__isnull=True)
+            )
+        elif path_name == "less_than_20":
+            title = "پروژه‌های با میانگین پیشرفت کم"
+            query = main.models.Project.objects.filter(
+                Q(pishrafte_kol__range=(0, 20))
+            )
+        elif path_name == "more_than_80":
+            title = "پروژه‌های با میانگین پیشرفت بالا"
+            query = main.models.Project.objects.filter(
+                Q(pishrafte_kol__range=(80, 100))
+            )
+        elif path_name == "without_gharardad":
+            title = "پروژه‌های فاقد قرارداد"
+            query = main.models.Project.objects.exclude(
+                Q(Documents__DocName__exact="gharardad")
+            )
+        elif path_name == "week_end_date":
+            title = "پایان در هفته آینده"
+            week_start = datetime.today()
+            week_start -= timedelta(days=week_start.weekday())
+            week_end = week_start + timedelta(days=7)
+            query = main.models.Project.objects.exclude(
+                date_end__gte=week_start, date_end__lt=week_end
+            )
+        elif path_name == "week_end_date":
+            title = "پایان در ماه آینده"
+            week_start = datetime.today()
+            week_start -= timedelta(days=week_start.weekday())
+            week_end = week_start + timedelta(days=30)
+            query = main.models.Project.objects.exclude(
+                date_end__gte=week_start, date_end__lt=week_end
+            )
+        else:
+            query = main.models.Project.objects.all()
+            title = "title"
+
+        context = {
+            'obj_type': main.models.MapObjectTypes.objects.all().values(),
+            'search_in': title,
+            'search_word': "",
+            'min': 0,
+            'max': 100,
+            'projects_data': query,
+            'projects_count': query.exists(),
+        }
+
+        return render(request, 'search.html', context)
 
 
 class SingleProject(TemplateView):
@@ -110,6 +205,7 @@ class SingleProject(TemplateView):
         this_project = this_project.get()
 
         context = {
+            'id': pid,
             'project': this_project,
             'lat': this_project.location.split(",")[0],
             'lng': this_project.location.split(",")[1],

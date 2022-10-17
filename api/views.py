@@ -1,7 +1,7 @@
-from django.shortcuts import render
-
+from datetime import datetime
 import city.models
 import main.models
+from events.models import Events
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,12 +11,14 @@ from rest_framework import status
 class ApiSaveCityNote(APIView):
 
     def post(self, request, format=None):
+        print(format)
         try:
             pid = self.request.POST['city']
             note = self.request.POST['text']
             print(pid)
             print(note)
             city.models.CityProject.objects.filter(slug=pid).update(note=note)
+            register_event(self, pid, "ثبت یادداشت شهر", "متن " + note + "به عنوان یادداشت جدید برای شهر "+pid+" ثبت شد. ")
             return Response({"response": "ok"}, status=status.HTTP_200_OK)
         except NameError:
             print(NameError)
@@ -35,23 +37,45 @@ class ApiSaveCityNote(APIView):
                     'view_count': pd.view_count,
                     'note': pd.note,
                 })
+
             return Response({"response": projects_data}, status=status.HTTP_200_OK)
-        except:
+        except NameError:
             return Response({"response": "error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class ApiSaveProjectNote(APIView):
+class ApiUpdateProject(APIView):
 
     def post(self, request, format=None):
         try:
             pid = self.request.POST['project']
-            note = self.request.POST['text']
             print(pid)
-            print(note)
-            main.models.Project.objects.filter(id=pid).update(note=note)
-            return Response({"response": "ok"},status=status.HTTP_200_OK)
-        except:
-            return Response({"response": "error"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            if "note" in self.request.POST:
+                note = self.request.POST['note']
+                print(note)
+                main.models.Project.objects.filter(id=pid).update(note=note)
+                register_event(self, pid, "ثبت یادداشت پروژه", "متن " + note +
+                               "به عنوان یادداشت جدید برای پروژه " + pid + " ثبت شد. ")
+            elif "desc" in self.request.POST:
+                text = self.request.POST['desc']
+                level = self.request.POST['level']
+                print(pid+": "+level+": "+text)
+                lookup = "marhale%s" % level
+                main.models.Project.objects.filter(id=pid).update(**{lookup: text})
+                register_event(self, pid, "تغییر توضیحات مرحله", "ثبت " + text + "به عنوان توضیحات جدید مرحله " + level)
+
+            elif "level" in self.request.POST:
+                text = self.request.POST['text']
+                level = self.request.POST['level']
+                print(pid+": "+level+": "+text)
+                lookup = "marhale%saccomplished" % level
+                p = main.models.Project.objects.filter(id=pid)
+                p.update(**{lookup: text})
+                p.get().save()
+                register_event(self, pid, "تغییر وضعیت مرحله", "ثبت " + text + "به عنوان میزان کارکرد جدید مرحله " + level)
+
+            return Response({"response": "ok"}, status=status.HTTP_200_OK)
+        except NameError:
+            return Response({"response": NameError.args}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request, format=None):
         try:
@@ -104,3 +128,27 @@ class ApiProjectType(APIView):
                 return Response(all_map_obj_types_data, status=status.HTTP_200_OK)
         except:
             return Response({"response": "error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+def register_event(self, pid, ev_type, text):
+    print(datetime.now())
+    ev1 = Events.objects.create(
+        # do_time=datetime.now(),
+        # day="25/12/1390",
+        EventType=ev_type,
+        description=text,
+        # OwnerUser=accounts.models.CustomUser.abstract,
+        OwnerUser=self.request.user,
+        # OwnerUser_id=1,
+        RelatedProject_id=pid,
+    )
+    print(ev1)
+
+    ev = Events()
+    ev.EventType = ev_type
+    ev.description = text
+    # ev.day = "2323232"
+    ev.OwnerUser = self.request.user
+    ev.RelatedProject = main.models.Project.objects.filter(id=pid).get()
+    ev.save()
+    print(ev)
