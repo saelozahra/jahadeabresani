@@ -26,13 +26,45 @@
             z-index: 0;
             transform: skewX(-4deg) translateX(0px);
         }
+
+        .timeline_outer {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 3px;
+            height: 5px;
+            background-color: var(--color_secondary_light);
+            width: 100%;
+            z-index: -1;
+            margin: auto;
+        }
+
+        #timeline {
+            bottom: 0;
+            position: absolute;
+            margin-bottom: 0;
+            display: flex !important;
+            flex-direction: row;
+            justify-content: center;
+            width: 66%;
+        }
+        .tear {
+            width: 50px;
+            height: 50px;
+            border-radius: 0 50% 50% 50%;
+            border: 3px solid var(--color_secondary);
+            background-color: var(--color_secondary_light);
+            transform: rotate(230deg) translateY(24px);
+            margin-top: 33px;
+            margin-bottom: 4px;
+        }
+        .tear div {
+            transform: rotate(88deg) translateX(0px) translateY(-3px);
+            text-shadow: 1px 1px 2px white;
+        }
     </style>
 
 
-
-    <div class="progress full_progress tooltipped" data-position="top" data-tooltip="{{ project.pishrafte_kol }}% پیشرفت ">
-        <div class="determinate" style="width: {{ project.pishrafte_kol }}%"></div>
-    </div>
 
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
       <a id="menu" class="btn btn-floating btn-large" style="background-color: var(--color_secondary)" onclick="$('.tap-target').tapTarget('open')">
@@ -148,17 +180,44 @@
 {% endblock RightContent %}
 
 {% block BottomContent %}
-    <div id="timeline">
+    <div class="row timeline_outer">
+    </div>
+    <div id="timeline" class="owl-carousel owl-theme" >
         {% for tld in tl_day %}
-            <b>{{ tld|replace:"-|/" }}</b><br>
-            {% for ef in tl_day.values %}
-                {% for e in ef %}
-                    <br>{{ e.day }} | {{ e.RelatedProject }} | {{ e.description }}<br>
-                {% endfor %}
-            {% endfor %}
-            <br>
+            <div class="tli">
+                <button class="tear modal-trigger" href="#modal{{ tld }}">
+                    <div>{{ tld|replace:"-|/" }}</div>
+                </button>
+            </div>
         {% endfor %}
     </div>
+
+
+
+
+    {% for tld in tl_day %}
+        <div id="modal{{ tld }}" class="modal rtl">
+            <div class="modal-content">
+              <h4>رویدادهای {{ tld|replace:"-|/" }}</h4>
+              <p>
+                <ol>
+                    {% for ef in tl_day.values %}
+                        {% for e in ef %}
+                            {% if e.day|slugify == tld|slugify %}
+                                <li>در <b> {{ e.do_time }} </b>وضعیت: <b style="color: darkred">  {{ e.description }} </b>  برای پروژه  <b>{{ e.RelatedProject }}</b> توسط <b>  {{ e.OwnerUser }} </b> ثبت شد</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </ol>
+              </p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-close waves-effect waves-green btn-flat">یا علی</a>
+            </div>
+        </div>
+    {% endfor %}
+
+
 {% endblock BottomContent %}
 
 
@@ -215,6 +274,22 @@
     var elem = document.querySelector('.collapsible.expandable');
     var instance = M.Collapsible.init(elem, {
       accordion: false
+    });
+
+    var owl = $('#timeline');
+    owl.owlCarousel({
+        items: 4,
+        center: true,
+{#        autoWidth: true,#}
+        dots: false,
+    })
+    owl.on('mousewheel', '.owl-stage', function (e) {
+        if (e.deltaY>0) {
+            owl.trigger('next.owl');
+        } else {
+            owl.trigger('prev.owl');
+        }
+        e.preventDefault();
     });
 
   });

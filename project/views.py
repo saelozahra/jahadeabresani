@@ -209,10 +209,8 @@ class SingleProject(TemplateView):
         timeline = events.models.Events.objects.filter(Q(RelatedProject_id=pid))
         tl_day = {}
 
-        print(tl_day)  # before the change
         for tl in timeline:
             tl_day[tl.day.__str__()] = timeline.filter(day=tl.day.__str__())
-
         print(tl_day)  # after changes
 
         context = {
