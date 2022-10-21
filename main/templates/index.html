@@ -8,7 +8,7 @@
           <div id="popup-content"></div>
     </div>
 
-    <div class="progress" style="bottom: -2px;position: absolute;left: 1.2%;width: 97%;height: 8px;border-radius: 10px;">
+    <div class="progress tooltipped" data-position="top" data-tooltip="{{ pishraft }}% پیشرفت کل پروژه‌ها " style="bottom: -2px;position: absolute;left: 1.2%;width: 97%;height: 8px;border-radius: 10px;">
         <div class="determinate" style="width: {{ pishraft }}%"></div>
     </div>
 {% endblock UnderMap %}
@@ -66,6 +66,23 @@
             </li>
         {% endfor %}
     </ul>
+    <ul class="collection fl home-col sc" data-mcs-theme="dark" >
+        <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">فاقد مستندات</label>
+        <br>
+        {% for pd in has_not_doc %}
+            <li class="collection-item avatar">
+                <a  href="./project/{{ pd.id }}" title="{{ pd.title }}">
+                    <img src="{{ pd.photo.url }}" alt="" class="circle" style="margin-top: 10px;">
+                    <span class="title">{{ pd.title }} - {{ pd.RelatedCity }}</span>
+                    <p>
+                        <div class="progress">
+                            <div class="determinate" style="width: {{ pd.pishrafte_kol }}%"></div>
+                        </div>
+                    </p>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
     <ul class="collection fl home-col sc" >
         <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">پروژه ویژه</label>
         <br>
@@ -83,23 +100,6 @@
                     </a>
                 </li>
             {% endif %}
-        {% endfor %}
-    </ul>
-    <ul class="collection fl home-col sc" data-mcs-theme="dark" >
-        <label class="tac row fr" style="width:100%; background-color: white; margin: 1%;">فاقد مستندات</label>
-        <br>
-        {% for pd in has_not_doc %}
-            <li class="collection-item avatar">
-                <a  href="./project/{{ pd.id }}" title="{{ pd.title }}">
-                    <img src="{{ pd.photo.url }}" alt="" class="circle" style="margin-top: 10px;">
-                    <span class="title">{{ pd.title }} - {{ pd.RelatedCity }}</span>
-                    <p>
-                        <div class="progress">
-                            <div class="determinate" style="width: {{ pd.pishrafte_kol }}%"></div>
-                        </div>
-                    </p>
-                </a>
-            </li>
         {% endfor %}
     </ul>
 {% endblock LeftContent %}
