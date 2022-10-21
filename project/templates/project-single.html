@@ -66,6 +66,10 @@
 
 
 
+    <div class="progress full_progress tooltipped" data-position="top" data-tooltip="{{ project.pishrafte_kol }}% پیشرفت ">
+        <div class="determinate" style="width: {{ project.pishrafte_kol }}%"></div>
+    </div>
+
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
       <a id="menu" class="btn btn-floating btn-large" style="background-color: var(--color_secondary)" onclick="$('.tap-target').tapTarget('open')">
         <i class="material-icons">timeline</i>
@@ -185,7 +189,7 @@
     <div id="timeline" class="owl-carousel owl-theme" >
         {% for tld in tl_day %}
             <div class="tli">
-                <button class="tear modal-trigger" href="#modal{{ tld }}">
+                <button class="tear modal-trigger tooltipped" data-position="top" data-tooltip="رویدادها و وقایع  {{ tld|replace:"-|/" }}" href="#modal{{ tld }}">
                     <div>{{ tld|replace:"-|/" }}</div>
                 </button>
             </div>
