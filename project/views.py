@@ -4,6 +4,8 @@ from django.core.paginator import Paginator
 import jdatetime
 from django.http.response import Http404
 from django.shortcuts import render
+
+import events.models
 import main.models
 from django.views.generic import TemplateView
 from django.db.models import Q
@@ -204,9 +206,19 @@ class SingleProject(TemplateView):
 
         this_project = this_project.get()
 
+        timeline = events.models.Events.objects.filter(Q(RelatedProject_id=pid))
+        tl_day = {}
+
+        print(tl_day)  # before the change
+        for tl in timeline:
+            tl_day[tl.day.__str__()] = timeline.filter(day=tl.day.__str__())
+
+        print(tl_day)  # after changes
+
         context = {
             'id': pid,
             'project': this_project,
+            'tl_day': tl_day,
             'lat': this_project.location.split(",")[0],
             'lng': this_project.location.split(",")[1],
             'icon': percent_icon(this_project.pishrafte_kol),

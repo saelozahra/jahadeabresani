@@ -149,7 +149,15 @@
 
 {% block BottomContent %}
     <div id="timeline">
-        {% for tl in  %}
+        {% for tld in tl_day %}
+            <b>{{ tld|replace:"-|/" }}</b><br>
+            {% for ef in tl_day.values %}
+                {% for e in ef %}
+                    <br>{{ e.day }} | {{ e.RelatedProject }} | {{ e.description }}<br>
+                {% endfor %}
+            {% endfor %}
+            <br>
+        {% endfor %}
     </div>
 {% endblock BottomContent %}
 

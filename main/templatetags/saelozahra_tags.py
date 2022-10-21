@@ -107,6 +107,19 @@ def marhale_full(pid, num):
     print(state_name)
     return main.models.Project.objects.filter(id=pid).get().__dict__.get(state_name)
 
+
+@register.filter
+def replace(value, arg):
+    """
+    Replacing filter
+    Use `{{ "aaa"|replace:"a|b" }}`
+    """
+    if len(arg.split('|')) != 2:
+        return value
+
+    what, to = arg.split('|')
+    return value.replace(what, to)
+
 # @register.filter()
 # def var_num(arg, num):
 #     if arg == "simple":
