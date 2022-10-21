@@ -9,7 +9,7 @@ register = template.Library()
 
 @register.filter
 def darsad(value, arg):
-    if arg == 0 or value == 0:
+    if arg == 0 or value == 0 or arg is None or value is None:
         return 0
     our_value = (value * 100) / arg
 
@@ -76,6 +76,8 @@ def filter_number_icon(value, arg=0):
 
 @register.filter
 def menha(value, arg):
+    if value is None or arg is None:
+        return 0
     return value - arg
 
 

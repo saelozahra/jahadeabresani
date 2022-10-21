@@ -1,4 +1,4 @@
-﻿powershell -Command "(Get-Content .\abresani\settings.py) -Replace 'DEBUG = True', 'DEBUG = False' | Set-Content .\abresani\settings.py"
+powershell -Command "(Get-Content .\abresani\settings.py) -Replace 'DEBUG = True', 'DEBUG = False' | Set-Content .\abresani\settings.py"
 
 git pull origin master
 
