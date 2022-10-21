@@ -48,14 +48,12 @@ def percent_color_calc(value, arg):
     if arg is None:
         arg = 0
 
-    print("percent_color_calc", value, arg)
-
     if arg == 0 or value == 0:
         our_value = 0
     else:
         our_value = (value * 100) / arg
 
-    print("our_value: ", our_value, str(value)+" | "+str(arg)+" | "+str(our_value))
+    print(str(value)+" | "+str(arg)+" | "+str(our_value))
 
     if our_value == 100:
         color = "darkolivegreen"

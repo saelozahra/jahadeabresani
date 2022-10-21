@@ -171,10 +171,21 @@
         $(document).ready(function(){
 
             $('.project_marhale_loop li').each(function(i, obj) {
-                var this_color = $(this).find(".loop_color").css("color");
+                let this_color = $(this).find(".loop_color").css("color");
                 $(this).find(".collapsible-header").css("background-color", this_color);
-                var this_darsad = $(this).find(".determinate").css("width");
+                let this_darsad = $(this).find(".determinate").css("width");
                 $(this).find(".collapsible-header .gradient_hover").css("width", this_darsad);
+
+                let level_msg;
+                if(this_darsad==="100%"){
+                    level_msg = " این مرحله تکمیل شده " ;
+                }else if(this_darsad==="0%"){
+                    level_msg = " این مرحله هنوز شروع نشده " ;
+                }else{
+                    level_msg =  this_darsad + " پیشرفت داشته..." ;
+                }
+
+                $(this).attr("data-tooltip", level_msg);
             });
 
 

@@ -30,7 +30,7 @@
 
 
 
-    <div class="progress full_progress">
+    <div class="progress full_progress tooltipped" data-position="top" data-tooltip="{{ project.pishrafte_kol }}% پیشرفت ">
         <div class="determinate" style="width: {{ project.pishrafte_kol }}%"></div>
     </div>
 
@@ -130,7 +130,7 @@
 {% block RightContent %}
     <ul class="collapsible expandable popout project_marhale_loop" style="direction: rtl;">
     {% for spdtmejra in project.type.marhalel_ejra_s.values %}
-            <li>
+            <li class="tooltipped" data-position="bottom" >
                 <div class="collapsible-header" style="position:relative;">
                     <span class="gradient_hover" ></span>
                     <span style="z-index: 1;position: relative;width: 100%;display: inline-flex;">
@@ -148,6 +148,9 @@
 {% endblock RightContent %}
 
 {% block BottomContent %}
+    <div id="timeline">
+        {% for tl in  %}
+    </div>
 {% endblock BottomContent %}
 
 
