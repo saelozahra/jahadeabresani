@@ -217,6 +217,7 @@ class SingleProject(TemplateView):
             'id': pid,
             'project': this_project,
             'tl_day': tl_day,
+            'doc_type': main.models.ProjectFiles.DocChoices,
             'lat': this_project.location.split(",")[0],
             'lng': this_project.location.split(",")[1],
             'icon': percent_icon(this_project.pishrafte_kol),

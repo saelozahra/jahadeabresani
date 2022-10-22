@@ -126,7 +126,59 @@
 
 
     <div class="collection with-header">
-        <li class="collection-header" style="text-align: right;"><h5><b>مستندات</b> {{ project.title }}</h5></li>
+        <li class="collection-header" style="text-align: right;">
+            <h5 style="width: calc(100% - 70px);display: inline-block;"><b>مستندات</b> {{ project.title }}</h5>
+            <a class="btn-floating modal-trigger btn-small pulse left green darken-4 tooltipped"
+               data-tooltip="بارگزاری مستندات" style="margin-top: 12px;"
+               href="#modal_upload">
+                <i class="material-icons">upload</i>
+            </a>
+        </li>
+
+        <!-- Modal Structure -->
+        <div id="modal_upload" class="modal">
+            <div class="modal-content">
+                <h4>بارگزاری تصویر و مستندات پروژه</h4>
+                <p>
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="project_id" value="{{ id }}">
+                        <div class="input-field col s12">
+                            <select name="DocType">
+                                <option value="" disabled selected>نوع مستندات و فایل خود را انتخاب کنید</option>
+                                {% for dt in doc_type %}
+                                    <option value="{{ dt.0 }}">{{ dt.1 }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>نوع فایل</label>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="textarea1" name="DocName" class="materialize-textarea"></textarea>
+                                <label for="textarea1">توضیحات فایل</label>
+                            </div>
+                        </div>
+
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>فایل یا تصویر</span>
+                                <input required type="file" name="photo">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate"  type="text" placeholder="فایل یا تصویر مورد نظر را انتخاب کنید">
+                            </div>
+                        </div>
+
+                        <br>
+
+                    </form>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close1 waves-effect waves-green btn" >  <b> بارگزاری </b>  </a>
+            </div>
+        </div>
         <ul class="collapsible popout" style="padding: 14px;">
 
             {% for pdoc in project.Documents.values %}
