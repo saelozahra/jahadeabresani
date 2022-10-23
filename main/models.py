@@ -70,6 +70,7 @@ class ProjectFiles(models.Model):
                                          " انتخاب کنید")
     photo = models.FileField(upload_to='files/images/project/sub', verbose_name='فایل', default="")
     DocType = models.CharField(default="image", max_length=72, choices=DocChoices, verbose_name="نوع فایل")
+    Sender = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, editable=False, verbose_name="آپلود کننده")
 
     class Meta:
         verbose_name = "فایلهای پروژه"
