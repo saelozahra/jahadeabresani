@@ -143,11 +143,13 @@ class ApiProjectMosatanadat(APIView):
             if "photo" in self.request.FILES:
                 doc_name = self.request.POST["DocName"]
                 doc_type = self.request.POST["DocType"]
+                mdi_icon = self.request.POST["MDIIcon"]
                 my_file = request.FILES['photo']
 
                 pf_instance = main.models.ProjectFiles.objects.create(
                     DocName=doc_name,
                     DocType=doc_type,
+                    MDIIcon=mdi_icon,
                     photo=my_file,
                     Uploader_id=self.request.user.id,
                 )
