@@ -66,11 +66,12 @@ class ProjectFiles(models.Model):
     DocName = models.CharField(max_length=110, verbose_name='توضیحات', null=False, blank=False)
     MDIIcon = models.CharField(verbose_name='آیکون', max_length=110, default="filter_drama",
                                help_text="نام آیکون را از <a href='https://materializecss.com/icons.html'>"
-                                         "https://materializecss.com/icons.html</a>"
-                                         " انتخاب کنید")
+                                         "https://materializecss.com/icons.html</a> انتخاب کنید")
     photo = models.FileField(upload_to='files/images/project/sub', verbose_name='فایل', default="")
     DocType = models.CharField(default="image", max_length=72, choices=DocChoices, verbose_name="نوع فایل")
-    Sender = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, editable=False, verbose_name="آپلود کننده")
+    Uploader = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=True,
+                                 editable=False, verbose_name="آپلود کننده")
+    UploadTime = models.DateTimeField(auto_now=True, blank=True, null=True, editable=False, verbose_name='زمان بارگزاری')
 
     class Meta:
         verbose_name = "فایلهای پروژه"
@@ -217,38 +218,13 @@ class Project(models.Model):
     def save(self, *args, **kwargs):
         real_miangin_all = 0
         real_miangin_count = 0
-        for i in range(1, 25):
+        for i in range(1, 30):
             m_f = "marhale%sfull" % i
             m_a = "marhale%saccomplished" % i
             if self.__getattribute__(m_a).numerator > 0:
                 real_miangin_all = real_miangin_all + calculate_percent(self.__getattribute__(m_f).numerator,
                                                                         self.__getattribute__(m_a).numerator)
                 real_miangin_count = real_miangin_count + 1
-
-        if self.marhale26full.numerator > 0:
-            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale26full.numerator,
-                                                                    self.marhale26accomplished.numerator)
-            real_miangin_count = real_miangin_count + 1
-
-        if self.marhale27full.numerator > 0:
-            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale27full.numerator,
-                                                                    self.marhale27accomplished.numerator)
-            real_miangin_count = real_miangin_count + 1
-
-        if self.marhale28full.numerator > 0:
-            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale28full.numerator,
-                                                                    self.marhale28accomplished.numerator)
-            real_miangin_count = real_miangin_count + 1
-
-        if self.marhale29full.numerator > 0:
-            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale29full.numerator,
-                                                                    self.marhale29accomplished.numerator)
-            real_miangin_count = real_miangin_count + 1
-
-        if self.marhale30full.numerator > 0:
-            real_miangin_all = real_miangin_all + calculate_percent(self, self.marhale30full.numerator,
-                                                                    self.marhale30accomplished.numerator)
-            real_miangin_count = real_miangin_count + 1
 
         if real_miangin_all == 0:
             self.pishrafte_kol = 0
