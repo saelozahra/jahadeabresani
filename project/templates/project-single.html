@@ -136,13 +136,53 @@
         </li>
 
         <!-- Modal Structure -->
-        <div id="modal_upload" class="modal">
+        <form method="post" enctype="multipart/form-data" action="../../api/project/mosatanadat/{{ id }}" id="modal_upload" class="modal">
             <div class="modal-content">
-                <h4>بارگزاری تصویر و مستندات پروژه</h4>
+                <h4 class="tar">بارگزاری تصویر و مستندات پروژه</h4>
                 <p>
-                    <form method="post" enctype="multipart/form-data">
+                    <div method="post" enctype="multipart/form-data" action="../../api/project/mosatanadat/{{ id }}">
+                        {% csrf_token %}
                         <input type="hidden" name="project_id" value="{{ id }}">
-                        <div class="input-field col s12">
+                        <div class="input-field col s5">
+                            <select name="DocType">
+                                <option value="" disabled selected>آیکون مورد نظر را انتخاب کنید</option>
+                                <option value="access_alarm">access_alarm</option>
+                                <option value="ac_unit">ac_unit</option>
+                                <option value="3d_rotation">3d_rotation</option>
+                                <option value="account_balance">account_balance</option>
+                                <option value="account_circle">account_circle</option>
+                                <option value="add_a_photo">add_a_photo</option>
+                                <option value="adjust">adjust</option>
+                                <option value="airport_shuttle">airport_shuttle</option>
+                                <option value="all_inclusive">all_inclusive</option>
+                                <option value="album">album</option>
+                                <option value="apps">apps</option>
+                                <option value="aspect_ratio">aspect_ratio</option>
+                                <option value="art_track">art_track</option>
+                                <option value="assignment">assignment</option>
+                                <option value="assistant">assistant</option>
+                                <option value="assistant_photo">assistant_photo</option>
+                                <option value="backup">backup</option>
+                                <option value="beach_access">beach_access</option>
+                                <option value="blur_circular">blur_circular</option>
+                                <option value="blur_on">blur_on</option>
+                                <option value="brightness_high">brightness_high</option>
+                                <option value="bubble_chart">bubble_chart</option>
+                                <option value="cake">cake</option>
+                                <option value="camera">camera</option>
+                                <option value="card_giftcard">card_giftcard</option>
+                                <option value="casino">casino</option>
+                                <option value="dashboard">dashboard</option>
+                                <option value="drive_eta">drive_eta</option>
+                                <option value="favorite">favorite</option>
+                                <option value="filter_vintage">filter_vintage</option>
+                                <option value="filter_tilt_shift">filter_tilt_shift</option>
+                                <option value="gesture">gesture</option>
+                                <option value="healing">healing</option>
+                            </select>
+                            <label>آیکون</label>
+                        </div>
+                        <div class="input-field col s7">
                             <select name="DocType">
                                 <option value="" disabled selected>نوع مستندات و فایل خود را انتخاب کنید</option>
                                 {% for dt in doc_type %}
@@ -172,13 +212,13 @@
 
                         <br>
 
-                    </form>
+                    </div>
                 </p>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-close1 waves-effect waves-green btn" >  <b> بارگزاری </b>  </a>
+                <input type="submit" class="modal-close1 waves-effect waves-green btn btn-large fl" style="margin-left: 18px;margin-bottom: 18px;" value=" بارگزاری " >
             </div>
-        </div>
+        </form>
         <ul class="collapsible popout" style="padding: 14px;">
 
             {% for pdoc in project.Documents.values %}

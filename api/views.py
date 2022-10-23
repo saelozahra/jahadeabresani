@@ -5,6 +5,8 @@ from events.models import Events
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+
 # Create your views here.
 
 
@@ -18,7 +20,8 @@ class ApiSaveCityNote(APIView):
             print(pid)
             print(note)
             city.models.CityProject.objects.filter(slug=pid).update(note=note)
-            register_event(self, pid, "ثبت یادداشت شهر", "متن " + note + "به عنوان یادداشت جدید برای شهر "+pid+" ثبت شد. ")
+            register_event(self, pid, "ثبت یادداشت شهر",
+                           "متن " + note + "به عنوان یادداشت جدید برای شهر " + pid + " ثبت شد. ")
             return Response({"response": "ok"}, status=status.HTTP_200_OK)
         except NameError:
             print(NameError)
@@ -58,7 +61,7 @@ class ApiUpdateProject(APIView):
             elif "desc" in self.request.POST:
                 text = self.request.POST['desc']
                 level = self.request.POST['level']
-                print(pid+": "+level+": "+text)
+                print(pid + ": " + level + ": " + text)
                 lookup = "marhale%s" % level
                 main.models.Project.objects.filter(id=pid).update(**{lookup: text})
                 register_event(self, pid, "تغییر توضیحات مرحله", "ثبت " + text + "به عنوان توضیحات جدید مرحله " + level)
@@ -66,12 +69,13 @@ class ApiUpdateProject(APIView):
             elif "level" in self.request.POST:
                 text = self.request.POST['text']
                 level = self.request.POST['level']
-                print(pid+": "+level+": "+text)
+                print(pid + ": " + level + ": " + text)
                 lookup = "marhale%saccomplished" % level
                 p = main.models.Project.objects.filter(id=pid)
                 p.update(**{lookup: text})
                 p.get().save()
-                register_event(self, pid, "تغییر وضعیت مرحله", "ثبت " + text + "به عنوان میزان کارکرد جدید مرحله " + level)
+                register_event(self, pid, "تغییر وضعیت مرحله",
+                               "ثبت " + text + "به عنوان میزان کارکرد جدید مرحله " + level)
 
             return Response({"response": "ok"}, status=status.HTTP_200_OK)
         except NameError:
@@ -90,7 +94,8 @@ class ApiUpdateProject(APIView):
                     'city': pd.city,
                     'location': pd.location,
                     'miangin_pishraft': pd.miangin_pishraft,
-                    'date_start': str(pd.date_start.year) + "/" + str(pd.date_start.month) + "/" + str(pd.date_start.day),
+                    'date_start': str(pd.date_start.year) + "/" + str(pd.date_start.month) + "/" + str(
+                        pd.date_start.day),
                     'date_end': str(pd.date_end.year) + "/" + str(pd.date_end.month) + "/" + str(pd.date_end.day),
                     'mojavez': pd.mojavez.url,
                     'mostanadat': pd.mostanadat.url,
@@ -107,7 +112,7 @@ class ApiProjectType(APIView):
 
     def get(self, request, pt_id, format=None):
         try:
-            print("pt_id: "+pt_id)
+            print("pt_id: " + pt_id)
             all_map_obj_types_data = []
             all_marahel_ejra_data = []
             all_map_obj_types = main.models.MapObjectTypes.objects.filter(id=pt_id)
@@ -128,6 +133,41 @@ class ApiProjectType(APIView):
                 return Response(all_map_obj_types_data, status=status.HTTP_200_OK)
         except:
             return Response({"response": "error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ApiProjectMosatanadat(APIView):
+
+    def post(self, request, pt_id, format=None):
+        try:
+            print("pt_id: " + pt_id)
+            if "photo" in self.request.FILES:
+                doc_name = self.request.POST["DocName"]
+                doc_type = self.request.POST["DocType"]
+                my_file = request.FILES['photo']
+
+                pf_instance = main.models.ProjectFiles.objects.create(
+                    DocName=doc_name,
+                    DocType=doc_type,
+                    photo=my_file,
+                    Uploader_id=self.request.user.id,
+                )
+                print("PFInstance:", pf_instance.id, pf_instance)
+
+                main.models.Project.objects.filter(id=pt_id).get().Documents.add(pf_instance)
+
+                register_event(self, pt_id, "بارگزاری مستندات",
+                                "یک فایل با توضییحات " + doc_name + " در پروژه  " + pt_id + " بارگزاری شد. ")
+
+                return Response(
+                    {
+                        "status": "ok",
+                        "doc_name": doc_name,
+                        "doc_type": doc_type,
+                    }, status=status.HTTP_200_OK)
+            else:
+                return Response("تصویر را وارد کنید", status=status.HTTP_400_BAD_REQUEST)
+        except NameError:
+            return Response(NameError, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 def register_event(self, pid, ev_type, text):
