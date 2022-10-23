@@ -226,9 +226,8 @@
                     <div class="collapsible-header"><i class="material-icons">{{ pdoc.MDIIcon }}</i>{{ pdoc.DocType|pd_name }}</div>
                     <div class="collapsible-body">
                         <span>
-                            <a data-lightbox="lb" data-title="{{ pdoc.DocType|pd_name }}" href="/files/{{ pdoc.photo }}" >
-                                <img style="max-width: 100%" src="/files/{{ pdoc.photo }}" alt="{{ pdoc.DocName }}">
-                            </a>
+                            <img style="max-width: 100%" class="materialboxed" src="/files/{{ pdoc.photo }}"
+                                 data-caption="{{ pdoc.DocName }}" alt="{{ pdoc.DocName }}">
                             <br>
                             <p class="row">{{ pdoc.DocName }}</p>
                             <a download="" href="/files/{{ pdoc.photo }}" class="waves-effect waves-light btn-small" style="background-color: var(--color_secondary)">
