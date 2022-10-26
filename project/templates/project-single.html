@@ -203,7 +203,7 @@
                         <div class="file-field input-field">
                             <div class="btn">
                                 <span>فایل یا تصویر</span>
-                                <input required type="file" name="photo">
+                                <input required type="file" name="photo" id="mostanadat_file">
                             </div>
                             <div class="file-path-wrapper">
                                 <input class="file-path validate"  type="text" placeholder="فایل یا تصویر مورد نظر را انتخاب کنید">
@@ -216,7 +216,7 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="modal-close1 waves-effect waves-green btn btn-large fl" style="margin-left: 18px;margin-bottom: 18px; color: white;" value="  بارگـزاری  " >
+                <input type="submit" class="modal-close1 waves-effect waves-green btn btn-large fl input_submit_for_mostanadat farar_kon" data-dir="chap" style="margin-left: 18px;margin-bottom: 18px; color: white;" value="  بارگـزاری  " >
             </div>
         </form>
         <ul class="collapsible popout" style="padding: 14px;">
@@ -365,6 +365,23 @@
     });
 
   $(document).ready(function(){
+
+    $("#mostanadat_file").change(function (){
+        $(".input_submit_for_mostanadat").removeClass('farar_kon');
+        $(".input_submit_for_mostanadat").css("margin-left", "3%");
+    });
+
+
+    $(".farar_kon").hover(function (){
+        if($(this).hasClass('farar_kon')){
+            M.toast({html: 'اول فایل رو انتخاب کن', classes: 'rounded', displayLength: 313});
+            if(parseInt($(this).css("margin-left")) > 202){
+                $(this).css("margin-left", "3%");
+            }else{
+                $(this).css("margin-left", "86%");
+            }
+        }
+    });
 
     var elem = document.querySelector('.collapsible.expandable');
     var instance = M.Collapsible.init(elem, {
