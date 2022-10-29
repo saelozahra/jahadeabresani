@@ -6,9 +6,11 @@ from django.http.response import Http404
 from django.shortcuts import render
 
 import events.models
+import financial.models
 import main.models
 from django.views.generic import TemplateView
-from django.db.models import Q
+from django.db.models import Q, Sum
+
 
 # Create your views here.
 
@@ -220,6 +222,8 @@ class SingleProject(TemplateView):
             'doc_type': main.models.ProjectFiles.DocChoices,
             'lat': this_project.location.split(",")[0],
             'lng': this_project.location.split(",")[1],
+            'finance': financial.models.Property.objects.filter(ForProject_id=pid),
+            'finance_sum': financial.models.Property.objects.filter(ForProject_id=pid).aggregate(Sum('CommodityPrice')),
             'icon': percent_icon(this_project.pishrafte_kol),
         }
         return render(request, 'project-single.html', context)
