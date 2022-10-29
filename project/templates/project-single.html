@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load saelozahra_tags %}
+{% load humanize %}
 
 {% block title %} کنترل پروژه آب رسانی -  {{ project.title }} {% endblock %}
 {% block MenuTitle %}
@@ -7,6 +8,11 @@
     <div style="float: left">{{ project.title }}</div>
 {% endblock %}
 
+{% block ExtraMenu %}
+    {% if request.user.is_superuser %}
+        <li><a href="../../../modiriat/main/project/{{ id }}/change/" ><i class="material-icons">edit</i></a></li>
+    {% endif %}
+{% endblock ExtraMenu %}
 
 {% block UnderMap %}
     <style>
@@ -120,6 +126,26 @@
                 {% endif %}
             </div>
           </div>
+
+            <img src="/static/img/sp.png" alt="hr" style="margin: 12px auto;max-width: 100%;">
+
+            <div class="row valign-wrapper" style="margin: auto">
+                <div class="col s10" style="text-align: center; direction: rtl;">
+
+                    <b class="red-text">
+                        {{ project.money|intcomma:False}}
+                    </b>
+
+                    <small class="black-text">
+                        تومان
+                    </small>
+
+                    <a class="left waves-effect waves-light btn green darken-4" style="margin-right: 8px; margin-top: -14px;" href="./finance/{{ id }}">
+                        <i class="material-icons left">attach_money</i> پرداخت ها و مخارج
+                    </a>
+                </div>
+                <h5 class="col s2 right" style="text-align: right">مالی</h5>
+            </div>
         </div>
       </div>
 

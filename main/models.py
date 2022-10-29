@@ -111,6 +111,7 @@ class Project(models.Model):
                                     verbose_name="شهر مربوطه")
     type = models.ForeignKey(MapObjectTypes, blank=False, null=False, on_delete=models.CASCADE,
                              verbose_name='نوع پروژه')
+    money = models.IntegerField(default=0, verbose_name='بودجه پروژه', help_text="بودجه به تومان")
     pishrafte_kol = models.IntegerField(validators=[validate_darsad], editable=False, verbose_name='پیشرفت کل')
     date_start = jmodels.jDateField(verbose_name='تاریخ شروع')
     date_end = jmodels.jDateField(verbose_name='تاریخ پایان')
