@@ -44,6 +44,7 @@
                     {% if request.user.is_superuser %}
                         <li><a href="../../../modiriat/accounts/customuser/add/" onclick="M.toast({html: 'برای ثبت‌نام به مدیر سایت پیام دهید '});return false;"><i class="material-icons">person_add</i></a></li>
                     {% endif %}
+                    {% block ExtraMenu %}{% endblock ExtraMenu %}
                 </ul>
             </div>
         </nav>
