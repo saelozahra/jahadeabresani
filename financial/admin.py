@@ -32,4 +32,4 @@ class PropertyAdmin(ExportActionMixin, admin.ModelAdmin):
 
 
 admin.site.register(Storage, StorageAdmin)
-admin.site.register(Property, PropertyAdmin)
+admin.site.register(PPP, PropertyAdmin)

@@ -22,13 +22,41 @@ class Storage(models.Model):
         return "انبار" + self.StoreName
 
 
-class Property(models.Model):
+class RequestTicket(models.Model):
+    Commodity = models.CharField(max_length=110, verbose_name='نام کالا', null=False, blank=False)
+    CommodityVolume = models.CharField(max_length=1313, verbose_name='میزان کالا', null=True, blank=True)
+    CommodityDesc = models.TextField(verbose_name='توضیحات', null=True, blank=True, help_text="توضیحات")
+    Photo = models.ImageField(upload_to='files/finance', verbose_name='تصویر نامه درخواست')
+    Requester = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=False, verbose_name="درخواست دهنده")
+    BuyDay = jmodels.jDateField(editable=False, auto_now_add=True, verbose_name='روز درخواست')
+    BuyDateTime = jmodels.jDateTimeField(auto_now_add=True, verbose_name='زمان درخواست')
+    ForProject=models.ForeignKey(main.models.Project, on_delete=models.CASCADE, null=False, verbose_name="پروژه مربوطه")
+
+    def save(self, *args, **kwargs):
+        PPP.objects.create(
+            Commodity=self.Commodity,
+            CommodityDesc=self.CommodityDesc,
+            ForProject=self.ForProject
+        )
+
+        return super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "نامه درخواست"
+        verbose_name_plural = "نامه درخواست"
+
+    def __str__(self):
+        return self.CommodityVolume, " «", self.Commodity, "»"
+
+
+class PPP(models.Model):
+    # ProductPurchaseProcess
     Commodity = models.CharField(max_length=110, verbose_name='محصول', null=False, blank=False)
     CommodityDesc = models.TextField(verbose_name='توضیحات', null=True, blank=True, help_text="توضیحات یا نوع محصول")
     CommodityPrice = models.IntegerField(verbose_name='قیمت', null=True, blank=True, help_text="قیمت به تومان")
-    BuyFrom = models.CharField(max_length=110, verbose_name='نام فروشگاه', null=False, blank=False)
-    Buyer = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=False, verbose_name="خریدار")
-    Storage = models.ForeignKey(Storage, on_delete=models.CASCADE, null=False, blank=False, verbose_name="انبار")
+    BuyFrom = models.CharField(max_length=110, verbose_name='نام فروشگاه', null=True, blank=True)
+    Buyer = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=True, verbose_name="خریدار")
+    Storage = models.ForeignKey(Storage, on_delete=models.CASCADE, null=True, blank=True, verbose_name="انبار")
     BuyDay = jmodels.jDateField(editable=False, auto_now_add=True, verbose_name='روز خرید')
     BuyDateTime = jmodels.jDateTimeField(auto_now_add=True, verbose_name='زمان خرید')
     ForProject=models.ForeignKey(main.models.Project, on_delete=models.CASCADE, null=False, verbose_name="پروژه مربوطه")
@@ -40,24 +68,6 @@ class Property(models.Model):
     class Meta:
         verbose_name = "پروسه خرید محصول"
         verbose_name_plural = "پروسه خرید محصول"
-
-    def __str__(self):
-        return self.Commodity
-
-
-class RequestTicket(models.Model):
-    Commodity = models.CharField(max_length=110, verbose_name='نام کالا', null=False, blank=False)
-    CommodityPrice = models.CharField(verbose_name='قیمت', null=True, blank=True, help_text="میزان کالا")
-    CommodityDesc = models.TextField(verbose_name='توضیحات', null=True, blank=True, help_text="توضیحات")
-    Photo = models.ImageField(upload_to='files/finance', verbose_name='تصویر نامه درخواست')
-    Requester = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=False, verbose_name="درخواست دهنده")
-    BuyDay = jmodels.jDateField(editable=False, auto_now_add=True, verbose_name='روز درخواست')
-    BuyDateTime = jmodels.jDateTimeField(auto_now_add=True, verbose_name='زمان درخواست')
-    ForProject=models.ForeignKey(main.models.Project, on_delete=models.CASCADE, null=False, verbose_name="پروژه مربوطه")
-
-    class Meta:
-        verbose_name = "نامه درخواست"
-        verbose_name_plural = "نامه درخواست"
 
     def __str__(self):
         return self.Commodity
