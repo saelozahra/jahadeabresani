@@ -185,7 +185,7 @@
 
                                 <tbody>
                                 {% for f in finance %}
-                                    <tr class="tooltipped" data-position="top" data-tooltip="{{ f.Buyer }} این محصول را از فروشگاه: {{ f.BuyFrom }} خرید">
+                                    <tr class="tooltipped" data-position="top" data-tooltip="{{ f.Buyer }} این محصول را از فروشگاه: {{ f.BuyFrom }} خرید<br><br>{{ f.CommodityDesc }}">>
                                         <td >{{ f }}</td>
                                         <td><img src="{{ f.Photo.url }}" class="materialboxed" alt="تصویر محصول" style="max-width: 110px;max-height: 110px; border-radius: 14px;display: inline;"></td>
                                         <td><img src="{{ f.BuyFactor.url }}" class="materialboxed" alt="فاکتور" style="max-width: 110px;max-height: 110px; border-radius: 14px;display: inline;"></td>

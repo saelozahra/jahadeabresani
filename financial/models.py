@@ -34,10 +34,30 @@ class Property(models.Model):
     ForProject=models.ForeignKey(main.models.Project, on_delete=models.CASCADE, null=False, verbose_name="پروژه مربوطه")
     Photo = models.ImageField(upload_to='files/finance', verbose_name='تصویر محصول')
     BuyFactor = models.ImageField(upload_to='files/finance/factor', verbose_name='تصویر فاکتور خرید')
+    ####
+    RequestTicket = models.ForeignKey(RequestTicket, on_delete=models.CASCADE, blank=False, null=False, verbose_name="نامه درخواست")
 
     class Meta:
-        verbose_name = "محصول"
-        verbose_name_plural = "محصول"
+        verbose_name = "پروسه خرید محصول"
+        verbose_name_plural = "پروسه خرید محصول"
+
+    def __str__(self):
+        return self.Commodity
+
+
+class RequestTicket(models.Model):
+    Commodity = models.CharField(max_length=110, verbose_name='نام کالا', null=False, blank=False)
+    CommodityPrice = models.CharField(verbose_name='قیمت', null=True, blank=True, help_text="میزان کالا")
+    CommodityDesc = models.TextField(verbose_name='توضیحات', null=True, blank=True, help_text="توضیحات")
+    Photo = models.ImageField(upload_to='files/finance', verbose_name='تصویر نامه درخواست')
+    Requester = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=False, verbose_name="درخواست دهنده")
+    BuyDay = jmodels.jDateField(editable=False, auto_now_add=True, verbose_name='روز درخواست')
+    BuyDateTime = jmodels.jDateTimeField(auto_now_add=True, verbose_name='زمان درخواست')
+    ForProject=models.ForeignKey(main.models.Project, on_delete=models.CASCADE, null=False, verbose_name="پروژه مربوطه")
+
+    class Meta:
+        verbose_name = "نامه درخواست"
+        verbose_name_plural = "نامه درخواست"
 
     def __str__(self):
         return self.Commodity
