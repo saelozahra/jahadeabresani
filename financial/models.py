@@ -22,6 +22,22 @@ class Storage(models.Model):
         return "انبار" + self.StoreName
 
 
+class Inquiry(models.Model):
+    StoreName = models.CharField(max_length=110, verbose_name='نام انبار', null=False, blank=False)
+    StoreAddress = models.TextField(verbose_name='آدرس', null=True, blank=True)
+    StoreLocation = PlainLocationField(based_fields=['city'], zoom=10, null=True, suffix=['StoreAddress'],
+                                       verbose_name='موقعیت مکانی')
+    StoreAdmin = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=True,
+                                   verbose_name="انبار دار")
+
+    class Meta:
+        verbose_name = "استعلام"
+        verbose_name_plural = "استعلام"
+
+    def __str__(self):
+        return "انبار" + self.StoreName
+
+
 class RequestTicket(models.Model):
     Commodity = models.CharField(max_length=110, verbose_name='نام کالا', null=False, blank=False)
     CommodityVolume = models.CharField(max_length=1313, verbose_name='میزان کالا', null=True, blank=True)
@@ -34,6 +50,7 @@ class RequestTicket(models.Model):
 
     def save(self, *args, **kwargs):
         PPP.objects.create(
+            Status=1,
             Commodity=self.Commodity,
             CommodityDesc=self.CommodityDesc,
             ForProject=self.ForProject
@@ -51,6 +68,12 @@ class RequestTicket(models.Model):
 
 class PPP(models.Model):
     # ProductPurchaseProcess
+    StatusChoices = (
+        (1, 'بارگزاری'),
+        (2, 'تائید ناظر'),
+        (3, ''),
+    )
+    Status = models.SmallIntegerField(verbose_name="وضعیت", choices=StatusChoices)
     Commodity = models.CharField(max_length=110, verbose_name='محصول', null=False, blank=False)
     CommodityDesc = models.TextField(verbose_name='توضیحات', null=True, blank=True, help_text="توضیحات یا نوع محصول")
     CommodityPrice = models.IntegerField(verbose_name='قیمت', null=True, blank=True, help_text="قیمت به تومان")
