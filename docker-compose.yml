@@ -28,7 +28,27 @@ services:
       - "5432:5432"
     networks:
       - abresani_network
-
+  pgbackups:
+    image: prodrigestivill/postgres-backup-local
+    restart: always
+    user: postgres:postgres # Optional: see below
+    volumes:
+      - /var/opt/pgbackups:/backups
+    links:
+      - abresani_postgresql
+    depends_on:
+      - abresani_postgresql
+    environment:
+      - POSTGRES_HOST=abresani_postgresql
+      - POSTGRES_DB=abresani_db
+      - POSTGRES_USER=POSTGRES
+      - POSTGRES_PASSWORD=passwordRAZ5224
+      - POSTGRES_EXTRA_OPTS=-Z6 --schema=public --blobs
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=4
+      - BACKUP_KEEP_MONTHS=6
+      - HEALTHCHECK_PORT=8080
 volumes:
   abresani_postgresql:
     external: true
