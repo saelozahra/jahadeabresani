@@ -8,7 +8,7 @@ from .models import *
 class EventsAdmin(ExportActionMixin, admin.ModelAdmin):
 
     list_display = ("RelatedProject", "OwnerUser", "EventType", "day")
-    list_filter = ("RelatedProject", "OwnerUser", )
+    list_filter = ("RelatedProject", "OwnerUser", "day", )
 
 
 admin.site.register(Events, EventsAdmin)
