@@ -1,5 +1,6 @@
 from datetime import datetime
 import city.models
+import financial.models
 import main.models
 from events.models import Events
 from rest_framework.views import APIView
@@ -172,6 +173,37 @@ class ApiProjectMosatanadat(APIView):
             return Response(NameError, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class ApiFinance(APIView):
+    def post(self, request, format=None):
+        photo = ""
+        if "photo" in self.request.FILES:
+            photo = self.request.FILES['photo']
+        pid = self.request.POST['pid']
+        Commodity = self.request.POST['Commodity']
+        CommodityVolume = self.request.POST['CommodityVolume']
+        CommodityDesc = self.request.POST['CommodityDesc']
+        Requester = self.request.POST['Requester']
+        try:
+            ref_fin = financial.models.PPP.objects.create(
+                ForProject_id=pid,
+                Commodity=Commodity,
+                CommodityVolume=CommodityVolume,
+                CommodityDesc=CommodityDesc,
+                Requester_id=Requester,
+                RequestPhoto=photo,
+                Status=1,
+            )
+
+            register_event(self, pid, "درخواست خرید محصول", f"ثبت درخواست خرید {CommodityVolume} از {Commodity}")
+
+            if ref_fin.id:
+                return Response({"status": "ok", }, status=status.HTTP_200_OK)
+            else:
+                return Response({"status": "error", }, status=status.HTTP_400_BAD_REQUEST)
+        except NameError:
+            return Response(NameError, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 def register_event(self, pid, ev_type, text):
     print(datetime.now())
     ev1 = Events.objects.create(
@@ -194,3 +226,4 @@ def register_event(self, pid, ev_type, text):
     ev.RelatedProject = main.models.Project.objects.filter(id=pid).get()
     ev.save()
     print(ev)
+
