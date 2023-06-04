@@ -8,6 +8,11 @@ from django_jalali.db import models as jmodels
 from location_field.models.plain import PlainLocationField
 from django.contrib.auth.models import User, Group
 from city.models import CityProject
+import sys
+from PIL import Image
+from io import BytesIO
+from django.db import models
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 
 def calculate_percent(kol, jozea):
@@ -107,10 +112,9 @@ def update_avg_city(related_city):
 class Project(models.Model):
     title = models.CharField(max_length=202, null=False, blank=False, verbose_name='عنوان')
     photo = models.ImageField(upload_to='files/images/project/sub', verbose_name='تصویر پروژه', default="")
-    RelatedCity = models.ForeignKey(CityProject, blank=False, null=True, on_delete=models.CASCADE,
-                                    verbose_name="شهر مربوطه")
-    type = models.ForeignKey(MapObjectTypes, blank=False, null=False, on_delete=models.CASCADE,
-                             verbose_name='نوع پروژه')
+    thumbnails = models.ImageField(upload_to='files/images/project/sub/thumbnail', editable=False, blank=True, verbose_name='تصویرک')
+    RelatedCity = models.ForeignKey(CityProject, blank=False, null=True, on_delete=models.CASCADE, verbose_name="شهر مربوطه")
+    type = models.ForeignKey(MapObjectTypes, blank=False, null=False, on_delete=models.CASCADE, verbose_name='نوع پروژه')
     money = models.IntegerField(default=0, verbose_name='بودجه پروژه', help_text="بودجه به تومان")
     pishrafte_kol = models.IntegerField(validators=[validate_darsad], editable=False, verbose_name='پیشرفت کل')
     date_start = jmodels.jDateField(verbose_name='تاریخ شروع')
@@ -217,6 +221,19 @@ class Project(models.Model):
     marhale30accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 30')
 
     def save(self, *args, **kwargs):
+
+        output_size = (313, 313)
+        output_thumb = BytesIO()
+
+        img = Image.open(self.photo)
+        img_name = self.photo.name.split('.')[0]
+
+        if img.height > 313 or img.width > 313:
+            img.thumbnail(output_size)
+            img.save(output_thumb,format='JPEG', quality=90)
+
+        self.thumbnails = InMemoryUploadedFile(output_thumb, 'ImageField', f"{img_name}_thumb.jpg", 'image/jpeg', sys.getsizeof(output_thumb), None)
+
         real_miangin_all = 0
         real_miangin_count = 0
         for i in range(1, 30):
@@ -248,7 +265,7 @@ class Project(models.Model):
         if self.photo:
             return mark_safe(
                 '<img src="{}" style="object-fit:contain; height:auto; max-height:110px; " width="110" />'.format(
-                    self.photo.url))
+                    self.thumbnails.url))
         return ""
 
 

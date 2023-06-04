@@ -71,9 +71,8 @@ class PPP(models.Model):
     StatusChoices = (
         (1, 'بارگزاری'),
         (2, 'تائید ناظر'),
-        (3, ''),
     )
-    Status = models.SmallIntegerField(verbose_name="وضعیت", choices=StatusChoices)
+    Status = models.SmallIntegerField(verbose_name="وضعیت", default=1, choices=StatusChoices)
     Commodity = models.CharField(max_length=110, verbose_name='محصول', null=False, blank=False)
     CommodityDesc = models.TextField(verbose_name='توضیحات', null=True, blank=True, help_text="توضیحات یا نوع محصول")
     CommodityPrice = models.IntegerField(verbose_name='قیمت', null=True, blank=True, help_text="قیمت به تومان")

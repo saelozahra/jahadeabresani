@@ -22,7 +22,7 @@
 {% block extrastyle %}
     {{ block.super }}
 
-<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/sahel-font@v3.4.0/dist/font-face.css" />
+<link type="text/css" rel="stylesheet" href="/static/fonts/sahel/font-face.css" />
 
 <style>
     :root {
@@ -31,7 +31,9 @@
       --link-fg: #d76266;
       --link-selected-fg: #96494d;
     }
-
+    .skip-to-content-link {
+        display: none;
+    }
     a[href="{{ site_url }}"] {
         display: none;
     }
