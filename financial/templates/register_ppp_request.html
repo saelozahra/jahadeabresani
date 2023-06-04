@@ -1,0 +1,121 @@
+{% load saelozahra_tags %}
+{% load humanize %}
+
+<div class="col s10 tar" style="direction: rtl;">
+
+    <b class="red-text">
+        <span class="black-text">
+            بودجه کل:
+        </span>
+        {{ project.money|intcomma:False}}
+        <small class="black-text">
+            {{ toman|safe }}
+        </small>
+    </b>
+    <br>
+    <b class="red-text" style="text-decoration: line-through;opacity: 0.8;">
+        <span class="black-text">
+            خرج شده:
+        </span>
+        {{ finance_sum.CommodityPrice__sum|intcomma:False}}
+        <small class="black-text">
+            {{ toman|safe }}
+        </small>
+    </b>
+
+    <br>
+    <b class="red-text" style="text-decoration: underline">
+        <span class="black-text">
+            بودجه باقیمانده:
+        </span>
+        {{ project.money|menha:finance_sum.CommodityPrice__sum|intcomma:False  }}
+        <small class="black-text">
+            {{ toman|safe }}
+        </small>
+    </b>
+
+    <a class="left waves-effect waves-light btn green darken-4 modal-trigger" style="margin-right: 8px; margin-top: -14px;" href="#finance">
+        <i class="material-icons left">attach_money</i> جزئیات پرداخت ها و مخارج
+    </a>
+
+    <!-- Modal Structure -->
+    <div id="finance" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>پرداخت‌های  {{ project }}</h4>
+
+            <table class="centered highlight striped responsive-table">
+                <thead>
+                    <tr>
+                        <th>نام</th>
+                        <th>تصویر محصول</th>
+                        <th>فاکتور</th>
+                        <th>مبلغ</th>
+                        <th>زمان</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for f in finance %}
+                    <tr class="tooltipped" data-position="top" data-tooltip="{{ f.Buyer }} این محصول را از فروشگاه: {{ f.BuyFrom }} خرید<br><br>{{ f.CommodityDesc }}">>
+                        <td >{{ f }}</td>
+                        <td><img src="{{ f.Photo.url }}" class="materialboxed" alt="تصویر محصول" style="max-width: 110px;max-height: 110px; border-radius: 14px;display: inline;"></td>
+                        <td><img src="{{ f.BuyFactor.url }}" class="materialboxed" alt="فاکتور" style="max-width: 110px;max-height: 110px; border-radius: 14px;display: inline;"></td>
+                        <td>{{ f.CommodityPrice|intcomma:False }}</td>
+                        <td>{{ f.BuyDateTime.ctime }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">یا علی</a>
+            <a href="#request_kharid" class="teal lighten-1 modal-close modal-trigger waves-effect waves-green btn-flat">درخواست خرید جدید</a>
+        </div>
+    </div>
+
+
+
+<div id="request_kharid" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h4>درخواست خرید کالا برای پروژه {{ project }}</h4>
+            <br>
+            <form method="post">
+                <input type="hidden" name="pid" value="{{ id }}">
+                <input type="hidden" name="Requester" value="{{ request.user.id }}">
+                <div class="input-field col s5">
+                    <i class="material-icons prefix">album</i>
+                    <input required name="CommodityVolume" data-length="110" id="CommodityVolume" type="text" value="" class="validate">
+                    <label style="margin-left: 0;" for="CommodityVolume" class="">میزان کالا</label>
+                </div>
+                <div class="input-field col s7">
+                    <i class="material-icons prefix">all_inclusive</i>
+                  <input required name="Commodity" id="Commodity" type="text" value="" class="validate">
+                  <label style="margin-left: 0;" for="Commodity" class="">نام کالا</label>
+                </div>
+                <br>
+                <br style="clear: both">
+                <div class="input-field col s12" style="margin: 2rem auto 4rem;">
+                    <i class="material-icons prefix">mode_edit</i>
+                    <textarea style="min-height: 110px" name="CommodityDesc" class="materialize-textarea"></textarea>
+                  <label style="margin-left: 0;" for="CommodityDesc" class="">توضیحات درخواست</label>
+                </div>
+                <br>
+                <div class="file-field input-field col s12">
+                    <div class="btn">
+                        <span>انتخاب تصویر نامه درخواست</span>
+                        <input required type="file" name="Photo">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat teal lighten-1">ثبت درخواست</a>
+        </div>
+    </div>
+
+
+</div>
+<h5 class="col s2 right tar" >مالی</h5>

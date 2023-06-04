@@ -12,20 +12,20 @@ class StorageAdmin(ExportActionMixin, admin.ModelAdmin):
 
 
 class PropertyAdmin(ExportActionMixin, admin.ModelAdmin):
-    list_display = ("Commodity", "CommodityPrice", "BuyFrom", "BuyDateTime")
+    list_display = ("Commodity", "CommodityPrice", "BuyDateTime")
     raw_id_fields = ['Storage']
     list_filter = ("ForProject", "BuyDay", "Storage", )
     fieldsets = (
         ('اطلاعات خرید', {
-            'fields': ('Commodity', 'CommodityDesc', 'Storage', 'Buyer', 'ForProject', ),
+            'fields': ('Status', 'Commodity', 'CommodityDesc', 'Storage', 'ForProject', 'Requester', ),
             'description': 'اطلاعات محصول را در اینجا وارد کنید',
         }),
         ('اطلاعات فروشگاه و محصول', {
-            'fields': ('BuyFrom', 'CommodityPrice', ),
+            'fields': ('BuyFrom', 'CommodityPrice', 'Buyer', ),
             'classes': ('collapse', ),
         }),
         ('تصاویر و مستندات', {
-            'fields': ('Photo', 'BuyFactor', ),
+            'fields': ('RequestPhoto', 'CommodityPhoto', 'BuyFactor', ),
             'classes': ('collapse', ),
         }),
     )
