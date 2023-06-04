@@ -130,78 +130,7 @@
             <img src="/static/img/sp.png" alt="hr" style="margin: 12px auto;max-width: 100%;">
 
             <div class="row valign-wrapper" style="margin: auto">
-                <div class="col s10 tar" style="direction: rtl;">
-
-                    <b class="red-text">
-                        <span class="black-text">
-                            بودجه کل:
-                        </span>
-                        {{ project.money|intcomma:False}}
-                        <small class="black-text">
-                            {{ toman|safe }}
-                        </small>
-                    </b>
-                    <br>
-                    <b class="red-text" style="text-decoration: line-through;opacity: 0.8;">
-                        <span class="black-text">
-                            خرج شده:
-                        </span>
-                        {{ finance_sum.CommodityPrice__sum|intcomma:False}}
-                        <small class="black-text">
-                            {{ toman|safe }}
-                        </small>
-                    </b>
-
-                    <br>
-                    <b class="red-text" style="text-decoration: underline">
-                        <span class="black-text">
-                            بودجه باقیمانده:
-                        </span>
-                        {{ project.money|menha:finance_sum.CommodityPrice__sum|intcomma:False  }}
-                        <small class="black-text">
-                            {{ toman|safe }}
-                        </small>
-                    </b>
-
-                    <a class="left waves-effect waves-light btn green darken-4 modal-trigger" style="margin-right: 8px; margin-top: -14px;" href="#finance">
-                        <i class="material-icons left">attach_money</i> جزئیات پرداخت ها و مخارج
-                    </a>
-
-                    <!-- Modal Structure -->
-                    <div id="finance" class="modal modal-fixed-footer">
-                        <div class="modal-content">
-                            <h4>پرداخت‌های  {{ project }}</h4>
-
-                            <table class="centered highlight striped responsive-table">
-                                <thead>
-                                    <tr>
-                                        <th>نام</th>
-                                        <th>تصویر محصول</th>
-                                        <th>فاکتور</th>
-                                        <th>مبلغ</th>
-                                        <th>زمان</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                {% for f in finance %}
-                                    <tr class="tooltipped" data-position="top" data-tooltip="{{ f.Buyer }} این محصول را از فروشگاه: {{ f.BuyFrom }} خرید<br><br>{{ f.CommodityDesc }}">>
-                                        <td >{{ f }}</td>
-                                        <td><img src="{{ f.Photo.url }}" class="materialboxed" alt="تصویر محصول" style="max-width: 110px;max-height: 110px; border-radius: 14px;display: inline;"></td>
-                                        <td><img src="{{ f.BuyFactor.url }}" class="materialboxed" alt="فاکتور" style="max-width: 110px;max-height: 110px; border-radius: 14px;display: inline;"></td>
-                                        <td>{{ f.CommodityPrice|intcomma:False }}</td>
-                                        <td>{{ f.BuyDateTime.ctime }}</td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">یا علی</a>
-                        </div>
-                    </div>
-                </div>
-                <h5 class="col s2 right tar" >مالی</h5>
+                {% include "register_ppp_request.html" %}
             </div>
         </div>
       </div>
@@ -449,6 +378,7 @@
 
   $(document).ready(function(){
 
+    $('input#input_text, textarea#textarea1').characterCounter();
     $("#mostanadat_file").change(function (){
         $(".input_submit_for_mostanadat").removeClass('farar_kon');
         $(".input_submit_for_mostanadat").css("margin-left", "3%");
