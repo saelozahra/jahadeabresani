@@ -24,7 +24,11 @@
                 {% for Chat in ChatList %}
                     <li class="row padding tr">
                         <a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{ request.get_host }}/chat/{{ Chat.id }}" class="row padding effect-shine">
-                            <img src="..{{ Chat.avatar.url }}" alt="{{ Chat.name }}" class="fr rounded">
+                            {% if Chat.avatar %}
+                                <img src="..{{ Chat.avatar.url }}" alt="{{ Chat.name }}" class="fr rounded">
+                            {% else %}
+                                <img src="/static/favicon.ico" alt="{{ Chat.name }}" class="fr rounded">
+                            {% endif %}
                             <h5 class="fl tar">{{ Chat.name }}</h5>
                             <p class="fl tar white-space">{{ Chat.lead }}</p>
                             <small class="fl">{{ Chat.zaman }}</small>
