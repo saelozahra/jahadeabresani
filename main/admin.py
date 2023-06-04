@@ -19,7 +19,7 @@ class MapObjectTypesAdmin(ExportActionMixin, admin.ModelAdmin):
 
 
 class ProjectAdmin(ExportActionMixin, admin.ModelAdmin):
-    list_display = ("title", "team", "photo", "pishrafte_kol", "thumbnail_preview", "view_count")
+    list_display = ("title", "team", "pishrafte_kol", "thumbnail_preview", "view_count")
     raw_id_fields = ['team']
     readonly_fields = ('thumbnail_preview',)
 
