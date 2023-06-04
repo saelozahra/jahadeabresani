@@ -44,6 +44,7 @@
                     {% if request.user.is_superuser %}
                         <li><a href="../../../modiriat/accounts/customuser/add/" onclick="M.toast({html: 'برای ثبت‌نام به مدیر سایت پیام دهید '});return false;"><i class="material-icons">person_add</i></a></li>
                     {% endif %}
+                    <li id="desktop_show_toggle"><a href="#" ><i class="material-icons">hide_image</i></a></li>
                     {% block ExtraMenu %}{% endblock ExtraMenu %}
                 </ul>
             </div>
@@ -99,7 +100,7 @@
             </div>
         </form>
 
-        <div class="{% block ContainerRowClass %}row{% endblock ContainerRowClass %}">
+        <div class="{% block ContainerRowClass %}row{% endblock ContainerRowClass %} desktop">
 
             {% if obj_type %}
                 <div class="row owl-carousel  owl-theme" id="display_search_list" style="direction: ltr ;">
@@ -198,6 +199,20 @@
                 }else if (this.value === 'project_type') {
                     $("#search_text_label").text("نوع پروژه را بنویسید");
                 }
+            });
+
+            $('#desktop_show_toggle').click(function() {
+                $(".desktop").toggle("slow");
+                if($(this).attr("is_show")==="false"){
+                    $(this).find("a i").text("hide_image");
+                    $(this).attr("is_show", "true");
+                    $("body").addClass("show_desktop");
+                }else{
+                    $(this).find("a i").text("image");
+                    $(this).attr("is_show", "false");
+                    $("body").removeClass("show_desktop");
+                }
+                return false;
             });
 
             if("{{ search_in }}" === "title"){
