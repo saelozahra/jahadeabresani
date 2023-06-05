@@ -24,22 +24,6 @@ class Storage(models.Model):
         return "انبار" + self.StoreName
 
 
-class Inquiry(models.Model):
-    StoreName = models.CharField(max_length=110, verbose_name='نام فروشگاه', null=False, blank=False)
-    StoreAddress = models.TextField(verbose_name='آدرس', null=True, blank=True)
-    StoreLocation = PlainLocationField(based_fields=['city'], zoom=10, null=True, suffix=['StoreAddress'],
-                                       verbose_name='موقعیت مکانی')
-    StoreAdmin = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=True,
-                                   verbose_name="انبار دار")
-
-    class Meta:
-        verbose_name = "استعلام"
-        verbose_name_plural = "استعلام"
-
-    def __str__(self):
-        return "انبار" + self.StoreName
-
-
 class PPP(models.Model):
     # ProductPurchaseProcess
     StatusChoices = (
@@ -62,6 +46,8 @@ class PPP(models.Model):
     CommodityDesc = models.TextField(verbose_name='توضیحات', null=True, blank=True, help_text="توضیحات یا نوع محصول")
     CommodityPrice = models.IntegerField(verbose_name='قیمت', null=True, blank=True, help_text="قیمت به تومان")
     CommodityPhoto = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True, verbose_name='تصویر محصول')
+    ####
+    # Inquiry = models.ForeignKey(Inquiry, on_delete=models.CASCADE, null=True, blank=True, default="", verbose_name="استعلام قیمت")
     ####
     BuyFrom = models.CharField(max_length=110, verbose_name='نام فروشگاه', null=True, blank=True)
     Buyer = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=True, related_name="buyer", verbose_name="خریدار")
@@ -156,3 +142,20 @@ class PPP(models.Model):
 
         super().save(force_insert, force_update, *args, **kwargs)
         self.__original_name = self.Status
+
+
+class Inquiry(models.Model):
+    Amount = models.PositiveBigIntegerField(default=0, verbose_name="قیمت")
+    StoreName = models.CharField(max_length=110, verbose_name='نام فروشگاه', null=False, blank=False)
+    StoreAddress = models.CharField(max_length=313, verbose_name='آدرس', null=True, blank=True)
+    StoreLocation = PlainLocationField(based_fields=['city'], zoom=10, null=True, suffix=['StoreAddress'],
+                                       verbose_name='موقعیت مکانی')
+    ProductPurchaseProcess = models.ForeignKey(PPP, on_delete=models.CASCADE, null=True, blank=True, default="", verbose_name="استعلام قیمت")
+
+    class Meta:
+        verbose_name = "استعلام"
+        verbose_name_plural = "استعلام"
+
+    def __str__(self):
+        return "انبار" + self.StoreName
+

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.admin import TabularInline
 from import_export.admin import ExportActionMixin
 from financial.models import *
 
@@ -11,10 +12,16 @@ class StorageAdmin(ExportActionMixin, admin.ModelAdmin):
     list_filter = ("StoreAdmin", )
 
 
+class InquiryInline(TabularInline):
+    model = Inquiry
+    # list_display = ("title", "course",)
+
+
 class PropertyAdmin(ExportActionMixin, admin.ModelAdmin):
     list_display = ("Commodity", "CommodityPrice", "BuyDateTime")
     raw_id_fields = ['Storage']
     list_filter = ("ForProject", "BuyDay", "Storage", )
+    inlines = [InquiryInline]
     fieldsets = (
         ('اطلاعات خرید', {
             'fields': ('Status', 'Commodity', 'CommodityDesc', 'Storage', 'ForProject', 'Requester', ),
