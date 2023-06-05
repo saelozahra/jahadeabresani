@@ -24,6 +24,31 @@ class Storage(models.Model):
         return "انبار" + self.StoreName
 
 
+class Pay(models.Model):
+    PayType = (
+        (1, '💴 نقدی 💵'),
+        (2, '🏧 اقساط'),
+    )
+    Status = models.PositiveSmallIntegerField(verbose_name="نوع پرداخت", default=1, choices=PayType)
+    Amount = models.PositiveBigIntegerField(default=0, verbose_name="مبلغ واریز شده", help_text="قیمت به تومان")
+    #####
+    BuyFrom = models.CharField(max_length=110, verbose_name='نام فروشگاه', null=True, blank=True)
+    HesabName = models.CharField(max_length=110, verbose_name='نام صاحب حساب', null=True, blank=True)
+    ShopHesab = models.CharField(max_length=16, verbose_name='شماره کارت فروشنده', null=True, blank=True)
+    ShopShaba = models.CharField(max_length=110, verbose_name='شماره شبای فروشنده', null=True, blank=True)
+    ######
+    Tarikh = models.DateTimeField(verbose_name='تاریخ واریز', blank=True)
+    HesabMabda = models.TextField(max_length=110, verbose_name='حساب مبداء', null=True, blank=True)
+    Sanad = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True, verbose_name='پیوست سند')
+
+    class Meta:
+        verbose_name = "واریز"
+        verbose_name_plural = "واریز"
+
+    def __str__(self):
+        return f"پرداخت {self.Amount} به {self.BuyFrom} "
+
+
 class PPP(models.Model):
     # ProductPurchaseProcess
     StatusChoices = (
