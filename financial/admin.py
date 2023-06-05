@@ -12,6 +12,10 @@ class StorageAdmin(ExportActionMixin, admin.ModelAdmin):
     list_filter = ("StoreAdmin", )
 
 
+class PurchaseOrderAdmin(ExportActionMixin, admin.ModelAdmin):
+    raw_id_fields = ['ForProject']
+
+
 class InquiryInline(TabularInline):
     # fields = ("Amount", "StoreName", "StoreAddress", "InquiryPhoto",)
     model = Inquiry
@@ -27,17 +31,18 @@ class PropertyAdmin(ExportActionMixin, admin.ModelAdmin):
             'fields': ('Status', 'Commodity', 'CommodityDesc', 'Storage', 'ForProject', 'Requester', ),
             'description': 'اطلاعات محصول را در اینجا وارد کنید',
         }),
-        ('اطلاعات فروشگاه و محصول', {
-            'fields': ('BuyFrom', 'CommodityPrice', 'Buyer', ),
+        ('اطلاعات فروشگاه', {
+            'fields': ('BuyFrom', 'CommodityPrice', 'Buyer',),
             # 'classes': ('collapse', ),
         }),
         ('تصاویر و مستندات', {
-            'fields': ('RequestPhoto', 'CommodityPhoto', 'BuyFactor', ),
+            'fields': ('RequestPhoto', 'CommodityPhoto', 'BuyFactor', 'PreFactor',  'Pay',),
             # 'classes': ('collapse', ),
         }),
     )
 
 
-admin.site.register(PurchaseOrder)
+admin.site.register(PurchaseOrder, PurchaseOrderAdmin)
 admin.site.register(Storage, StorageAdmin)
 admin.site.register(PPP, PropertyAdmin)
+admin.site.register(Pay)

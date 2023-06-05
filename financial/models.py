@@ -46,20 +46,21 @@ class PPP(models.Model):
     CommodityDesc = models.TextField(verbose_name='توضیحات', null=True, blank=True, help_text="توضیحات یا نوع محصول")
     CommodityPrice = models.IntegerField(verbose_name='قیمت', null=True, blank=True, help_text="قیمت به تومان")
     CommodityPhoto = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True, verbose_name='تصویر محصول')
-    ####
-    # Inquiry = models.ForeignKey(Inquiry, on_delete=models.CASCADE, null=True, blank=True, default="", verbose_name="استعلام قیمت")
-    ####
+    ########
     BuyFrom = models.CharField(max_length=110, verbose_name='نام فروشگاه', null=True, blank=True)
     Buyer = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=True, related_name="buyer", verbose_name="خریدار")
     Storage = models.ForeignKey(Storage, on_delete=models.CASCADE, null=True, blank=True, verbose_name="انبار")
     ForProject = models.ForeignKey(main.models.Project, on_delete=models.CASCADE, null=False, verbose_name="پروژه مربوطه")
     BuyFactor = models.ImageField(upload_to='files/finance/factor', verbose_name='تصویر فاکتور خرید')
+    PreFactor = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True, verbose_name='تصویر پیش فاکتور')
     ####
     RequestPhoto = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True, verbose_name='تصویر نامه درخواست')
     Requester = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=False, default="",
                                   blank=True, related_name="requester", verbose_name="درخواست دهنده")
-    BuyDay = jmodels.jDateField(editable=False, auto_now_add=True, verbose_name='روز خرید')
+    BuyDay = jmodels.jDateField(editable=False, auto_now_add=True, verbose_name='روز ثبت درخواست')
     BuyDateTime = jmodels.jDateTimeField(auto_now_add=True, verbose_name='زمان خرید')
+
+    Pay = models.ForeignKey(Pay, on_delete=models.DO_NOTHING, null=True, blank=True, default="", verbose_name="پرداخت")
 
     class Meta:
         verbose_name = "پروسه خرید محصول"
@@ -147,10 +148,11 @@ class PPP(models.Model):
 class PurchaseOrder(models.Model):
     Orderer = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=False, default="",
                                 blank=True, related_name="orderer", verbose_name="دستور دهنده")
+    PurchaseTime = models.DateTimeField(auto_now=True, verbose_name="تاریخ ثبت")
     PurchaseOrderTicket = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True,
                                             verbose_name='تصویر نامه دستور خرید')
-    # Inquiry = models.ForeignKey(Inquiry, on_delete=models.CASCADE, null=True, blank=True, default="",
-    #                             verbose_name="دستور خرید نسبت به استعلام")
+    ForProject = models.ForeignKey(main.models.Project, on_delete=models.DO_NOTHING, null=True, blank=True, default="",
+                                   verbose_name="دستور خرید نسبت به استعلام")
 
     class Meta:
         verbose_name = "دستور خرید"
@@ -158,6 +160,17 @@ class PurchaseOrder(models.Model):
 
     def __str__(self):
         return f"دستور خرید شماره {self.id} توسط {self.Orderer}"
+
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        # @todo چک کن ببین تکراری نباشه
+        Events.objects.create(
+            EventType="اعلام دستور خرید",
+            description=self.__str__(),
+            OwnerUser=self.Orderer,
+            RelatedProject=self.ForProject,
+        )
+
+        super().save(force_insert, force_update, *args, **kwargs)
 
 
 class Inquiry(models.Model):
@@ -178,4 +191,3 @@ class Inquiry(models.Model):
 
     def __str__(self):
         return "انبار" + self.StoreName
-
