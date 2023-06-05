@@ -144,13 +144,33 @@ class PPP(models.Model):
         self.__original_name = self.Status
 
 
+class PurchaseOrder(models.Model):
+    Orderer = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=False, default="",
+                                blank=True, related_name="orderer", verbose_name="دستور دهنده")
+    PurchaseOrderTicket = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True,
+                                            verbose_name='تصویر نامه دستور خرید')
+    # Inquiry = models.ForeignKey(Inquiry, on_delete=models.CASCADE, null=True, blank=True, default="",
+    #                             verbose_name="دستور خرید نسبت به استعلام")
+
+    class Meta:
+        verbose_name = "دستور خرید"
+        verbose_name_plural = "دستور خرید"
+
+    def __str__(self):
+        return f"دستور خرید شماره {self.id} توسط {self.Orderer}"
+
+
 class Inquiry(models.Model):
-    Amount = models.PositiveBigIntegerField(default=0, verbose_name="قیمت")
+    Amount = models.PositiveBigIntegerField(default=0, verbose_name="قیمت", help_text="قیمت به تومان")
     StoreName = models.CharField(max_length=110, verbose_name='نام فروشگاه', null=False, blank=False)
-    StoreAddress = models.CharField(max_length=313, verbose_name='آدرس', null=True, blank=True)
+    StoreAddress = models.TextField(max_length=313, verbose_name='آدرس', null=True, blank=True)
     StoreLocation = PlainLocationField(based_fields=['city'], zoom=10, null=True, suffix=['StoreAddress'],
                                        verbose_name='موقعیت مکانی')
+    InquiryPhoto = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True, verbose_name='تصویر محصول')
     ProductPurchaseProcess = models.ForeignKey(PPP, on_delete=models.CASCADE, null=True, blank=True, default="", verbose_name="استعلام قیمت")
+
+    PurchaseOrder = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE, null=True, blank=True, default="",
+                                verbose_name="ثبت دستور خرید")
 
     class Meta:
         verbose_name = "استعلام"

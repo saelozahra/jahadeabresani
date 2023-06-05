@@ -13,8 +13,8 @@ class StorageAdmin(ExportActionMixin, admin.ModelAdmin):
 
 
 class InquiryInline(TabularInline):
+    # fields = ("Amount", "StoreName", "StoreAddress", "InquiryPhoto",)
     model = Inquiry
-    # list_display = ("title", "course",)
 
 
 class PropertyAdmin(ExportActionMixin, admin.ModelAdmin):
@@ -29,14 +29,15 @@ class PropertyAdmin(ExportActionMixin, admin.ModelAdmin):
         }),
         ('اطلاعات فروشگاه و محصول', {
             'fields': ('BuyFrom', 'CommodityPrice', 'Buyer', ),
-            'classes': ('collapse', ),
+            # 'classes': ('collapse', ),
         }),
         ('تصاویر و مستندات', {
             'fields': ('RequestPhoto', 'CommodityPhoto', 'BuyFactor', ),
-            'classes': ('collapse', ),
+            # 'classes': ('collapse', ),
         }),
     )
 
 
+admin.site.register(PurchaseOrder)
 admin.site.register(Storage, StorageAdmin)
 admin.site.register(PPP, PropertyAdmin)
