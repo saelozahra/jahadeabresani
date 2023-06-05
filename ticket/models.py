@@ -23,12 +23,17 @@ class Chat(models.Model):
                               verbose_name='کاربر 1')
     User2 = models.ForeignKey(accounts.models.CustomUser, related_name="user2", on_delete=models.CASCADE,
                               verbose_name='کاربر 2')
-    Zaman = models.CharField(editable=False, default=datetime.now(), max_length=202, verbose_name='زمان آخرین پیام')
+    Zaman = models.CharField(editable=False,  default=None, max_length=202, verbose_name='زمان آخرین پیام')
     Lead = models.TextField(editable=False, verbose_name='خلاصه آخرین پیام')
 
     class Meta:
         verbose_name = "چت"
         verbose_name_plural = "چت"
+
+    def save(self, *args, **kwargs):
+        if self.Zaman is None:
+            self.Zaman = datetime.now()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return "مکالمه " + self.User1.get_short_name() + " و " + self.User2.get_short_name()
