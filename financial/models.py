@@ -8,20 +8,6 @@ import accounts.models
 # Create your models here.
 
 
-class Aghlam(models.Model):
-    Name = models.CharField(max_length=313, verbose_name='نام انبار', null=False, blank=False)
-    Volume = models.TextField(verbose_name='میزان', null=True, blank=True)
-    Description = models.TextField(null=True, verbose_name='توضیحات')
-    Storage = models.ForeignKey(Storage, on_delete=models.CASCADE, null=True, verbose_name="انبار")
-
-    class Meta:
-        verbose_name = "اقلام"
-        verbose_name_plural = "اقلام"
-
-    def __str__(self):
-        return self.Name
-
-
 class Storage(models.Model):
     StoreName = models.CharField(max_length=110, verbose_name='نام انبار', null=False, blank=False)
     StoreAddress = models.TextField(verbose_name='آدرس', null=True, blank=True)
@@ -36,6 +22,20 @@ class Storage(models.Model):
 
     def __str__(self):
         return "انبار" + self.StoreName
+
+
+class Aghlam(models.Model):
+    Name = models.CharField(max_length=313, verbose_name='نام کالا', null=False, blank=False)
+    Volume = models.CharField(max_length=313,verbose_name='میزان', null=True, blank=True)
+    Description = models.TextField(null=True, verbose_name='توضیحات')
+    Storage = models.ForeignKey(Storage, on_delete=models.CASCADE, null=True, verbose_name="انبار")
+
+    class Meta:
+        verbose_name = "اقلام"
+        verbose_name_plural = "اقلام"
+
+    def __str__(self):
+        return self.Name
 
 
 class Pay(models.Model):
