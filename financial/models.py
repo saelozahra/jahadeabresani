@@ -87,10 +87,11 @@ class PPP(models.Model):
     CommodityPhoto = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True, verbose_name='تصویر محصول')
     ########
     BuyFrom = models.CharField(max_length=110, verbose_name='نام فروشگاه', null=True, blank=True)
-    Buyer = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=True, related_name="buyer", verbose_name="خریدار")
+    Buyer = models.ForeignKey(accounts.models.CustomUser, on_delete=models.CASCADE, null=True, blank=True,
+                              related_name="buyer", verbose_name="خریدار")
     Storage = models.ForeignKey(Storage, on_delete=models.CASCADE, null=True, blank=True, verbose_name="انبار")
     ForProject = models.ForeignKey(main.models.Project, on_delete=models.CASCADE, null=False, verbose_name="پروژه مربوطه")
-    BuyFactor = models.ImageField(upload_to='files/finance/factor', verbose_name='تصویر فاکتور خرید')
+    BuyFactor = models.ImageField(upload_to='files/finance/factor', blank=True, verbose_name='تصویر فاکتور خرید')
     PreFactor = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True, verbose_name='تصویر پیش فاکتور')
     ####
     RequestPhoto = models.ImageField(upload_to='files/finance/%Y/%m/%d/', blank=True, verbose_name='تصویر نامه درخواست')
