@@ -13,6 +13,11 @@ class Index(TemplateView):
         miangin_pishrafte_all_projects = 0
         for pd in all_projects:
             miangin_pishrafte_all_projects += pd.pishrafte_kol
+            if pd.thumbnails:
+                img = pd.thumbnails.url
+            else:
+                img = pd.photo.url
+
             projects_data.append({
                 'id': pd.id,
                 'title': pd.title,
@@ -20,7 +25,7 @@ class Index(TemplateView):
                 'location': pd.location,
                 'lat': pd.location.split(",")[0],
                 'lng': pd.location.split(",")[1],
-                'photo': pd.photo.url,
+                'photo': img,
                 'icon': pd.type.icon.url,
                 'last_update': pd.last_update,
                 'promote': pd.promote,
