@@ -84,8 +84,8 @@
             <h4>درخواست خرید کالا برای پروژه {{ project }}</h4>
             <br>
             <form method="post">
-                <input type="hidden" name="pid" value="{{ id }}">
-                <input type="hidden" name="Requester" value="{{ request.user.id }}">
+                <input type="hidden" name="pid" id="kharid_pid" value="{{ id }}">
+                <input type="hidden" name="Requester" id="kharid_requester" value="{{ request.user.id }}">
                 <div class="input-field col s5">
                     <i class="material-icons prefix">album</i>
                     <input required name="CommodityVolume" data-length="110" id="CommodityVolume" type="text" value="" class="validate">
@@ -100,14 +100,14 @@
                 <br style="clear: both">
                 <div class="input-field col s12" style="margin: 2rem auto 4rem;">
                     <i class="material-icons prefix">mode_edit</i>
-                    <textarea style="min-height: 110px" name="CommodityDesc" class="materialize-textarea"></textarea>
+                    <textarea style="min-height: 110px" name="CommodityDesc" id="CommodityDesc" class="materialize-textarea"></textarea>
                   <label style="margin-left: 0;" for="CommodityDesc" class="">توضیحات درخواست</label>
                 </div>
                 <br>
                 <div class="file-field input-field col s12">
                     <div class="btn">
                         <span>انتخاب تصویر نامه درخواست</span>
-                        <input required type="file" name="Photo">
+                        <input required type="file" name="Photo" id="kharid_photo">
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
@@ -116,10 +116,49 @@
             </form>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat teal lighten-1">ثبت درخواست</a>
+            <a href="#!" onclick="submit_kharid_request()" class="modal-close waves-effect waves-green btn-flat teal lighten-1">ثبت درخواست</a>
         </div>
     </div>
 
 
 </div>
 <h5 class="col s2 right tar" >مالی</h5>
+
+<script>
+
+    function submit_kharid_request(selfObject){
+        var pid = document.getElementById("kharid_pid").value;
+        var kharid_requester = document.getElementById("kharid_requester").value;
+        var Commodity = document.getElementById("Commodity").value;
+        var CommodityVolume = document.getElementById("CommodityVolume").value;
+        var CommodityDesc = document.getElementById("CommodityDesc").value;
+        var kharid_photo = document.getElementById("kharid_photo").files[0];
+
+        const data = new FormData();
+        data.append("pid", pid);
+        data.append("Commodity", Commodity);
+        data.append("CommodityVolume", CommodityVolume);
+        data.append("CommodityDesc", CommodityDesc);
+        data.append("Requester", kharid_requester);
+        data.append("photo", kharid_photo);
+        data.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === this.DONE) {
+                console.log(this.responseText);
+                const HtmlToast = '<span>درخواست خرید ثبت شد</span><button class="btn-flat toast-action">دمت گرم</button>';
+                M.toast({html: HtmlToast, classes: 'rounded'});
+            }
+        });
+
+        xhr.open("POST", "http://127.0.0.1:8000/api/financial/");
+
+        xhr.send(data);
+
+
+    }
+
+</script>

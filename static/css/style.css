@@ -122,6 +122,9 @@ nav {
     margin: 2% 10%;
     border-radius: 7px;
 }
+nav ul li {
+	position: relative;
+}
 nav .brand-logo {
 	font-size: 1.8rem;
 }
