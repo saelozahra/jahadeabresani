@@ -17,7 +17,11 @@
         <span class="black-text">
             خرج شده:
         </span>
-        {{ finance_sum.CommodityPrice__sum|intcomma:False}}
+        {% if finance_sum.CommodityPrice__sum is None %}
+            0
+        {% else %}
+            {{ finance_sum.CommodityPrice__sum|intcomma:False}}
+        {% endif %}
         <small class="black-text">
             {{ toman|safe }}
         </small>
