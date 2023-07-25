@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 run mkdir /abresani
 WORKDIR /abresani
 COPY . /abresani
-ADD requirements.txt / abresani
+ADD requirements.txt / abresani/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN python manage.py collectstatic --no-input
