@@ -16,21 +16,24 @@ $(document).ready(function(){
                     if (result) {
                         console.log(result.title);
                         //  var dd = JSON.parse(result);
-                        $(".model-project .form-row").each(function(index,element){
-                            if(index >= 11 && index % 3 === 0){
-                                console.log(index / 3 - 3);
+                        $(".model-project .marahel .form-row").each(function(index,element){
+                            let index_num = index / 3
+                            if(index % 3 === 0){
+                                console.log("i:", index, "salam", index/3)
+                                console.log(index_num);
                                 if($(this).find("label").attr("first_run") === "false"){
-                                    $(this).find("label").text(result.marahel[(index / 3 - 3)]);
+                                    $(this).find("label").text(result.marahel[(index_num)]);
                                     $(this).find("label").css({"width": "100%"});
                                 }else{
-                                    $(this).find("label").text($(this).find("label").text()+" | "+result.marahel[(index / 3 - 3)]);
+                                    $(this).find("label").text($(this).find("label").text()+" | "+result.marahel[(index_num)]);
                                     $(this).find("label").css({"width": "100%"});
                                 }
                                 $(this).find("label").attr("first_run", "false");
                             }
-                            if( index >= 11+(parseInt(result.marahel_count)*3 )){
-                                // console.log(index+": "+$(this).text());
+                            if( index >= (parseInt(result.marahel_count)*3 )){
                                 $(this).fadeOut();
+                            }else{
+                                $(this).fadeIn();
                             }
                             //alert($(this).text())
                         });
