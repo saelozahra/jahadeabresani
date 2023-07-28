@@ -15,6 +15,6 @@ urlpatterns = [
     path('search/without_gharardad', views.SearchPage.as_view(), name="without_gharardad"),
     path('search/week_end_date', views.SearchPage.as_view(), name="week_end_date"),
     path('search/month_end_date', views.SearchPage.as_view(), name="month_end_date"),
-    path('search/month_end_date', views.SearchPage.as_view(), name="month_end_date"),
+    path('search/ended', views.SearchPage.as_view(), name="ended"),
     path('search/object_type/<objt>', views.SearchPage.as_view(), name="object_type"),
 ]

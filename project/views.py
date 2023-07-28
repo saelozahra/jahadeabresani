@@ -145,6 +145,11 @@ class SearchPage(TemplateView):
             query = main.models.Project.objects.filter(
                 Q(Documents__isnull=True)
             )
+        elif path_name == "ended":
+            title = "تکمیل شده"
+            query = main.models.Project.objects.filter(
+                Q(pishrafte_kol=100)
+            )
         elif path_name == "has_note":
             title = "دارای یادداشت مدیریتی"
             query = main.models.Project.objects.exclude(
