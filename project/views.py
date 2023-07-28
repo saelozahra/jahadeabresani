@@ -181,9 +181,15 @@ class SearchPage(TemplateView):
             query = main.models.Project.objects.exclude(
                 date_end__gte=week_start, date_end__lt=week_end
             )
+        elif path_name == "object_type":
+            objt = kwargs.get("objt")
+            title = objt
+            query = main.models.Project.objects.filter(
+                Q(type__title=objt)
+            )
         else:
             query = main.models.Project.objects.all()
-            title = "title"
+            title = "الگویی یافت نشد"
 
         context = {
             'obj_type': main.models.MapObjectTypes.objects.all().values(),
