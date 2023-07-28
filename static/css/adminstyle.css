@@ -3,7 +3,11 @@
 	counter-reset: item;
 }
 
-.model-project .form-row:nth-child(n+12) {
+.field-location .flex-container{
+	display: block;
+}
+
+.model-project .marahel .form-row:nth-child(n+2) {
 	width: 30%;
 	display: inline-block;
 	margin-top: -6px;
@@ -11,27 +15,12 @@
 	box-sizing: border-box;
 }
 
-.model-project .form-row:nth-child(3n+12) {
+.model-project .marahel .form-row:nth-child(3n+3) {
     counter-increment: item;
 	list-style-type: circle;
 }
-.model-project .form-row:nth-child(3n+14) {
-    border-left: 0;
-}
-.model-project .form-row:nth-child(11) {
-	margin-bottom: 72px;
-}
-.model-project .form-row:nth-child(12) {
-	padding-top: 50px;
-}
-.model-project .form-row:nth-child(12)::after {
-	content: "مراحل اجرا";
-	font: 33px "IRANSansXFaNum Black";
-	float: left;
-	margin-top: -142px;
-}
 
-.model-project .form-row:nth-child(3n+12)::before {
+.model-project .marahel .form-row:nth-child(3n+3)::before {
 	margin-right: -5px;
 	content: counter(item);
 	background: var(--primary);
@@ -42,10 +31,12 @@
 	display: inline-block;
 	height: 2em;
 	line-height: 2;
+	float: right;
+	margin-left: 10px;
 }
 
 
-.model-project .form-row:last-child::before {
+.model-project .marahel .form-row:last-child::before {
 	content: "";
 	background: transparent;
 	width: auto;

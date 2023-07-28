@@ -92,7 +92,6 @@ def update_avg_city(related_city):
     miangin_pishrafte_project_count = 0
 
     for spd_temp in hamshahri:
-        print("hamshahri: ", spd_temp.title, spd_temp.pishrafte_kol)
         miangin_pishrafte_project = miangin_pishrafte_project + spd_temp.pishrafte_kol
         miangin_pishrafte_project_count = miangin_pishrafte_project_count + 1
 
