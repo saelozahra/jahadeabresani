@@ -220,8 +220,8 @@ var data=[
 function addPointGeom(data) {
 
         data.forEach(function(item) {
-            var longitude = item.Lon,
-            latitude = item.Lat,
+            var longitude = item.lng,
+            latitude = item.lat,
             project_name = item.project_name,
             iconFeature = new ol.Feature({
                 geometry: new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326',
