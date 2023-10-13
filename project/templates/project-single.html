@@ -273,7 +273,7 @@
 
 {% block RightContent %}
     <ul class="collapsible expandable popout project_marhale_loop" style="direction: rtl;">
-    {% for spdtmejra in project.type.marhalel_ejra_s.values %}
+        {% for spdtmejra in marahel_ejra %}
             <li class="tooltipped" data-position="bottom" >
                 <div class="collapsible-header" style="position:relative;">
                     <span class="gradient_hover" ></span>
@@ -283,7 +283,7 @@
                 </div>
                 <div class="collapsible-body">
                     <span style="user-select: none">
-                        {% include "project_marhale_partial.html" with m=id|marhale_desc:forloop.counter m_accomplished=id|marhale_accomplished:forloop.counter m_full=id|marhale_full:forloop.counter %}
+                        {% include "project_marhale_partial.html" with m=spdtmejra.description m_accomplished=spdtmejra.marhale_accomplished m_full=spdtmejra.marhale_full %}
                     </span>
                 </div>
             </li>
