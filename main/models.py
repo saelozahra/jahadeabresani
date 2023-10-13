@@ -34,7 +34,6 @@ def validate_darsad(value):
 class MapObjectTypes(models.Model):
     title = models.CharField(max_length=202, verbose_name='عنوان شیع')
     icon = models.ImageField(upload_to='files/images/obj_icon', verbose_name='آیکون')
-    marhalel_ejra_s = models.ManyToManyField('MaraheleEjra', verbose_name='مراحل اجرا')
 
     class Meta:
         verbose_name = "نوع پروژه"
@@ -48,8 +47,26 @@ class MapObjectTypes(models.Model):
 
 
 class MaraheleEjra(models.Model):
+    VahedChoices = (
+        (0, 'متر'),
+        (1, 'کیلومتر'),
+        (2, 'کیلو'),
+        (3, 'متر مربع'),
+        (4, 'پروژه'),
+        (5, 'x'),
+    )
+    Project = models.ForeignKey("Project", on_delete=models.CASCADE, verbose_name="مراحل اجرای پروژه")
     marhale = models.CharField(max_length=110, verbose_name='نام مرحله', null=False, blank=False)
-    vahed = models.CharField(max_length=110, verbose_name='واحد', null=True, blank=True)
+    vahed = models.PositiveSmallIntegerField(choices=VahedChoices,default=0, verbose_name='واحد')
+    description = models.TextField(blank=True, null=True, default="", verbose_name='توضیحات این مرحله')
+    marhale_full = models.IntegerField(default="0", verbose_name='واحد کل')
+    marhale_accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده')
+
+    @property
+    def marhale_percent(self):
+        return calculate_percent(self.marhale_full, self.marhale_accomplished)
+
+
 
     class Meta:
         verbose_name = "مراحل اجرا"
@@ -127,97 +144,6 @@ class Project(models.Model):
     promote = models.BooleanField(default=False, verbose_name="پروژه ویژه")
     Documents = models.ManyToManyField(ProjectFiles, blank=True, verbose_name="مستندات و تصاویر")
     note = models.TextField(default="", verbose_name='یادداشت', blank=True, null=True)
-    #
-    marhale1 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 1')
-    marhale1full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 1')
-    marhale1accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 1')
-    marhale2 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 2')
-    marhale2full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 2')
-    marhale2accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 2')
-    marhale3 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 3')
-    marhale3full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 3')
-    marhale3accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 3')
-    marhale4 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 4')
-    marhale4full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 4')
-    marhale4accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 4')
-    marhale5 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 5')
-    marhale5full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 5')
-    marhale5accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 5')
-    marhale6 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 6')
-    marhale6full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 6')
-    marhale6accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 6')
-    marhale7 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 7')
-    marhale7full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 7')
-    marhale7accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 7')
-    marhale8 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 8')
-    marhale8full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 8')
-    marhale8accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 8')
-    marhale9 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 9')
-    marhale9full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 9')
-    marhale9accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 9')
-    marhale10 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 10')
-    marhale10full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 10')
-    marhale10accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 10')
-    marhale11 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 11')
-    marhale11full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 11')
-    marhale11accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 11')
-    marhale12 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 12')
-    marhale12full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 12')
-    marhale12accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 12')
-    marhale13 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 13')
-    marhale13full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 13')
-    marhale13accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 13')
-    marhale14 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 14')
-    marhale14full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 14')
-    marhale14accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 14')
-    marhale15 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 15')
-    marhale15full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 15')
-    marhale15accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 15')
-    marhale16 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 16')
-    marhale16full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 16')
-    marhale16accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 16')
-    marhale17 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 17')
-    marhale17full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 17')
-    marhale17accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 17')
-    marhale18 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 18')
-    marhale18full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 18')
-    marhale18accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 18')
-    marhale19 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 19')
-    marhale19full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 19')
-    marhale19accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 19')
-    marhale20 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 20')
-    marhale20full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 20')
-    marhale20accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 20')
-    marhale21 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 21')
-    marhale21full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 21')
-    marhale21accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 21')
-    marhale22 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 22')
-    marhale22full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 22')
-    marhale22accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 22')
-    marhale23 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 23')
-    marhale23full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 23')
-    marhale23accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 23')
-    marhale24 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 24')
-    marhale24full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 24')
-    marhale24accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 24')
-    marhale25 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 25')
-    marhale25full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 25')
-    marhale25accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 25')
-    marhale26 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 26')
-    marhale26full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 26')
-    marhale26accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 26')
-    marhale27 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 27')
-    marhale27full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 27')
-    marhale27accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 27')
-    marhale28 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 28')
-    marhale28full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 28')
-    marhale28accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 28')
-    marhale29 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 29')
-    marhale29full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 29')
-    marhale29accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 29')
-    marhale30 = models.CharField(max_length=202, blank=True, null=True, default="", verbose_name='توضیحات مرحله 30')
-    marhale30full = models.IntegerField(default="0", verbose_name='واحد کل | مرحله 30')
-    marhale30accomplished = models.IntegerField(default="0", verbose_name='واحد انجام شده | مرحله 30')
 
     def save(self, *args, **kwargs):
 
