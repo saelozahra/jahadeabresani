@@ -13,7 +13,7 @@ from PIL import Image
 from io import BytesIO
 from django.db import models
 from django.core.files.uploadedfile import InMemoryUploadedFile
-
+from inline_ordering.models import Orderable
 
 def calculate_percent(kol, jozea):
     if kol == 0:
@@ -46,7 +46,7 @@ class MapObjectTypes(models.Model):
         return self.marhalel_ejra_s.all().count()
 
 
-class MaraheleEjra(models.Model):
+class MaraheleEjra(Orderable):
     VahedChoices = (
         (0, 'متر'),
         (1, 'کیلومتر'),
@@ -68,9 +68,9 @@ class MaraheleEjra(models.Model):
 
 
 
-    class Meta:
-        verbose_name = "مراحل اجرا"
-        verbose_name_plural = "مراحل اجرا"
+    class Meta(Orderable.Meta):
+        verbose_name = "مرحله اجرا"
+        verbose_name_plural = "مرحله اجرا"
 
     def __str__(self):
         return self.marhale
@@ -161,13 +161,11 @@ class Project(models.Model):
 
         real_miangin_all = 0
         real_miangin_count = 0
-        for i in range(1, 30):
-            m_f = "marhale%sfull" % i
-            m_a = "marhale%saccomplished" % i
-            if self.__getattribute__(m_a).numerator > 0:
-                real_miangin_all = real_miangin_all + calculate_percent(self.__getattribute__(m_f).numerator,
-                                                                        self.__getattribute__(m_a).numerator)
+        for m in MaraheleEjra.objects.filter(Project_id=self.id).all():
+            if m.marhale_accomplished.numerator > 0:
+                real_miangin_all = real_miangin_all + calculate_percent(m.marhale_full.numerator, m.marhale_accomplished.numerator)
                 real_miangin_count = real_miangin_count + 1
+
 
         if real_miangin_all == 0:
             self.pishrafte_kol = 0
