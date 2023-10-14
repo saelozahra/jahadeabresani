@@ -51,9 +51,9 @@ class ApiUpdateProject(APIView):
 
     def post(self, request, format=None):
         try:
-            pid = self.request.POST['project']
-            print(pid)
             if "note" in self.request.POST:
+                pid = self.request.POST['project']
+                print(pid)
                 note = self.request.POST['note']
                 print(note)
                 main.models.Project.objects.filter(id=pid).update(note=note)
@@ -70,11 +70,8 @@ class ApiUpdateProject(APIView):
             elif "level" in self.request.POST:
                 text = self.request.POST['text']
                 level = self.request.POST['level']
-                print(pid + ": " + level + ": " + text)
-                lookup = "marhale%saccomplished" % level
-                p = main.models.Project.objects.filter(id=pid)
-                p.update(**{lookup: text})
-                p.get().save()
+                main.models.MaraheleEjra.objects.filter(id=level).update(marhale_accomplished=text)
+                pid = main.models.MaraheleEjra.objects.get(id=level).Project.id
                 register_event(self, pid, "تغییر وضعیت مرحله",
                                "ثبت " + text + "به عنوان میزان کارکرد جدید مرحله " + level)
 
@@ -116,16 +113,19 @@ class ApiProjectType(APIView):
             print("pt_id: " + pt_id)
             all_map_obj_types_data = []
             all_marahel_ejra_data = []
+            all_marahel_vahed_data = []
             all_map_obj_types = main.models.MapObjectTypes.objects.filter(id=pt_id)
             for pd in all_map_obj_types:
                 mejr_all = pd.marhalel_ejra_s.all()
                 for me in mejr_all:
                     all_marahel_ejra_data.append(me.marhale)
+                    all_marahel_vahed_data.append(me.vahed)
                 all_map_obj_types_data = {
                     'id': pd.id,
                     'title': pd.title,
                     'icon': pd.icon.url,
                     'marahel': all_marahel_ejra_data,
+                    'marahel_vahed': all_marahel_vahed_data,
                     'marahel_count': pd.marhalel_ejra_s.count(),
                 }
             if all_map_obj_types.count() == 0:
