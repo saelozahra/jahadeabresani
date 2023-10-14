@@ -67,6 +67,11 @@ class MaraheleEjra(Orderable):
         return calculate_percent(self.marhale_full, self.marhale_accomplished)
 
 
+    @property
+    def vahed_name(self):
+        name_val = dict(self.VahedChoices).get(self.vahed)
+        return name_val
+
 
     class Meta(Orderable.Meta):
         verbose_name = "مرحله اجرا"
