@@ -283,7 +283,7 @@
                 </div>
                 <div class="collapsible-body">
                     <span style="user-select: none">
-                        {% include "project_marhale_partial.html" with m=spdtmejra.description m_accomplished=spdtmejra.marhale_accomplished m_full=spdtmejra.marhale_full %}
+                        {% include "project_marhale_partial.html" with m=spdtmejra.description m_accomplished=spdtmejra.marhale_accomplished m_full=spdtmejra.marhale_full id=spdtmejra.id %}
                     </span>
                 </div>
             </li>
@@ -346,26 +346,26 @@
         xhttp.send("project="+PID+"&csrfmiddlewaretoken={{ csrf_token }}&note="+selfObject.value);
     }
 
-    function UpdateMarhaleValue(Text, Level, PID){
+    function UpdateMarhaleValue(Text, LID){
         var xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
-            var HtmlToast = '<span>مرحله '+Level+' به '+Text+' تغییر کرد</span><button class="btn-flat toast-action" onclick="document.location.reload()">بارگزاری مجدد نتایج</button>';
+            var HtmlToast = '<span>مرحله '+LID+' به '+Text+' تغییر کرد</span><button class="btn-flat toast-action" onclick="document.location.reload()">بارگزاری مجدد نتایج</button>';
             M.toast({html: HtmlToast, classes: 'rounded'});
         }
         xhttp.open("POST", "/api/project/");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("level="+Level+"&project="+PID+"&csrfmiddlewaretoken={{ csrf_token }}&text="+Text);
+        xhttp.send("level="+LID+"&csrfmiddlewaretoken={{ csrf_token }}&text="+Text);
     }
 
-    function UpdateMarhaleDesc(Text, Level, PID){
+    function UpdateMarhaleDesc(Text, LID){
         var xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
-            var HtmlToast = '<span>توضیحات مرحله '+Level+' به '+Text+' تغییر کرد</span><button class="btn-flat toast-action" onclick="document.location.reload()">بارگزاری مجدد نتایج</button>';
+            var HtmlToast = '<span>توضیحات مرحله '+LID+' به '+Text+' تغییر کرد</span><button class="btn-flat toast-action" onclick="document.location.reload()">بارگزاری مجدد نتایج</button>';
             M.toast({html: HtmlToast, classes: 'rounded'});
         }
         xhttp.open("POST", "/api/project/");
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("level="+Level+"&project="+PID+"&csrfmiddlewaretoken={{ csrf_token }}&desc="+Text);
+        xhttp.send("level="+LID+"&csrfmiddlewaretoken={{ csrf_token }}&desc="+Text);
     }
 
     var map = new ol.Map({
