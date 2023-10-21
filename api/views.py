@@ -62,9 +62,8 @@ class ApiUpdateProject(APIView):
             elif "desc" in self.request.POST:
                 text = self.request.POST['desc']
                 level = self.request.POST['level']
-                print(pid + ": " + level + ": " + text)
-                lookup = "marhale%s" % level
-                main.models.Project.objects.filter(id=pid).update(**{lookup: text})
+                main.models.MaraheleEjra.objects.filter(id=level).update(description=text)
+                pid = main.models.MaraheleEjra.objects.get(id=level).Project.id
                 register_event(self, pid, "تغییر توضیحات مرحله", "ثبت " + text + "به عنوان توضیحات جدید مرحله " + level)
 
             elif "level" in self.request.POST:
@@ -216,14 +215,11 @@ def register_event(self, pid, ev_type, text):
         # OwnerUser_id=1,
         RelatedProject_id=pid,
     )
-    print(ev1)
 
     ev = Events()
     ev.EventType = ev_type
     ev.description = text
-    # ev.day = "2323232"
     ev.OwnerUser = self.request.user
     ev.RelatedProject = main.models.Project.objects.filter(id=pid).get()
     ev.save()
-    print(ev)
 
