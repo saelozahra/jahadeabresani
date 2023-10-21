@@ -1,10 +1,10 @@
 {% load saelozahra_tags %}
 <div class="loop_color" style="color: {{ m_accomplished|percent_color_calc:m_full }};">
     <p class="desc" contenteditable="true" onfocusout="UpdateMarhaleDesc(this.innerText,{{ id }})" >{{ m }}</p>
-    <div class="full">واحد کل: <b>{{ m_full }}</b> <small>{{ spdtmejra.vahed }}</small></div>
+    <div class="full">واحد کل: <b>{{ m_full }}</b> <small>{{ spdtmejra.vahed_name }}</small></div>
     واحد اجرا شده:  <b contenteditable="true" onfocusout="UpdateMarhaleValue(this.innerText,{{ id }})" >{{ m_accomplished }}</b> <small>{{ spdtmejra.vahed_name }}</small>
     <div class="result_value">
-        میزان باقیمانده: <b>{{ m_full|menha:m_accomplished }}</b> <small>{{ spdtmejra.vahed }}</small>
+        میزان باقیمانده: <b>{{ m_full|menha:m_accomplished }}</b> <small>{{ spdtmejra.vahed_name }}</small>
     </div>
     <br>
     <div class="progress">
