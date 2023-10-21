@@ -17,7 +17,7 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/staticfiles" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (venv)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (jahadeabresani)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
@@ -28,6 +28,7 @@
         <option value="$MODULE_DIR$/project/templates" />
         <option value="$MODULE_DIR$/ticket/templates" />
         <option value="$MODULE_DIR$/city/templates" />
+        <option value="$MODULE_DIR$/financial/templates" />
       </list>
     </option>
   </component>
