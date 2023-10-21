@@ -219,7 +219,7 @@ class SingleProject(TemplateView):
 
         this_project = this_project.get()
 
-        timeline = events.models.Events.objects.filter(Q(RelatedProject_id=pid))
+        timeline = events.models.Events.objects.filter(Q(RelatedProject_id=pid)).order_by("-id")
         tl_day = {}
 
         for tl in timeline:

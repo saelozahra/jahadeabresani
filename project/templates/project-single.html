@@ -296,7 +296,7 @@
     </div>
     <div id="timeline" class="owl-carousel owl-theme" >
         {% for tld in tl_day %}
-            <div class="tli">
+            <div class="tli tac">
                 <button class="tear modal-trigger tooltipped" data-position="top" data-tooltip="رویدادها و وقایع  {{ tld|replace:"-|/" }}" href="#modal{{ tld }}">
                     <div>{{ tld|replace:"-|/" }}</div>
                 </button>
@@ -408,7 +408,7 @@
 
     var owl = $('#timeline');
     owl.owlCarousel({
-        items: 4,
+        items: 6,
         center: true,
 {#        autoWidth: true,#}
         dots: false,
