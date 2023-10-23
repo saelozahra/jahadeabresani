@@ -79,12 +79,9 @@ class ChatList(TemplateView):
 
         for C in chat_list_all:
 
-            print("me: " + self.request.user.first_name)
             if C.User1 == self.request.user:
-                print("to: " + C.User2.first_name)
                 to_user = C.User2
             else:
-                print("to: " + C.User1.first_name)
                 to_user = C.User1
 
             avatar_url = ""
@@ -203,12 +200,10 @@ class CreateNewChat(TemplateView):
                 (Q(User1__username=to_slug) and Q(User2__username=my_slug))
             )
 
-        print("our_chat")
-        print(our_chat)
         new_chat_id = our_chat.get()
 
-        print(new_chat_id)
-        print(new_chat_id.id)
+        print(new_chat_id.encode("utf-8"))
+        print(new_chat_id.id.encode("utf-8"))
 
         return HttpResponseRedirect('../../chat/' + str(new_chat_id.id))
 
