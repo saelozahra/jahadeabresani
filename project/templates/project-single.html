@@ -40,8 +40,26 @@
             display: flex !important;
             flex-direction: row;
             justify-content: center;
-            width: 96%;
-            left: 2%;
+            width: 98%;
+            left: 1%;
+        }
+        #timeline::after {
+            content: " ";
+            position: absolute;
+            left: -0%;
+            top: -20px;
+            height: 100%;
+            box-shadow: 0 0 50px 50px white;
+            z-index: 9;
+        }
+        #timeline::before {
+            content: " ";
+            position: absolute;
+            right: -0%;
+            top: -20px;
+            height: 100%;
+            box-shadow: 0 0 50px 50px white;
+            z-index: 9;
         }
         .tear {
             width: 50px;
@@ -398,6 +416,9 @@
 {#        items: 6,#}
         center: true,
         autoWidth: true,
+        autoplay: true,
+        autoplayHoverPause: true,
+        autoplayTimeout: 1313,
         margin: 110,
         dots: false,
     })
