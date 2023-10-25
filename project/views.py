@@ -224,6 +224,8 @@ class SingleProject(TemplateView):
 
         for tl in timeline:
             tl_day[tl.day.__str__()] = timeline.filter(day=tl.day.__str__())
+
+
         # print(tl_day)  # after changes
 
         context = {
