@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = ["https://project.malcomx.ir", "https://www.project.malcomx.ir", "https://malcomx.ir"]
 
 # Application definition
 
